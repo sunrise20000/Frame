@@ -9,7 +9,9 @@ namespace Frame.Class
 {
     public class ViewMessageBase
     {
-        public string MessageName { get; set; }
-        public string MsgHandlerName { get; set; }
+        public string MessageName
+        {
+            get { return GetType().Name; }
+        }
     }
 }

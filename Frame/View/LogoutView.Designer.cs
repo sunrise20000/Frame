@@ -1,6 +1,6 @@
 ﻿namespace Frame.View
 {
-    partial class MessageLogoutView
+    partial class LogoutView
     {
         /// <summary> 
         /// 必需的设计器变量。

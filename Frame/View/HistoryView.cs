@@ -20,12 +20,13 @@ namespace Frame.View
             
         }
 
-        public override void OnRecvMessage<T>(T msg)
+        public void OnMsg1(Msg1 msg)
         {
-            if (msg is Msg1)
-            {
-                MessageBox.Show((msg as Msg1).ID+"sfsfsfs");
-            }
+            MessageBox.Show(msg.ID);
+        }
+        public void OnMsg2(Msg2 msg)
+        {
+            MessageBox.Show("HistoryView"+msg.dt.GetDateTimeFormats()[35]);
         }
     }
 }

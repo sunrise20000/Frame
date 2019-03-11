@@ -18,12 +18,9 @@ namespace Frame.View
         {
             InitializeComponent();
         }
-        public override void OnRecvMessage<T>(T msg)
+        public void OnMsg2(Msg2 msg)
         {
-            if (msg is Msg1)
-            {
-                MessageBox.Show((msg as Msg1).ID);
-            }
+            MessageBox.Show("SettingView"+msg.dt.GetDateTimeFormats()[10]);
         }
     }
 }

@@ -12,41 +12,58 @@ namespace Frame
 {
     public partial class Form1 : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        HistoryView ViewHistory = new HistoryView();
-        SettingView ViewSetting = new SettingView();
+        List<MessageUserControl> ControlList = new List<MessageUserControl>();
+
+        HistoryView historyView = new HistoryView();
+        SettingView settingView = new SettingView();
+        LogoutView logoutView = new LogoutView();
+
         public Form1()
         {
             InitializeComponent();
-
-            ViewHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            ViewSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-
-            Controls.Add(ViewHistory);
-            Controls.Add(ViewSetting);
-
-            ViewSetting.AddMonitorList(homeView1);
-            ViewHistory.AddMonitorList(homeView1);
+            InitCtrl();
         }
 
+
+        private void InitCtrl()
+        {
+            historyView.Dock = System.Windows.Forms.DockStyle.Fill;
+            settingView.Dock = System.Windows.Forms.DockStyle.Fill;
+
+            Controls.Add(historyView);
+            Controls.Add(settingView);
+
+            ControlList.Add(historyView);
+            ControlList.Add(settingView);
+            ControlList.Add(homeView1);
+            //绑定消息
+            settingView.AddMonitorList(homeView1);
+            historyView.AddMonitorList(homeView1);
+          
+        }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            ViewHistory.Visible = false;
-            ViewSetting.Visible = false;
-            homeView1.Visible = true;
+            ShowUserControl(homeView1);
         }
 
         private void barButtonItemSetting_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            ViewHistory.Visible = false;
-            ViewSetting.Visible = true;
-            homeView1.Visible = false;
+            ShowUserControl(settingView);
         }
 
         private void barButtonItemHistory_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            ViewHistory.Visible = true;
-            ViewSetting.Visible = false;
-            homeView1.Visible = false;
+            ShowUserControl(historyView);
+        }
+
+        private void ShowUserControl(MessageUserControl Ctrl)
+        {
+            if (ControlList.Contains(Ctrl))
+            {
+                foreach (var w in ControlList.Where(u => u != Ctrl))
+                    w.Visible = false;
+                Ctrl.Visible = true;
+            }
         }
     }
 }

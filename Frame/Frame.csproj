@@ -77,11 +77,11 @@
     <Compile Include="View\HomeView.Designer.cs">
       <DependentUpon>HomeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\MessageLogoutView.cs">
+    <Compile Include="View\LogoutView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\MessageLogoutView.Designer.cs">
-      <DependentUpon>MessageLogoutView.cs</DependentUpon>
+    <Compile Include="View\LogoutView.Designer.cs">
+      <DependentUpon>LogoutView.cs</DependentUpon>
     </Compile>
     <Compile Include="View\MessageUserControl.cs">
       <SubType>UserControl</SubType>
@@ -102,8 +102,8 @@
     <EmbeddedResource Include="View\HomeView.resx">
       <DependentUpon>HomeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\MessageLogoutView.resx">
-      <DependentUpon>MessageLogoutView.cs</DependentUpon>
+    <EmbeddedResource Include="View\LogoutView.resx">
+      <DependentUpon>LogoutView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SettingView.resx">
       <DependentUpon>SettingView.cs</DependentUpon>

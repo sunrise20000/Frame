@@ -11,16 +11,12 @@ using Frame.Interface;
 
 namespace Frame.View
 {
-    public partial class MessageLogoutView : MessageUserControl
+    public partial class LogoutView : MessageUserControl
     {
-        public MessageLogoutView()
+        public LogoutView()
         {
             InitializeComponent();
         }
 
-        public override void OnRecvMessage<Msg1>(Msg1 msg)
-        {
-
-        }
     }
 }

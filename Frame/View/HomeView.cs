@@ -19,16 +19,9 @@ namespace Frame.View
             InitializeComponent();
         }
 
-        public override void OnRecvMessage<Msg1>(Msg1 msg)
-        {
-
-        }
-
-
-
         private void button1_Click(object sender, EventArgs e)
         {
-            SendMessage(new Msg1() {  ID="Frome HomeView"});
+            SendMessage(new Msg2());
         }
     }
 }

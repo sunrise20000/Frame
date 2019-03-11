@@ -46,10 +46,15 @@ namespace Frame.View
                 MonitorObj.ReceiverList.Remove(this);
         }
 
-
-        public virtual void OnRecvMessage<T>(T msg)
+        public void OnRecvMessage<T>(T msg)
         {
-            throw new NotImplementedException();
+            var msgType = msg.GetType();
+            string MethodName = "On" + msgType.Name;
+            var method=GetType().GetMethod(MethodName);
+            if (method != null)
+            {
+                method.Invoke(this,new object[] { msg});
+            }
         }
     }
 }
