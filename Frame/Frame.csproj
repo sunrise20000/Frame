@@ -61,9 +61,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interface\CommandActionBase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Interface\ICommandAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +77,15 @@
     <Compile Include="View\HomeView.Designer.cs">
       <DependentUpon>HomeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\MessageLogoutView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\MessageLogoutView.Designer.cs">
+      <DependentUpon>MessageLogoutView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="View\SettingView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -89,13 +95,15 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx" />
     <EmbeddedResource Include="View\HistoryView.resx">
       <DependentUpon>HistoryView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\HomeView.resx">
       <DependentUpon>HomeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MessageLogoutView.resx">
+      <DependentUpon>MessageLogoutView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SettingView.resx">
       <DependentUpon>SettingView.cs</DependentUpon>

@@ -1,6 +1,6 @@
 ﻿namespace Frame.View
 {
-    partial class SettingView
+    partial class MessageLogoutView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -35,20 +35,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(215, 256);
+            this.label1.Location = new System.Drawing.Point(228, 232);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 24);
+            this.label1.Size = new System.Drawing.Size(166, 24);
             this.label1.TabIndex = 2;
-            this.label1.Text = "SettingView";
+            this.label1.Text = "MessageLogOut";
             // 
-            // SettingView
+            // MessageLogoutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.label1);
-            this.Name = "SettingView";
-            this.Size = new System.Drawing.Size(537, 537);
+            this.Name = "MessageLogoutView";
+            this.Size = new System.Drawing.Size(563, 488);
             this.ResumeLayout(false);
             this.PerformLayout();
 

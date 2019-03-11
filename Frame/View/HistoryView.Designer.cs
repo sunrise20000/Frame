@@ -28,18 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(273, 249);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(142, 24);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "HistoryView";
             // 
             // HistoryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.Controls.Add(this.label1);
             this.Name = "HistoryView";
-            this.Size = new System.Drawing.Size(419, 442);
+            this.Size = new System.Drawing.Size(652, 522);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
     }
 }

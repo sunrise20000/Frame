@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Frame.Interface;
-using Frame.Class;
 
 namespace Frame.View
 {
-    public partial class HomeView : MessageUserControl
+    public partial class MessageLogoutView : MessageUserControl
     {
-        public HomeView()
+        public MessageLogoutView()
         {
             InitializeComponent();
         }
@@ -22,13 +21,6 @@ namespace Frame.View
         public override void OnRecvMessage<Msg1>(Msg1 msg)
         {
 
-        }
-
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SendMessage(new Msg1() {  ID="Frome HomeView"});
         }
     }
 }

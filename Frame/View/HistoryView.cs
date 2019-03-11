@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Frame.Interface;
+using Frame.Class;
 
 namespace Frame.View
 {
-    public partial class HistoryView : CommandActionBase
+    public partial class HistoryView : MessageUserControl
     {
         public HistoryView()
         {
@@ -19,9 +20,12 @@ namespace Frame.View
             
         }
 
-        protected override void OnRecvMessage<Msg1>(Msg1 msg)
+        public override void OnRecvMessage<T>(T msg)
         {
-            
+            if (msg is Msg1)
+            {
+                MessageBox.Show((msg as Msg1).ID+"sfsfsfs");
+            }
         }
     }
 }

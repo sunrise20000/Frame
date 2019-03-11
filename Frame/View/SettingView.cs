@@ -8,18 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Frame.Interface;
+using Frame.Class;
 
 namespace Frame.View
 {
-    public partial class SettingView : CommandActionBase
+    public partial class SettingView : MessageUserControl
     {
         public SettingView()
         {
             InitializeComponent();
         }
-        protected override void OnRecvMessage<Msg2>(Msg2 msg)
+        public override void OnRecvMessage<T>(T msg)
         {
-
+            if (msg is Msg1)
+            {
+                MessageBox.Show((msg as Msg1).ID);
+            }
         }
     }
 }

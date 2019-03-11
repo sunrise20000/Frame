@@ -8,8 +8,12 @@ using System.Windows.Forms;
 
 namespace Frame.Interface
 {
-    interface ICommandAction
+    /// <summary>
+    /// 赋予窗口发送消息的能力
+    /// </summary>
+    public interface ICommandAction
     {
-        void SendMessage<T>(T msg) where T : ViewMessageBase;
+        void SendMessage<T>(T msg,ICommandAction Receive=null) where T : ViewMessageBase;
+        void OnRecvMessage<T>(T msg);
     }
 }
