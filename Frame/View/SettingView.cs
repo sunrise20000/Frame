@@ -22,5 +22,12 @@ namespace Frame.View
         {
             MessageBox.Show("SettingView"+msg.dt.GetDateTimeFormats()[10]);
         }
+
+        private void SettingView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            SendMessage(new MsgOutput() {
+                 //MsgTime=DateT
+            });
+        }
     }
 }

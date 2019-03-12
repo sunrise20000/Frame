@@ -15,5 +15,7 @@ namespace Frame.Interface
     {
         void SendMessage<T>(T msg,ICommandAction Receive=null) where T : ViewMessageBase;
         void OnRecvMessage<T>(T msg);
+        List<ICommandAction> ReceiverList { get; set; }
+         
     }
 }

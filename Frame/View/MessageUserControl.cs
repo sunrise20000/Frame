@@ -11,7 +11,7 @@ namespace Frame.View
 {
     public class MessageUserControl : UserControl, ICommandAction
     {
-        public List<MessageUserControl> ReceiverList { get; private set; } = new List<MessageUserControl>();
+        public List<ICommandAction> ReceiverList { get; set; }= new List<ICommandAction>();
 
         public void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
         {
@@ -29,21 +29,21 @@ namespace Frame.View
         /// <summary>
         /// 添加监视窗体
         /// </summary>
-        /// <param name="Receive"></param>
-        public void AddMonitorList(MessageUserControl MonitorObj)
+        /// <param name="MonitorCtrl">要监视的窗体</param>
+        public void AddMonitorList(ICommandAction MonitorCtrl)
         {
-            if (!MonitorObj.ReceiverList.Contains(this))
-                MonitorObj.ReceiverList.Add(this);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Add(this);
         }
 
         /// <summary>
         /// 删除监视窗体
         /// </summary>
-        /// <param name="Receive"></param>
-        public void RemoveMonitorList(MessageUserControl MonitorObj)
+        /// <param name="MonitorCtrl">要监视的窗体</param>
+        public void RemoveMonitorList(ICommandAction MonitorCtrl)
         {
-            if (!MonitorObj.ReceiverList.Contains(this))
-                MonitorObj.ReceiverList.Remove(this);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Remove(this);
         }
 
         public void OnRecvMessage<T>(T msg)

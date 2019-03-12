@@ -49,6 +49,7 @@
             this.Controls.Add(this.label1);
             this.Name = "SettingView";
             this.Size = new System.Drawing.Size(537, 537);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SettingView_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 

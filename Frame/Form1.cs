@@ -1,4 +1,5 @@
-﻿using Frame.View;
+﻿using Frame.Model;
+using Frame.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,10 +19,13 @@ namespace Frame
         SettingView settingView = new SettingView();
         LogoutView logoutView = new LogoutView();
 
+       
+
         public Form1()
         {
             InitializeComponent();
             InitCtrl();
+            LoadConfig();
         }
 
 
@@ -36,10 +40,22 @@ namespace Frame
             ControlList.Add(historyView);
             ControlList.Add(settingView);
             ControlList.Add(homeView1);
+
             //绑定消息
             settingView.AddMonitorList(homeView1);
             historyView.AddMonitorList(homeView1);
-          
+
+            //
+            homeView1.AddMonitorList(settingView);
+
+
+        }
+
+        private void LoadConfig()
+        {
+            var station = new StationTest();
+            StationMgr.Instance.AddStation(station.GetType().Name,station);
+            homeView1.AddMonitorList(station);
         }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -64,6 +80,16 @@ namespace Frame
                     w.Visible = false;
                 Ctrl.Visible = true;
             }
+        }
+
+        private void barButtonItemStart_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            StationMgr.Instance.StartAllStation();
+        }
+
+        private void barButtonItemStop_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            StationMgr.Instance.StopAllStation();
         }
     }
 }

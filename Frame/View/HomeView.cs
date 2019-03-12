@@ -3,25 +3,82 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-using System.Linq;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Frame.Interface;
+using DevExpress.XtraEditors;
+using HalWindow;
+using Frame.Model;
+using ViewROI;
+using HalconDotNet;
 using Frame.Class;
 
 namespace Frame.View
 {
     public partial class HomeView : MessageUserControl
     {
+        HSmartWindowControl halWIndow = new HSmartWindowControl();
+        RapidSettingModel rapidSetting = new RapidSettingModel();
+        DataTable _dt = new DataTable();
+
         public HomeView()
         {
             InitializeComponent();
+            InitCtrl();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void InitCtrl()
         {
-            SendMessage(new Msg2());
+            //
+            propertyGridControl1.SelectedObject = rapidSetting;
+            this.halWIndow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Controls.Add(this.halWIndow);
+
+            //初始化DataGrid
+            _dt.Columns.Add("Time", Type.GetType("System.DateTime"));
+            _dt.Columns.Add("Type", Type.GetType("System.String"));
+            _dt.Columns.Add("Content", Type.GetType("System.String"));
+            dataGridView1.DataSource = _dt;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.Columns[0].FillWeight = 15;
+            dataGridView1.Columns[1].FillWeight = 15;
+            dataGridView1.Columns[2].FillWeight = 65;
+        }
+
+        public void OnMsgOutput(MsgOutput msg)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(()=> OnMsgOutput(msg)));
+            }
+            else
+            {
+                var newdr = _dt.NewRow();
+                newdr[0] = msg.msg.MsgTime;
+                newdr[1] = msg.msg.MsgType;
+                newdr[2] = msg.msg.MsgContent;
+                _dt.Rows.Add(newdr);
+            }
+        }
+
+        public void OnMsgStationInfo(MsgStationInfo msg)
+        {
+         
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(()=>OnMsgStationInfo(msg)));
+            }
+            else
+            {
+                var station = StationMgr.Instance.FindStationByName(msg.SenderName);
+                if (station != null)
+                {
+                   uC_StationInfo1.InfoList[0].InfoCollect.Add(msg.Infomation);
+                    if (uC_StationInfo1.InfoList[0].InfoCollect.Count > 5)
+                        uC_StationInfo1.InfoList[0].InfoCollect.RemoveAt(0);
+                }
+            }
         }
     }
 }

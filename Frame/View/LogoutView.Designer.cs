@@ -41,13 +41,13 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "MessageLogOut";
             // 
-            // MessageLogoutView
+            // LogoutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
-            this.Name = "MessageLogoutView";
-            this.Size = new System.Drawing.Size(563, 488);
+            this.Name = "LogoutView";
+            this.Size = new System.Drawing.Size(710, 488);
             this.ResumeLayout(false);
             this.PerformLayout();
 

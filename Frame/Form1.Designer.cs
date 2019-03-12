@@ -38,7 +38,8 @@
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.homeView1 = new Frame.View.HomeView();
+            this.homeView1 = new View.HomeView();
+            this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,10 +52,12 @@
             this.barButtonItemStop,
             this.barButtonItemSetting,
             this.barButtonItemHome,
-            this.barButtonItemHistory});
+            this.barButtonItemHistory,
+            this.skinRibbonGalleryBarItem1});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 6;
+            this.ribbonControl2.MaxItemId = 7;
             this.ribbonControl2.Name = "ribbonControl2";
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.skinRibbonGalleryBarItem1);
             this.ribbonControl2.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2});
             this.ribbonControl2.Size = new System.Drawing.Size(907, 147);
@@ -66,6 +69,7 @@
             this.barButtonItemStart.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemStart.ImageOptions.Image")));
             this.barButtonItemStart.Name = "barButtonItemStart";
             this.barButtonItemStart.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemStart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemStart_ItemClick);
             // 
             // barButtonItemStop
             // 
@@ -74,6 +78,7 @@
             this.barButtonItemStop.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemStop.ImageOptions.Image")));
             this.barButtonItemStop.Name = "barButtonItemStop";
             this.barButtonItemStop.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemStop.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemStop_ItemClick);
             // 
             // barButtonItemSetting
             // 
@@ -131,8 +136,15 @@
             this.homeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.homeView1.Location = new System.Drawing.Point(0, 147);
             this.homeView1.Name = "homeView1";
+            //this.homeView1.ReceiverList = ((System.Collections.Generic.List<Frame.Interface.ICommandAction>)(resources.GetObject("homeView1.ReceiverList")));
             this.homeView1.Size = new System.Drawing.Size(907, 490);
             this.homeView1.TabIndex = 4;
+            // 
+            // skinRibbonGalleryBarItem1
+            // 
+            this.skinRibbonGalleryBarItem1.Caption = "skinRibbonGalleryBarItem1";
+            this.skinRibbonGalleryBarItem1.Id = 6;
+            this.skinRibbonGalleryBarItem1.Name = "skinRibbonGalleryBarItem1";
             // 
             // Form1
             // 
@@ -162,6 +174,7 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItemHome;
         private DevExpress.XtraBars.BarButtonItem barButtonItemHistory;
         private View.HomeView homeView1;
+        private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
     }
 }
 
