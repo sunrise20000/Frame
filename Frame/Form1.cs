@@ -15,9 +15,9 @@ namespace Frame
     {
         List<MessageUserControl> ControlList = new List<MessageUserControl>();
 
+        HomeView homeView = new HomeView();
         HistoryView historyView = new HistoryView();
         SettingView settingView = new SettingView();
-        LogoutView logoutView = new LogoutView();
 
        
 
@@ -33,20 +33,25 @@ namespace Frame
         {
             historyView.Dock = System.Windows.Forms.DockStyle.Fill;
             settingView.Dock = System.Windows.Forms.DockStyle.Fill;
+            homeView.Dock= System.Windows.Forms.DockStyle.Fill;
 
+            Controls.Add(homeView);
             Controls.Add(historyView);
             Controls.Add(settingView);
+            
 
+            ControlList.Add(homeView);
             ControlList.Add(historyView);
             ControlList.Add(settingView);
-            ControlList.Add(homeView1);
+            
 
-            //绑定消息
-            settingView.AddMonitorList(homeView1);
-            historyView.AddMonitorList(homeView1);
+            //绑定homeView发出的消息
+            settingView.AddMonitorList(homeView);
+            historyView.AddMonitorList(homeView);
 
-            //
-            homeView1.AddMonitorList(settingView);
+
+            //绑定settingView发出的消息
+            homeView.AddMonitorList(settingView);
 
 
         }
@@ -54,12 +59,22 @@ namespace Frame
         private void LoadConfig()
         {
             var station = new StationTest();
-            StationMgr.Instance.AddStation(station.GetType().Name,station);
-            homeView1.AddMonitorList(station);
+            var station1 = new StationTest1();
+            var station2 = new StationTest2();
+            StationMgr.Instance.AddStation(station);
+            StationMgr.Instance.AddStation(station1);
+            StationMgr.Instance.AddStation(station2);
+
+            homeView.AddMonitorList(station);
+            homeView.AddMonitorList(station1);
+            homeView.AddMonitorList(station2);
+
+            homeView.SetStationBinding(station, station1, station2);
+
         }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            ShowUserControl(homeView1);
+            ShowUserControl(homeView);
         }
 
         private void barButtonItemSetting_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -90,6 +105,13 @@ namespace Frame
         private void barButtonItemStop_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             StationMgr.Instance.StopAllStation();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StationMgr.Instance.StopAllStation();
+            StationMgr.Instance.WaitFinish();
+       
         }
     }
 }

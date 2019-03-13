@@ -29,17 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
             this.ribbonControl2 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barButtonItemStart = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemStop = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemSetting = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemHome = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemHistory = new DevExpress.XtraBars.BarButtonItem();
+            this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
+            this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
+            this.barButtonItemPLC = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.homeView1 = new View.HomeView();
-            this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
+            //this.homeView1 = new Frame.View.HomeView();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,11 +58,15 @@
             this.barButtonItemSetting,
             this.barButtonItemHome,
             this.barButtonItemHistory,
-            this.skinRibbonGalleryBarItem1});
+            this.skinRibbonGalleryBarItem1,
+            this.barStaticItem1,
+            this.barCheckItem1,
+            this.barButtonItemPLC});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 7;
+            this.ribbonControl2.MaxItemId = 10;
             this.ribbonControl2.Name = "ribbonControl2";
             this.ribbonControl2.PageHeaderItemLinks.Add(this.skinRibbonGalleryBarItem1);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.barButtonItemPLC);
             this.ribbonControl2.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2});
             this.ribbonControl2.Size = new System.Drawing.Size(907, 147);
@@ -107,6 +116,36 @@
             this.barButtonItemHistory.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.barButtonItemHistory.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemHistory_ItemClick);
             // 
+            // skinRibbonGalleryBarItem1
+            // 
+            this.skinRibbonGalleryBarItem1.Caption = "skinRibbonGalleryBarItem1";
+            this.skinRibbonGalleryBarItem1.Id = 6;
+            this.skinRibbonGalleryBarItem1.Name = "skinRibbonGalleryBarItem1";
+            // 
+            // barStaticItem1
+            // 
+            this.barStaticItem1.Caption = "barStaticItem1";
+            this.barStaticItem1.Id = 7;
+            this.barStaticItem1.Name = "barStaticItem1";
+            // 
+            // barCheckItem1
+            // 
+            this.barCheckItem1.Caption = "barCheckItem1";
+            this.barCheckItem1.Id = 8;
+            this.barCheckItem1.Name = "barCheckItem1";
+            // 
+            // barButtonItemPLC
+            // 
+            this.barButtonItemPLC.Caption = "PLC";
+            this.barButtonItemPLC.Description = "PLC";
+            this.barButtonItemPLC.Enabled = false;
+            this.barButtonItemPLC.Id = 9;
+            this.barButtonItemPLC.Name = "barButtonItemPLC";
+            this.barButtonItemPLC.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            toolTipTitleItem1.Text = "PLC";
+            superToolTip1.Items.Add(toolTipTitleItem1);
+            this.barButtonItemPLC.SuperTip = superToolTip1;
+            // 
             // ribbonPage2
             // 
             this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -132,30 +171,25 @@
             // 
             // homeView1
             // 
-            this.homeView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.homeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.homeView1.Location = new System.Drawing.Point(0, 147);
-            this.homeView1.Name = "homeView1";
+            //this.homeView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            //this.homeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.homeView1.Location = new System.Drawing.Point(0, 147);
+            //this.homeView1.Name = "homeView1";
             //this.homeView1.ReceiverList = ((System.Collections.Generic.List<Frame.Interface.ICommandAction>)(resources.GetObject("homeView1.ReceiverList")));
-            this.homeView1.Size = new System.Drawing.Size(907, 490);
-            this.homeView1.TabIndex = 4;
-            // 
-            // skinRibbonGalleryBarItem1
-            // 
-            this.skinRibbonGalleryBarItem1.Caption = "skinRibbonGalleryBarItem1";
-            this.skinRibbonGalleryBarItem1.Id = 6;
-            this.skinRibbonGalleryBarItem1.Name = "skinRibbonGalleryBarItem1";
+            //this.homeView1.Size = new System.Drawing.Size(907, 490);
+            //this.homeView1.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 637);
-            this.Controls.Add(this.homeView1);
+            //this.Controls.Add(this.homeView1);
             this.Controls.Add(this.ribbonControl2);
             this.Name = "Form1";
             this.Ribbon = this.ribbonControl2;
             this.Text = "Frame";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -173,8 +207,11 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItemSetting;
         private DevExpress.XtraBars.BarButtonItem barButtonItemHome;
         private DevExpress.XtraBars.BarButtonItem barButtonItemHistory;
-        private View.HomeView homeView1;
+        //private View.HomeView homeView1;
         private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem1;
+        private DevExpress.XtraBars.BarCheckItem barCheckItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemPLC;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Frame.Class;
+using Frame.Definations;
 using Frame.Interface;
 using System;
 using System.Collections.Generic;
@@ -11,42 +12,52 @@ namespace Frame.Model
 
     public class StationBase : ICommandAction
     {
-        private bool bPused=false;
-        public bool Enable;
-        public string StationName;
-        public int StationIndex;
+        private string OldMsg = "";
+        private bool bPused { get; set; } = false;
+        public bool Enable { get; set; } = false;
+        public string StationName { get; set; }
+        public int StationIndex { get; set; } = 0;
         protected CancellationTokenSource cts =new CancellationTokenSource();
-        protected enum STEP
-        {
-            INIT
-        }
-        protected Queue<STEP> nStepQueue=new Queue<STEP>();
+        protected Queue<int> nStepQueue=new Queue<int>();
         protected Task t = null; 
-        protected STEP nStep;
-
         public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
-
         protected virtual bool CheckStationStatusChanged() { return bPused; }
-        protected STEP PeekStep() { return nStepQueue.Peek(); }
-        protected void PushStep(STEP nStep) { nStepQueue.Enqueue(nStep); }
-        protected void PopAndPushStep(STEP nStep) { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep); }
-        protected void PushBatchStep(STEP[] nSteps)
+        protected T PeekStep<T>() where T:struct
+        {
+            int i = nStepQueue.Peek();
+            if (Enum.TryParse(i.ToString(), out T result))
+                return result;
+            else
+                return default(T);
+
+        }
+        protected void PushStep<T>(T nStep) where T:struct { nStepQueue.Enqueue(nStep.GetHashCode()); }
+        protected void PopAndPushStep<T>(T nStep) where T:struct { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep.GetHashCode()); }
+        protected void PushBatchStep<T>(params T[] nSteps) where T:struct
         {
             foreach (var step in nSteps)
-                nStepQueue.Enqueue(step);
+                nStepQueue.Enqueue(step.GetHashCode());
         }
         protected void PopStep() { nStepQueue.Dequeue(); }
         protected void ClearAllStep() { nStepQueue.Clear(); }
         protected int GetCurStepCount() { return nStepQueue.Count; }
         protected virtual bool UserInit() { return true; }
-        protected void ShowInfo(string strMsg)
+        protected void ShowInfo(string strMsg,bool IsCanRepeat=false)
         {
-            SendMessage(new MsgStationInfo() {
-                SenderName = GetType().Name,
-                Infomation=strMsg,
-            });
+            if(IsCanRepeat || OldMsg != strMsg)
+            { 
+                SendMessage(new MsgStationInfo()
+                {
+                    SenderName = GetType().Name,
+                    Infomation = strMsg,
+                });
+                OldMsg = strMsg;
+            }
         }
-        public StationBase() {t = new Task(()=>ThreadFunc(this),cts.Token); }
+        public StationBase() {
+            t = new Task(()=>ThreadFunc(this),cts.Token);
+            StationName = GetType().Name;
+        }
         public bool Start()
         {
             Resume();
@@ -77,8 +88,18 @@ namespace Frame.Model
             bPused = false;
             return true;
         }
+        public bool Wait(int timeOut=5000)
+        {
+            if (t.Status == TaskStatus.Running)
+                return t.Wait(timeOut);
+            else
+                return true;
+        }
+
         private static int ThreadFunc(object o) { return (o as StationBase).WorkFlow(); }
         protected virtual int WorkFlow() { return 0; }
+
+
 
         public virtual void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
         {
@@ -97,5 +118,7 @@ namespace Frame.Model
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace Frame.Interface
 {
     /// <summary>
-    /// 赋予窗口发送消息的能力
+    /// 发送消息能力
     /// </summary>
     public interface ICommandAction
     {

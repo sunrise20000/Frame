@@ -17,7 +17,12 @@ namespace Frame.View
         public HistoryView()
         {
             InitializeComponent();
-            
+            this.uC_HistoryPanel1.MsgCollect = new System.Collections.ObjectModel.ObservableCollection<Model.MessageModel>()
+            {
+                new Model.MessageModel(Definations.EnumMsgType.Error,"Error1"),
+                new Model.MessageModel(Definations.EnumMsgType.Info,"Info1"),
+                new Model.MessageModel(Definations.EnumMsgType.Warning,"Watning1"),
+            };
         }
 
         public void OnMsg1(Msg1 msg)

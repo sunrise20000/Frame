@@ -10,33 +10,31 @@ using Frame.Definations;
 
 namespace Frame.Model
 {
-   
-    class StationTest : StationBase
+
+    class StationTest2 : StationBase
     {
-        STEP1 nStep;
-        public StationTest()
+        STEP3 nStep;
+        public StationTest2()
         {
            
         }
         protected override bool UserInit()
         {
-            Console.WriteLine("Getit");
-            ShowInfo("Hello");
+            ShowInfo("Test2",true);
             return true;
         }
         protected override int WorkFlow()
         {
             ClearAllStep();
-            PushStep(STEP1.INIT);
+            PushStep(STEP3.INIT);
             while (!cts.IsCancellationRequested)
             {
                 if (CheckStationStatusChanged())
                     continue;
-                nStep = PeekStep<STEP1>();
+                nStep = PeekStep<STEP3>();
                 switch (nStep)
                 {
                     default:
-                        ShowInfo("Default");
                         break;
                 }
             }

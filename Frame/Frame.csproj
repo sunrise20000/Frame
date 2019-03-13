@@ -12,6 +12,7 @@
     <AssemblyName>Frame</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v17.1" />
@@ -51,6 +54,9 @@
     <Reference Include="HDisplay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\HDisplay.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -80,6 +86,8 @@
     <Compile Include="Class\MsgOutput.cs" />
     <Compile Include="Class\MsgStationInfo.cs" />
     <Compile Include="Class\ViewMessageBase.cs" />
+    <Compile Include="Converts\DateTime2Text.cs" />
+    <Compile Include="Converts\MsgType2Image.cs" />
     <Compile Include="Definations\Defination.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -98,18 +106,14 @@
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Station\StationBase.cs" />
     <Compile Include="Station\StationMgr.cs" />
+    <Compile Include="Station\StationTest2.cs" />
+    <Compile Include="Station\StationTest1.cs" />
     <Compile Include="Station\StationTest.cs" />
     <Compile Include="View\HistoryView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\HistoryView.Designer.cs">
       <DependentUpon>HistoryView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\LogoutView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\LogoutView.Designer.cs">
-      <DependentUpon>LogoutView.cs</DependentUpon>
     </Compile>
     <Compile Include="View\MessageUserControl.cs">
       <SubType>UserControl</SubType>
@@ -126,6 +130,9 @@
     <Compile Include="View\HomeView.Designer.cs">
       <DependentUpon>HomeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\UC_HistoryPanel.xaml.cs">
+      <DependentUpon>UC_HistoryPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UC_StationInfo.xaml.cs">
       <DependentUpon>UC_StationInfo.xaml</DependentUpon>
     </Compile>
@@ -140,12 +147,11 @@
     <EmbeddedResource Include="View\HomeView.resx">
       <DependentUpon>HomeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\LogoutView.resx">
-      <DependentUpon>LogoutView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="View\SettingView.resx">
       <DependentUpon>SettingView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -158,16 +164,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\主页.png" />
+    <Content Include="images\infomation.png" />
     <Content Include="images\停止.png" />
     <Content Include="images\历史搜索.png" />
     <Content Include="images\启动.png" />
+    <Content Include="images\warning.png" />
     <Content Include="images\设置.png" />
+    <Content Include="images\error.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\UC_HistoryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UC_StationInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

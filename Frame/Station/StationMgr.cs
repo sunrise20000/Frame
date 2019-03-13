@@ -14,17 +14,17 @@ namespace Frame.Model
         {
             get { return _instance.Value; }
         }
-        public void AddStation(string stationName,StationBase station)
+        public void AddStation(StationBase station)
         {
-            if (stationName == null || station == null)
+            if (station == null)
                 return;
             foreach (var it in stationDic)
             {
-                if (it.Key == stationName)
+                if (it.Key == station.GetType().Name)
                     return;
             }
             station.StationIndex = stationDic.Count;
-            stationDic.Add(stationName, station);
+            stationDic.Add(station.GetType().Name, station);
         }
         public StationBase FindStationByName(string strName)
         {
@@ -71,6 +71,12 @@ namespace Frame.Model
             foreach (var it in stationDic)
                 bRet &= it.Value.Resume();
             return bRet;
+        }
+
+        public void WaitFinish()
+        {
+            foreach (var it in stationDic)
+                it.Value.Wait();
         }
 
     }

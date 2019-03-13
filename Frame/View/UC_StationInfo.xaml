@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightBlue">
+        <Grid>
+            
+        </Grid>
         <ListView ItemsSource="{Binding InfoList, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -15,13 +18,15 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="300" Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="150"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock FontSize="20" Text="{Binding StationName}" HorizontalAlignment="Center"/>
-                        <ListBox ItemsSource="{Binding InfoCollect}" Grid.Row="1" FontSize="15" BorderThickness="0"/>
+                    <Grid Width="300" Background="LightBlue">
+                        <Grid Margin="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="150"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="20" Text="{Binding StationName}" HorizontalAlignment="Center"/>
+                            <ListBox ItemsSource="{Binding InfoCollect}" Grid.Row="1" FontSize="15" BorderThickness="0"/>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

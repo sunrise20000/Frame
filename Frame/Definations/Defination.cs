@@ -12,4 +12,20 @@ namespace Frame.Definations
         Warning,
         Error,
     }
+    public enum STEP1
+    {
+        //station1
+        INIT,
+    }
+    public enum STEP2
+    {
+        //station1
+        INIT,
+    }
+    public enum STEP3
+    {
+        //station1
+        INIT,
+    }
+
 }

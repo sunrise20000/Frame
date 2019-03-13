@@ -1,19 +1,57 @@
 ﻿using Frame.Definations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Frame.Model
 {
-    public class MessageModel
+    public class MessageModel : INotifyPropertyChanged
     {
-        public DateTime MsgTime { get; set; }
-        public EnumMsgType MsgType { get; set; }
-        public string MsgContent { get; set; }
-        
+        DateTime msgTime { get; set; }
+        EnumMsgType msgType { get; set; }
+        string msgContent { get; set; }
+
+        public DateTime MsgTime
+        {
+            get { return msgTime; }
+            set {
+                if (msgTime != value)
+                {
+                    msgTime = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public EnumMsgType MsgType
+        {
+            get { return msgType; }
+            set
+            {
+                if (msgType != value)
+                {
+                    msgType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public string MsgContent
+        {
+            get { return msgContent; }
+            set
+            {
+                if (msgContent != value)
+                {
+                    msgContent = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public MessageModel()
         {
             MsgTime = DateTime.Now;
@@ -26,11 +64,17 @@ namespace Frame.Model
             MsgType = type;
             MsgContent = content;
         }
-        public MessageModel(DateTime time,EnumMsgType type, string content)
+        public MessageModel(DateTime time, EnumMsgType type, string content)
         {
             MsgTime = time;
             MsgType = type;
             MsgContent = content;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged([CallerMemberName]string PropertyName = "")
+        {
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(PropertyName));
         }
     }
 }

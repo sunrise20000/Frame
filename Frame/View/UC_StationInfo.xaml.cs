@@ -25,10 +25,40 @@ namespace Frame.View
         public UC_StationInfo()
         {
             InitializeComponent();
-            InfoList.Add(new StationInfoModel() {
-                StationName="Stationname",
-            });
         }
+
+        public void SetStationList(params StationBase[] stations)
+        {
+            foreach (var it in stations)
+            {
+                InfoList.Add(new StationInfoModel() {
+                    StationName=it.StationName, 
+                });
+            }
+        }
+
+        public void ShowInfo(string msg,string stationName, int maxCount=5)
+        {
+            var modellist = InfoList.Where(m => m.StationName.Equals(stationName)).First();
+            if (modellist != null)
+            {
+                modellist.InfoCollect.Add(msg);
+                while (modellist.InfoCollect.Count > maxCount)
+                    modellist.InfoCollect.RemoveAt(0);
+            }
+        }
+
+        public void ShowInfo(string msg, StationBase station, int maxCount = 5)
+        {
+            var modellist = InfoList.Where(m => m.StationName.Equals(station.StationName)).First();
+            if (modellist != null)
+            {
+                modellist.InfoCollect.Add(msg);
+                while (modellist.InfoCollect.Count > maxCount)
+                    modellist.InfoCollect.RemoveAt(0);
+            }
+        }
+
         public ObservableCollection<StationInfoModel> InfoList { get; set; } = new ObservableCollection<StationInfoModel>();  
     }
 }

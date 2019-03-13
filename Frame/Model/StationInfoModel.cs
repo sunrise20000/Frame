@@ -15,7 +15,7 @@ namespace Frame.Model
         ObservableCollection<string> infoCollect = new ObservableCollection<string>();
     
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName]string PropertyName = "")
+        private void RaisePropertyChanged(string PropertyName = "")
         {
             PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(PropertyName));
         }
