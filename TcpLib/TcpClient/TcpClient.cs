@@ -17,6 +17,7 @@ namespace TcpLib.TcpClient
         {
             this.IP = IP;
             this.Port = Port;
+            return false;
         }
 
     }

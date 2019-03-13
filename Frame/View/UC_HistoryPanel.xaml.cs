@@ -27,5 +27,10 @@ namespace Frame.View
             InitializeComponent();
         }
         public ObservableCollection<MessageModel> MsgCollect { get; set; } = new ObservableCollection<MessageModel>();
+
+        private void MenuClear_Click(object sender, RoutedEventArgs e)
+        {
+            MsgCollect.Clear();
+        }
     }
 }

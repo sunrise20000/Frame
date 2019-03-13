@@ -12,7 +12,7 @@ namespace Frame.Converts
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((DateTime)value).GetDateTimeFormats()[10];
+            return ((DateTime)value).GetDateTimeFormats()[35];
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

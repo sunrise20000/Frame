@@ -15,7 +15,7 @@
         {
             if (disposing && (components != null))
             {
-                components.Dispose();
+                //components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -28,30 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView();
-            this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager();
+            this.components = new System.ComponentModel.Container();
+            this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
+            this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.panelContainer1 = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dockPanel2 = new DevExpress.XtraBars.Docking.DockPanel();
             this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.uC_StationInfo1 = new Frame.View.UC_StationInfo();
-            this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
-            this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dockPanelSettingRapid = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel2_Container = new DevExpress.XtraBars.Docking.ControlContainer();
             this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.hDisplay1 = new HalWindow.HDisplay();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
             this.panelContainer1.SuspendLayout();
-            this.dockPanel2.SuspendLayout();
-            this.controlContainer1.SuspendLayout();
             this.dockPanel1.SuspendLayout();
             this.dockPanel1_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dockPanel2.SuspendLayout();
+            this.controlContainer1.SuspendLayout();
             this.dockPanelSettingRapid.SuspendLayout();
             this.dockPanel2_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabbedView1
@@ -78,7 +82,7 @@
             // 
             // panelContainer1
             // 
-            this.panelContainer1.ActiveChild = this.dockPanel2;
+            this.panelContainer1.ActiveChild = this.dockPanel1;
             this.panelContainer1.Controls.Add(this.dockPanel2);
             this.panelContainer1.Controls.Add(this.dockPanel1);
             this.panelContainer1.Dock = DevExpress.XtraBars.Docking.DockingStyle.Bottom;
@@ -90,36 +94,6 @@
             this.panelContainer1.Tabbed = true;
             this.panelContainer1.Text = "panelContainer1";
             // 
-            // dockPanel2
-            // 
-            this.dockPanel2.Controls.Add(this.controlContainer1);
-            this.dockPanel2.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-            this.dockPanel2.FloatVertical = true;
-            this.dockPanel2.ID = new System.Guid("160f8951-90e7-4152-8240-e2cc2ca54e03");
-            this.dockPanel2.Location = new System.Drawing.Point(4, 24);
-            this.dockPanel2.Name = "dockPanel2";
-            this.dockPanel2.OriginalSize = new System.Drawing.Size(792, 107);
-            this.dockPanel2.Size = new System.Drawing.Size(792, 107);
-            this.dockPanel2.Text = "工位状态";
-            // 
-            // controlContainer1
-            // 
-            this.controlContainer1.Controls.Add(this.elementHost1);
-            this.controlContainer1.Location = new System.Drawing.Point(0, 0);
-            this.controlContainer1.Name = "controlContainer1";
-            this.controlContainer1.Size = new System.Drawing.Size(792, 107);
-            this.controlContainer1.TabIndex = 0;
-            // 
-            // elementHost1
-            // 
-            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elementHost1.Location = new System.Drawing.Point(0, 0);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(792, 107);
-            this.elementHost1.TabIndex = 0;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.uC_StationInfo1;
-            // 
             // dockPanel1
             // 
             this.dockPanel1.Controls.Add(this.dockPanel1_Container);
@@ -127,10 +101,10 @@
             new DevExpress.XtraBars.Docking.CustomHeaderButton("清除", DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton)});
             this.dockPanel1.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
             this.dockPanel1.ID = new System.Guid("631c4360-0b68-43de-a63f-94e78a7551af");
-            this.dockPanel1.Location = new System.Drawing.Point(4, 24);
+            this.dockPanel1.Location = new System.Drawing.Point(4, 27);
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.OriginalSize = new System.Drawing.Size(792, 107);
-            this.dockPanel1.Size = new System.Drawing.Size(792, 107);
+            this.dockPanel1.Size = new System.Drawing.Size(792, 104);
             this.dockPanel1.Text = "输出信息";
             // 
             // dockPanel1_Container
@@ -138,7 +112,7 @@
             this.dockPanel1_Container.Controls.Add(this.dataGridView1);
             this.dockPanel1_Container.Location = new System.Drawing.Point(0, 0);
             this.dockPanel1_Container.Name = "dockPanel1_Container";
-            this.dockPanel1_Container.Size = new System.Drawing.Size(792, 107);
+            this.dockPanel1_Container.Size = new System.Drawing.Size(792, 104);
             this.dockPanel1_Container.TabIndex = 0;
             // 
             // dataGridView1
@@ -152,8 +126,38 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(792, 107);
+            this.dataGridView1.Size = new System.Drawing.Size(792, 104);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // dockPanel2
+            // 
+            this.dockPanel2.Controls.Add(this.controlContainer1);
+            this.dockPanel2.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+            this.dockPanel2.FloatVertical = true;
+            this.dockPanel2.ID = new System.Guid("160f8951-90e7-4152-8240-e2cc2ca54e03");
+            this.dockPanel2.Location = new System.Drawing.Point(4, 27);
+            this.dockPanel2.Name = "dockPanel2";
+            this.dockPanel2.OriginalSize = new System.Drawing.Size(792, 107);
+            this.dockPanel2.Size = new System.Drawing.Size(792, 104);
+            this.dockPanel2.Text = "工位状态";
+            // 
+            // controlContainer1
+            // 
+            this.controlContainer1.Controls.Add(this.elementHost1);
+            this.controlContainer1.Location = new System.Drawing.Point(0, 0);
+            this.controlContainer1.Name = "controlContainer1";
+            this.controlContainer1.Size = new System.Drawing.Size(792, 104);
+            this.controlContainer1.TabIndex = 0;
+            // 
+            // elementHost1
+            // 
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(792, 104);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.uC_StationInfo1;
             // 
             // dockPanelSettingRapid
             // 
@@ -182,25 +186,49 @@
             this.propertyGridControl1.Size = new System.Drawing.Size(207, 364);
             this.propertyGridControl1.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.hDisplay1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(584, 391);
+            this.panel1.TabIndex = 5;
+            // 
+            // hDisplay1
+            // 
+            this.hDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hDisplay1.HImageX = null;
+            this.hDisplay1.HRegionXList = null;
+            this.hDisplay1.HStringXList = null;
+            this.hDisplay1.IsCancelImageMove = false;
+            this.hDisplay1.Location = new System.Drawing.Point(0, 0);
+            this.hDisplay1.Name = "hDisplay1";
+            this.hDisplay1.Size = new System.Drawing.Size(584, 391);
+            this.hDisplay1.TabIndex = 0;
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dockPanelSettingRapid);
             this.Controls.Add(this.panelContainer1);
             this.Name = "HomeView";
             this.Size = new System.Drawing.Size(800, 554);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HomeView_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).EndInit();
             this.panelContainer1.ResumeLayout(false);
-            this.dockPanel2.ResumeLayout(false);
-            this.controlContainer1.ResumeLayout(false);
             this.dockPanel1.ResumeLayout(false);
             this.dockPanel1_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.dockPanel2.ResumeLayout(false);
+            this.controlContainer1.ResumeLayout(false);
             this.dockPanelSettingRapid.ResumeLayout(false);
             this.dockPanel2_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -222,6 +250,8 @@
         private DevExpress.XtraBars.Docking.ControlContainer controlContainer1;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private UC_StationInfo uC_StationInfo1;
+        private System.Windows.Forms.Panel panel1;
+        private HalWindow.HDisplay hDisplay1;
         //private DevExpress.XtraEditors.PanelControl panelControlCamera;
     }
 }

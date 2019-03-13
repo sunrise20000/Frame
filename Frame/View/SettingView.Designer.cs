@@ -28,11 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.shapeModle1 = new HalconModle.ShapeModle();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
+            this.groupControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // groupControl2
+            // 
+            this.groupControl2.Controls.Add(this.shapeModle1);
+            this.groupControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupControl2.Location = new System.Drawing.Point(219, 0);
+            this.groupControl2.Name = "groupControl2";
+            this.groupControl2.Size = new System.Drawing.Size(318, 537);
+            this.groupControl2.TabIndex = 1;
+            this.groupControl2.Text = "相机设置";
             // 
             // groupControl1
             // 
@@ -43,14 +55,14 @@
             this.groupControl1.TabIndex = 0;
             this.groupControl1.Text = "工艺参数";
             // 
-            // groupControl2
+            // shapeModle1
             // 
-            this.groupControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupControl2.Location = new System.Drawing.Point(219, 0);
-            this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(318, 537);
-            this.groupControl2.TabIndex = 1;
-            this.groupControl2.Text = "相机设置";
+            this.shapeModle1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.shapeModle1.Location = new System.Drawing.Point(2, 21);
+            this.shapeModle1.Margin = new System.Windows.Forms.Padding(2);
+            this.shapeModle1.Name = "shapeModle1";
+            this.shapeModle1.Size = new System.Drawing.Size(314, 514);
+            this.shapeModle1.TabIndex = 0;
             // 
             // SettingView
             // 
@@ -62,8 +74,9 @@
             this.Name = "SettingView";
             this.Size = new System.Drawing.Size(537, 537);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SettingView_KeyPress);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
+            this.groupControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -72,5 +85,6 @@
 
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraEditors.GroupControl groupControl2;
+        private HalconModle.ShapeModle shapeModle1;
     }
 }

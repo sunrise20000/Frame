@@ -11,27 +11,32 @@
         <ResourceDictionary>
             <Convert:MsgType2Image x:Key="MsgType2Image"/>
             <Convert:DateTime2Text x:Key="DateTime2Text"/>
+            <Convert:MsgType2Brush x:Key="MsgType2Brush"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding MsgCollect, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=UserControl}}"
                   BorderThickness="1">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="MenuClear" Header="Clear" ToolTip="Clear Message" Click="MenuClear_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="Black" Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}">
-                        <Grid Margin="1">
+                    <Border BorderThickness="0.1" BorderBrush="Black" CornerRadius="5">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="2000"/>
                             </Grid.ColumnDefinitions>
-                            <Image Source="{Binding MsgType,Converter={StaticResource MsgType2Image}}" Height="64" Width="64"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding MsgTime, Converter={StaticResource DateTime2Text}}" FontSize="20" 
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
-                            <TextBlock Text="{Binding MsgContent}" Grid.Column="2" FontSize="20" 
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Image Source="{Binding MsgType,Converter={StaticResource MsgType2Image}}" Height="24" Width="24"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                            <TextBlock Text="{Binding MsgTime, Converter={StaticResource DateTime2Text}}" FontSize="20" Foreground="{Binding MsgType, Converter={StaticResource MsgType2Brush}}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock Text="{Binding MsgContent}" Grid.Column="2" FontSize="20" Foreground="{Binding MsgType, Converter={StaticResource MsgType2Brush}}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="3"/>
                         </Grid>
                     </Border>

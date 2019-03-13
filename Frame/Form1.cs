@@ -61,6 +61,7 @@ namespace Frame
             var station = new StationTest();
             var station1 = new StationTest1();
             var station2 = new StationTest2();
+
             StationMgr.Instance.AddStation(station);
             StationMgr.Instance.AddStation(station1);
             StationMgr.Instance.AddStation(station2);
@@ -69,6 +70,8 @@ namespace Frame
             homeView.AddMonitorList(station1);
             homeView.AddMonitorList(station2);
 
+
+            //可以接收Station的消息
             homeView.SetStationBinding(station, station1, station2);
 
         }
@@ -105,6 +108,7 @@ namespace Frame
         private void barButtonItemStop_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             StationMgr.Instance.StopAllStation();
+           
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

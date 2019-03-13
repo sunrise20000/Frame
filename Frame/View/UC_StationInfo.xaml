@@ -7,9 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightBlue">
-        <Grid>
-            
-        </Grid>
         <ListView ItemsSource="{Binding InfoList, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

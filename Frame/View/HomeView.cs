@@ -18,7 +18,6 @@ namespace Frame.View
 {
     public partial class HomeView : MessageUserControl
     {
-        //HalWindow.HDisplay halWIndow =new  HDisplay();
         RapidSettingModel rapidSetting = new RapidSettingModel();
         DataTable _dt = new DataTable();
 
@@ -32,8 +31,7 @@ namespace Frame.View
         {
             //
             propertyGridControl1.SelectedObject = rapidSetting;
-            //this.halWIndow.Dock = System.Windows.Forms.DockStyle.Fill;
-            //this.Controls.Add(this.halWIndow);
+
 
             //初始化DataGrid
             _dt.Columns.Add("Time", Type.GetType("System.DateTime"));
@@ -59,6 +57,11 @@ namespace Frame.View
                 newdr[1] = msg.msg.MsgType;
                 newdr[2] = msg.msg.MsgContent;
                 _dt.Rows.Add(newdr);
+                while (_dt.Rows.Count > 5)
+                {
+                    _dt.Rows.RemoveAt(0);
+                }
+
             }
         }
 
@@ -81,6 +84,18 @@ namespace Frame.View
         public void SetStationBinding(params StationBase[] stations)
         {
             uC_StationInfo1.SetStationList(stations);
+        }
+
+        //Debug
+        private int i=0;
+        private void HomeView_MouseClick(object sender, MouseEventArgs e)
+        {
+            var msg = new MsgOutput()
+            {
+                msg = new MessageModel(Definations.EnumMsgType.Error, i++.ToString())
+            };
+            SendMessage(msg);
+            OnMsgOutput(msg);
         }
     }
 }

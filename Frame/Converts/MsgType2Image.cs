@@ -16,16 +16,17 @@ namespace Frame.Converts
         {
             EnumMsgType msg = (EnumMsgType)value;
             BitmapImage bitmap = null;
+            var basePath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             switch (msg)
             {
                 case EnumMsgType.Info:
-                    bitmap = new BitmapImage(new Uri(@"..\images\infomation.png", UriKind.Relative));
+                    bitmap = new BitmapImage(new Uri(basePath+@"images\infomation.png", UriKind.Absolute));
                     break;
                 case EnumMsgType.Warning:
-                    bitmap = new BitmapImage(new Uri(@"..\images\warning.png", UriKind.Relative));
+                    bitmap = new BitmapImage(new Uri(basePath+@"images\warning.png", UriKind.Absolute));
                     break;
                 case EnumMsgType.Error:
-                    bitmap = new BitmapImage(new Uri(@"..\images\error.png", UriKind.Relative));
+                    bitmap = new BitmapImage(new Uri(basePath+@"images\error.png", UriKind.Absolute));
                     break;
                 default:
                     break;
