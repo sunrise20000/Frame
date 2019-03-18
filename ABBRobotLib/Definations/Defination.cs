@@ -48,4 +48,9 @@ namespace ABBRobotLib.Definations
         Tool4,
         Tool5,
     }
+    public enum EnumMoveType
+    {
+        MoveL,
+        MoveJ,
+    }
 }

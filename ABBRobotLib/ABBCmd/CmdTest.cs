@@ -5,23 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ABBRobotLib
 {
-    public class MsgInit : RobotCmdBase
+    public class CmdTest : RobotCmdBase
     {
-        public MsgInit()
+        public CmdTest()
         {
-            I_Cmd = EnumRobotCmd.Init;
-        }   
+            I_Cmd = EnumRobotCmd.Test;
+        }
+        public override object GenEmptyCmd()
+        {
+            return new CmdTest();
+        }
 
         protected override void SetProfile()
         {
             
-        }
-        public override object GenEmptyCmd()
-        {
-            return new MsgInit() { I_Cmd = this.I_Cmd };
         }
         protected override void ReadProfile()
         {

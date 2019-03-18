@@ -150,7 +150,7 @@ namespace HalconModle
 
                 HTuple _column = new HTuple(), _angle = new HTuple(), _score = new HTuple();
 
-                HOperatorSet.FindShapeModel(m_image, m_modleHandle, m_paramFind.AngleStart, m_paramFind.AngleExtent, m_paramFind.MinScore,
+                HOperatorSet.FindShapeModel(_imagereduced, m_modleHandle, m_paramFind.AngleStart, m_paramFind.AngleExtent, m_paramFind.MinScore,
                     m_paramFind.NumMatch, m_paramFind.MaxOverLap, m_paramFind.SubPixel, m_paramFind.NumLevels, m_paramFind.Greediness, out HTuple _row, out _column, out _angle, out _score);
                 HOperatorSet.WriteShapeModel(m_modleHandle, AppDomain.CurrentDomain.BaseDirectory + "123.shm");
                 if (_row.TupleLength() > 0)
@@ -158,7 +158,7 @@ namespace HalconModle
                     HObject _modlecountor = new HObject();
                     HOperatorSet.GetShapeModelContours(out _modlecountor, m_modleHandle, 1);
                     HTuple _hommat2d;
-                    HOperatorSet.VectorAngleToRigid(0, 0, 0, _row, _column, _angle, out _hommat2d);
+                    HOperatorSet.VectorAngleToRigid(0, 0, 0, _row.D, _column.D, _angle.D, out _hommat2d);
                     HObject _transcountor;
                     HOperatorSet.AffineTransContourXld(_modlecountor, out _transcountor, _hommat2d);
                     HalWindow.RegionX regionX = new HalWindow.RegionX(_transcountor, "green");
@@ -427,7 +427,7 @@ namespace HalconModle
                         HObject _modlecountor = new HObject();
                         HOperatorSet.GetShapeModelContours(out _modlecountor, m_modleHandle, 1);
                         HTuple _hommat2d;
-                        HOperatorSet.VectorAngleToRigid(0, 0, 0, _row, _column, _angle, out _hommat2d);
+                        HOperatorSet.VectorAngleToRigid(0, 0, 0, _row.D, _column.D, _angle.D, out _hommat2d);
                         HObject _transcountor;
                         HOperatorSet.AffineTransContourXld(_modlecountor, out _transcountor, _hommat2d);
                         result.Row = _row.D;
@@ -470,7 +470,7 @@ namespace HalconModle
                             HObject _modlecountor = new HObject();
                             HOperatorSet.GetShapeModelContours(out _modlecountor, m_modleHandle, 1);
                             HTuple _hommat2d;
-                            HOperatorSet.VectorAngleToRigid(0, 0, 0, _row.DArr[i], _column.DArr[i], _angle.DArr[i], out _hommat2d);
+                            HOperatorSet.VectorAngleToRigid(0, 0, 0, _row[i], _column[i], _angle[i], out _hommat2d);
                             HObject _transcountor;
                             HOperatorSet.AffineTransContourXld(_modlecountor, out _transcountor, _hommat2d);
                             ModleFindResult result = new ModleFindResult();

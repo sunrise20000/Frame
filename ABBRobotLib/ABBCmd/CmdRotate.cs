@@ -7,22 +7,27 @@ using System.Threading.Tasks;
 
 namespace ABBRobotLib
 {
-    public class MsgRotate : RobotCmdBase
-    {    
+    public class CmdRotate : RobotCmdBase
+    {
+        public CmdRotate()
+        {
+            I_Cmd = EnumRobotCmd.Rotate;
+            AngleX = AngleY = AngleZ = 0;
+        }
         /// <summary>
         /// 绕X轴旋转的角度
         /// </summary>
-        public double X { get; set; }
+        public double AngleX { get; set; }
 
         /// <summary>
         /// 绕Y轴旋转的角度
         /// </summary>
-        public double Y { get; set; }
+        public double AngleY { get; set; }
 
         /// <summary>
         /// 绕Z轴旋转的角度
         /// </summary>
-        public double Z { get; set; }
+        public double AngleZ { get; set; }
 
         /// <summary>
         /// 输入时填的参数
@@ -30,17 +35,15 @@ namespace ABBRobotLib
         /// <returns></returns>
         protected override void SetProfile()
         {
-            I_Cmd = EnumRobotCmd.Rotate;
-            Paras[0] = X.ToString();
-            Paras[1] = Y.ToString();
-            Paras[2] = Z.ToString();
-            SetSpeedAndTool(I_Speed, I_Tool);
+            Paras[0] = AngleX.ToString();
+            Paras[1] = AngleY.ToString();
+            Paras[2] = AngleZ.ToString();
         }
 
     
         public override object GenEmptyCmd()
         {
-            return new MsgRotate() { I_Cmd = this.I_Cmd };
+            return new CmdRotate();
         }
 
         /// <summary>

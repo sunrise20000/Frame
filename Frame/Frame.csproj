@@ -93,7 +93,6 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Instrument\ABBRobot.cs" />
-    <Compile Include="Instrument\FX3U.cs" />
     <Compile Include="Interface\ICommandAction.cs" />
     <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Model\RapidSettingModel.cs" />

@@ -43,13 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ABBCmd\IRobotCmd.cs" />
-    <Compile Include="ABBCmd\MsgCalibrate.cs" />
-    <Compile Include="ABBCmd\MsgInit.cs" />
-    <Compile Include="ABBCmd\MsgMoveToPos.cs" />
-    <Compile Include="ABBCmd\MsgRotate.cs" />
-    <Compile Include="ABBCmd\MsgStopRobot.cs" />
-    <Compile Include="ABBCmd\MsgTest.cs" />
+    <Compile Include="ABBCmd\CmdCalibrate.cs" />
+    <Compile Include="ABBCmd\CmdInit.cs" />
+    <Compile Include="ABBCmd\CmdMoveToPos.cs" />
+    <Compile Include="ABBCmd\CmdRotate.cs" />
+    <Compile Include="ABBCmd\CmdStopRobot.cs" />
+    <Compile Include="ABBCmd\CmdTest.cs" />
     <Compile Include="ABBCmd\RobotCmdBase.cs" />
+    <Compile Include="ABBData\AbbPoint.cs" />
     <Compile Include="AbbRobot.cs" />
     <Compile Include="Definations\Defination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

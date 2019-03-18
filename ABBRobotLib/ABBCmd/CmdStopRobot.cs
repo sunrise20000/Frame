@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace ABBRobotLib
 {
-    public class MsgStopRobot : RobotCmdBase
+    public class CmdStopRobot : RobotCmdBase
     {
+        public CmdStopRobot()
+        {
+            I_Cmd = EnumRobotCmd.StopRobot;
+        }
+
+
         public override object GenEmptyCmd()
         {
-            return new MsgStopRobot() { I_Cmd = this.I_Cmd };
+            return new CmdStopRobot();
         }
 
         protected override void ReadProfile()
@@ -21,7 +27,7 @@ namespace ABBRobotLib
 
         protected override void SetProfile()
         {
-            I_Cmd = EnumRobotCmd.StopRobot;
+            
         }
     }
 }

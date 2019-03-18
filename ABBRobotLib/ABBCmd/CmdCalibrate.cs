@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace ABBRobotLib
 {
-    public class MsgCalibrate : RobotCmdBase
+    public class CmdCalibrate : RobotCmdBase
     {
+        public CmdCalibrate()
+        {
+            I_Cmd = this.I_Cmd;
+        }
         /// <summary>
         /// 标定点序号从1-9
         /// </summary>
@@ -21,13 +25,12 @@ namespace ABBRobotLib
 
         protected override void SetProfile()
         {
-            I_Cmd = EnumRobotCmd.Calibration;
             Paras[0] = Index.ToString();
         }
 
         public override object GenEmptyCmd()
         {
-            return new MsgCalibrate() { I_Cmd = this.I_Cmd };
+            return new CmdCalibrate();
         }
 
         protected override void ReadProfile()
