@@ -15,7 +15,6 @@ namespace ABBRobotLib.ABBData
 
         public double EX { get; set; }
         public double EY { get; set; }
-
         public double EZ { get; set; }
     }
 }

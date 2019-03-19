@@ -21,7 +21,7 @@ namespace ABBRobotLib
         CmdRotate RotateCmd = new CmdRotate();
         CmdStopRobot StopRobotCmd = new CmdStopRobot();
         CmdTest TestCmd = new CmdTest();
-       
+
         #region Property
         public string IP { get; set; }
         public int Port { get; set; }
@@ -76,7 +76,7 @@ namespace ABBRobotLib
             Client.Close();
         }
 
-        public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType)
+        public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType,int TimeOut=3000)
         {
             MoveToPosCmd.I_Speed = speed;
             MoveToPosCmd.I_Tool = tool;
@@ -84,7 +84,7 @@ namespace ABBRobotLib
             MoveToPosCmd.I_Y = y;
             MoveToPosCmd.I_Z = z;
             MoveToPosCmd.MoveType = MoveType;
-            var cmd=ExcuteCmd(MoveToPosCmd);
+            var cmd=ExcuteCmd(MoveToPosCmd, TimeOut);
             return cmd != null;
         }
     
@@ -94,17 +94,17 @@ namespace ABBRobotLib
             return null;
         }
 
-        public bool Rotote(double rx, double ry, double rz, EnumRobotSpeed speed, EnumRobotTool tool)
+        public bool Rotote(double rx, double ry, double rz, EnumRobotSpeed speed, EnumRobotTool tool, int TimeOut=3000)
         {
             RotateCmd.I_Speed = speed;
             RotateCmd.I_Tool = tool;
             RotateCmd.AngleX = rx;
             RotateCmd.AngleY = ry;
             RotateCmd.AngleZ = rz;
-            return ExcuteCmd(RotateCmd)!=null;
+            return ExcuteCmd(RotateCmd, TimeOut) !=null;
         }
 
-        private RobotCmdBase ExcuteCmd(RobotCmdBase cmd)
+        private RobotCmdBase ExcuteCmd(RobotCmdBase cmd,int TimeOut)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace ABBRobotLib
                         Client.Send(cmd.ToByteArray());
                     }
                     RobotCmdBase cmdClone = cmd.GenEmptyCmd() as RobotCmdBase;
-                    if (cmd.WaitCmdRecved(30000))
+                    if (cmd.WaitCmdRecved(TimeOut))
                     {
                         if (cmd.O_ReturnObj != null)
                             cmdClone.FromString(cmd.O_ReturnObj.ToString());
