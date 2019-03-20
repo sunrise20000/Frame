@@ -83,6 +83,15 @@
     <Compile Include="Class\MsgOutput.cs" />
     <Compile Include="Class\MsgStationInfo.cs" />
     <Compile Include="Class\ViewMessageBase.cs" />
+    <Compile Include="Config\CommunicationCfg\CommunicationCfgEntry.cs" />
+    <Compile Include="Config\CommunicationCfg\ComportCfg.cs" />
+    <Compile Include="Config\CommunicationCfg\EthernetCfg.cs" />
+    <Compile Include="Config\ConfigManger.cs" />
+    <Compile Include="Config\HardwareCfg\HardwareCfgEntry.cs" />
+    <Compile Include="Config\HardwareCfg\InstrumentCfg\AbbRobotCfg.cs" />
+    <Compile Include="Config\HardwareCfg\InstrumentCfg\FxPLCCfg.cs" />
+    <Compile Include="Config\HardwareCfg\InstrumentCfg\InstrumentCfgBase.cs" />
+    <Compile Include="Config\InstrumentConfigBase.cs" />
     <Compile Include="Converts\DateTime2Text.cs" />
     <Compile Include="Converts\MsgType2Brush.cs" />
     <Compile Include="Converts\MsgType2Image.cs" />
@@ -179,13 +188,15 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Config\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Users\Administrator\Desktop\Display\Display\HDisplay\HDisplay.csproj">
       <Project>{96cc5929-ee8a-4cb5-812e-5cee3c23820b}</Project>
       <Name>HDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FXPLCCommunicationLib\FXPLCCommunicationLib.csproj">
+      <Project>{3edb3bcb-20b6-4733-93e5-2540d49db651}</Project>
+      <Name>FXPLCCommunicationLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\HalconModle\HalconModle.csproj">
       <Project>{6b1e1cb0-1fe6-4d7d-b7ba-07e4debd6f3f}</Project>
