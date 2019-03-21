@@ -8,6 +8,7 @@ namespace Frame.Config.CommunicationCfg
 {
     public class CommunicationCfgEntry
     {
-
+        public ComportCfg[] Comports {get;set;}
+        public EthernetCfg[] Ethernets { get; set; }
     }
 }

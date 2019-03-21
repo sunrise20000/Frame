@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Frame</RootNamespace>
     <AssemblyName>Frame</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RapidSettingAttribute.cs" />
+    <Compile Include="Interface\IManagable.cs" />
     <Compile Include="Class\Msg1.cs" />
     <Compile Include="Class\Msg2.cs" />
     <Compile Include="Class\MsgOutput.cs" />
     <Compile Include="Class\MsgStationInfo.cs" />
+    <Compile Include="Class\Singleton.cs" />
     <Compile Include="Class\ViewMessageBase.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgEntry.cs" />
     <Compile Include="Config\CommunicationCfg\ComportCfg.cs" />
@@ -91,7 +93,6 @@
     <Compile Include="Config\HardwareCfg\InstrumentCfg\AbbRobotCfg.cs" />
     <Compile Include="Config\HardwareCfg\InstrumentCfg\FxPLCCfg.cs" />
     <Compile Include="Config\HardwareCfg\InstrumentCfg\InstrumentCfgBase.cs" />
-    <Compile Include="Config\InstrumentConfigBase.cs" />
     <Compile Include="Converts\DateTime2Text.cs" />
     <Compile Include="Converts\MsgType2Brush.cs" />
     <Compile Include="Converts\MsgType2Image.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Instrument\ABBRobot.cs" />
+    <Compile Include="Instrument\InstrumentBase.cs" />
     <Compile Include="Interface\ICommandAction.cs" />
     <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Model\RapidSettingModel.cs" />
@@ -193,6 +194,10 @@
     <ProjectReference Include="..\..\..\..\Users\Administrator\Desktop\Display\Display\HDisplay\HDisplay.csproj">
       <Project>{96cc5929-ee8a-4cb5-812e-5cee3c23820b}</Project>
       <Name>HDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABBRobotLib\ABBRobotLib.csproj">
+      <Project>{3afaa758-7bb2-48e7-9d13-508fcb4f451e}</Project>
+      <Name>ABBRobotLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\FXPLCCommunicationLib\FXPLCCommunicationLib.csproj">
       <Project>{3edb3bcb-20b6-4733-93e5-2540d49db651}</Project>

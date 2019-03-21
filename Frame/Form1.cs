@@ -58,13 +58,14 @@ namespace Frame
 
         private void LoadConfig()
         {
+            Config.ConfigManger.Instance.LoadConfig();
             var station = new StationTest();
             var station1 = new StationTest1();
             var station2 = new StationTest2();
 
-            StationMgr.Instance.AddStation(station);
-            StationMgr.Instance.AddStation(station1);
-            StationMgr.Instance.AddStation(station2);
+            StationMgr.Instance.AddInstanse(station);
+            StationMgr.Instance.AddInstanse(station1);
+            StationMgr.Instance.AddInstanse(station2);
 
             homeView.AddMonitorList(station);
             homeView.AddMonitorList(station1);

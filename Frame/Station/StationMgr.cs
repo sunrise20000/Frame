@@ -1,83 +1,77 @@
-﻿using System;
+﻿using Frame.Class;
+using Frame.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace Frame.Model
 {
-    public class StationMgr
+    public class StationMgr : Singleton<StationMgr>,IManagable<StationBase>
     {
-        private Dictionary<string,StationBase> stationDic=new Dictionary<string, StationBase>();
-        private StationMgr() { }
-        private static readonly Lazy<StationMgr> _instance = new Lazy<StationMgr>(() => new StationMgr());
-        public static StationMgr Instance
-        {
-            get { return _instance.Value; }
-        }
-        public void AddStation(StationBase station)
-        {
-            if (station == null)
-                return;
-            foreach (var it in stationDic)
-            {
-                if (it.Key == station.GetType().Name)
-                    return;
-            }
-            station.StationIndex = stationDic.Count;
-            stationDic.Add(station.GetType().Name, station);
-        }
-        public StationBase FindStationByName(string strName)
-        {
-            if (strName == null)
-                return null;
-            foreach(var it in stationDic)
-                if (it.Key == strName)
-                    return it.Value;
-            return null;
-        }
-        public StationBase FindStationByIndex(int index)
-        {
-            if (index<0 || index> stationDic.Count)
-                return null;
-            foreach (var it in stationDic)
-                if (it.Value.StationIndex == index)
-                    return it.Value;
-            return null;
-        }
+        public Dictionary<string, StationBase> Dic { get; set; } = new Dictionary<string, StationBase>();
         public bool StartAllStation()
         {
             bool bRet = true;
-            foreach (var it in stationDic)
+            foreach (var it in Dic)
                 bRet&=it.Value.Start();
             return bRet;
         }
         public bool StopAllStation()
         {
             bool bRet = true;
-            foreach (var it in stationDic)
+            foreach (var it in Dic)
                 bRet &= it.Value.Stop();
             return bRet;
         }
         public bool PuseAllStation()
         {
             bool bRet=true;
-            foreach (var it in stationDic)
+            foreach (var it in Dic)
                 bRet &= it.Value.Puse();
             return bRet;
         }
         public bool ResumeAllStation()
         {
             bool bRet = true;
-            foreach (var it in stationDic)
+            foreach (var it in Dic)
                 bRet &= it.Value.Resume();
             return bRet;
         }
 
         public void WaitFinish()
         {
-            foreach (var it in stationDic)
+            foreach (var it in Dic)
                 it.Value.Wait();
         }
 
+        public void AddInstanse(StationBase ins)
+        {
+            if (ins == null)
+                return;
+            foreach (var it in Dic)
+            {
+                if (it.Key == ins.GetType().Name)
+                    return;
+            }
+            Dic.Add(ins.GetType().Name, ins);
+        }
+
+        public StationBase FindInstanseByName(string strName)
+        {
+            if (strName == null)
+                return null;
+            foreach (var it in Dic)
+                if (it.Key == strName)
+                    return it.Value;
+            return null;
+        }
+
+        public StationBase FindInstanseByIndex(int Index)
+        {
+            if (Index < Dic.Count)
+                return Dic.ElementAt(Index).Value;
+            return null;
+        }
     }
 }

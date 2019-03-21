@@ -75,7 +75,7 @@ namespace Frame.View
             }
             else
             {
-                var station = StationMgr.Instance.FindStationByName(msg.SenderName);
+                var station = StationMgr.Instance.FindInstanseByName(msg.SenderName);
                 if (station != null)
                     uC_StationInfo1.ShowInfo(msg.Infomation, station);
             }

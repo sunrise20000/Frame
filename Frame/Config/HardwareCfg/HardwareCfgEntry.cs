@@ -9,6 +9,6 @@ namespace Frame.Config.HardwareCfg
 {
     public class HardwareCfgEntry
     {
-        InstrumentCfgBase[] Instrument { get; set; }
+        public InstrumentCfgBase[] Instruments { get; set; }
     }
 }
