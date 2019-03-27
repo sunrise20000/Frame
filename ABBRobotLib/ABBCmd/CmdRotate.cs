@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABBRobotLib
+namespace ABBRobotLib.ABBCmd
 {
     public class CmdRotate : RobotCmdBase
     {
         public CmdRotate()
         {
-            I_Cmd = EnumRobotCmd.Rotate;
+            I_Cmd = EnumRobotCmd.ROTATE;
             AngleX = AngleY = AngleZ = 0;
         }
         /// <summary>

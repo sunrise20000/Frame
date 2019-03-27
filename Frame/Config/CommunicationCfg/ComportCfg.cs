@@ -21,12 +21,11 @@ namespace Frame.Config.CommunicationCfg
         OnePointFive,
         Two,
     }
-    public class ComportCfg
+    public class ComportCfg : CommunicationCfgBase
     {
         private EnumParity parity = EnumParity.None;
         private EnumStopBits stopBits = EnumStopBits.One;
-        public bool Enabled { get; set; }
-        public string PortName { get; set; }
+       
         public string Port { get; set; }
         public int Baudrate { get; set; }
         public string Parity

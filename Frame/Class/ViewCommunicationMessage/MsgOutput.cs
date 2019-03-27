@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Frame.Class
+namespace Frame.Class.ViewCommunicationMessage
 {
     /// <summary>
     /// 用来显示运行过程中的信息

@@ -7,30 +7,18 @@ using System.Threading.Tasks;
 
 namespace ABBRobotLib.ABBCmd
 {
-    public class CmdCalibrate : RobotCmdBase
+    public class CmdGetCurPos : RobotCmdBase
     {
-        public CmdCalibrate()
-        {
-            I_Cmd = this.I_Cmd;
-        }
-        /// <summary>
-        /// 标定点序号从1-9
-        /// </summary>
-        public int Index { get; set; }
-
         public double Q_X { get; set; }
         public double Q_Y { get; set; }
         public double Q_Z { get; set; }
-
-
-        protected override void SetProfile()
+        public CmdGetCurPos()
         {
-            Paras[0] = Index.ToString();
+            I_Cmd = EnumRobotCmd.GETCURPOSXYZ;
         }
-
         public override object GenEmptyCmd()
         {
-            return new CmdCalibrate();
+            return new CmdGetCurPos();
         }
 
         protected override void ReadProfile()
@@ -39,11 +27,17 @@ namespace ABBRobotLib.ABBCmd
             bRet &= double.TryParse(Paras[0], out double x);
             bRet &= double.TryParse(Paras[1], out double y);
             bRet &= double.TryParse(Paras[2], out double z);
+            bRet &= Paras[5].ToUpper().Equals("OK");
             if (!bRet)
                 throw new Exception("Wrong robot coordinate when parse calibdata");
             this.Q_X = x;
             this.Q_Y = y;
             this.Q_Z = z;
+        }
+
+        protected override void SetProfile()
+        {
+            
         }
     }
 }

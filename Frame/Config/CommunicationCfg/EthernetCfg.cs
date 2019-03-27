@@ -11,12 +11,9 @@ namespace Frame.Config.CommunicationCfg
         Server,
         Client,
     }
-    public class EthernetCfg
+    public class EthernetCfg : CommunicationCfgBase
     {
         private EnumTcpMode mode = EnumTcpMode.Client;
-
-        public bool Enabled { get; set; }
-        public string PortName { get; set; }
         public string Mode
         {
             get { return mode.ToString(); }

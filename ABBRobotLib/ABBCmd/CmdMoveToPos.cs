@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABBRobotLib
+namespace ABBRobotLib.ABBCmd
 {
     public class CmdMoveToPos : RobotCmdBase
     {
         public CmdMoveToPos()
         {
-            I_Cmd = EnumRobotCmd.MoveToPos;
+            I_Cmd = EnumRobotCmd.MOVEXYZ;
         }
 
         public double I_X { get; set; }
@@ -25,7 +25,7 @@ namespace ABBRobotLib
             Paras[0] = I_X.ToString();
             Paras[1] = I_Y.ToString();
             Paras[2] = I_Z.ToString();
-            Paras[3] = ((int)MoveType).ToString();
+            Paras[3] = MoveType.ToString().ToUpper();
 
         }
         public override object GenEmptyCmd()

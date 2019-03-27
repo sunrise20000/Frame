@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABBRobotLib
+namespace ABBRobotLib.ABBCmd
 {
     public class CmdTest : RobotCmdBase
     {
         public CmdTest()
         {
-            I_Cmd = EnumRobotCmd.Test;
+            I_Cmd = EnumRobotCmd.NONE;
         }
         public override object GenEmptyCmd()
         {

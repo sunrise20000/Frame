@@ -12,7 +12,7 @@ using HalWindow;
 using Frame.Model;
 using ViewROI;
 using HalconDotNet;
-using Frame.Class;
+using Frame.Class.ViewCommunicationMessage;
 
 namespace Frame.View
 {

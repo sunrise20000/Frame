@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Frame.Class
+namespace Frame.Class.ViewCommunicationMessage
 {
     public class Msg1 : ViewMessageBase
     {

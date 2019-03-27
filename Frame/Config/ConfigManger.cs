@@ -8,6 +8,9 @@ using Frame.Config.CommunicationCfg;
 using Frame.Config.HardwareCfg;
 using Newtonsoft.Json;
 using ABBRobotLib;
+using Frame.Instrument;
+using Frame.Config.HardwareCfg.InstrumentCfg;
+
 namespace Frame.Config
 {
     
@@ -50,7 +53,33 @@ namespace Frame.Config
 
         private void InstanseCfg()
         {
-            
+            foreach (var cfg in HardwarecfgEntry.Instruments)
+            {
+                if (cfg.Enable && cfg.Name.Equals("RobotAbb"))
+                {
+                    foreach (var commuCfg in CommunicationcfgEntry.Ethernets)
+                    {
+                        if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
+                        {
+                            var robotCfg = cfg as AbbRobotCfg;
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(robotCfg, commuCfg));
+                            break;
+                        }
+                    }
+                }
+                else if (cfg.Enable && cfg.Name.Equals("FX3UPLC"))
+                {
+                    foreach (var commuCfg in CommunicationcfgEntry.Ethernets)
+                    {
+                        if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
+                        {
+                            var robotCfg = cfg as AbbRobotCfg;
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(robotCfg, commuCfg));
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

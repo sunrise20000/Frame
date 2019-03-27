@@ -8,12 +8,9 @@ namespace ABBRobotLib.Definations
 {
     public enum EnumRobotCmd
     {
-        Init = 1,
-        Calibration,
-        MoveToPos,
-        Rotate,
-        StopRobot,
-        Test,
+        MOVEXYZ,
+        ROTATE,
+        GETCURPOSXYZ,
 
         NONE = 999,
     }

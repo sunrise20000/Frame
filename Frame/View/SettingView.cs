@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Frame.Interface;
-using Frame.Class;
+using Frame.Class.ViewCommunicationMessage;
 
 namespace Frame.View
 {

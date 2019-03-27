@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Frame.Class
+namespace Frame.Class.ViewCommunicationMessage
 {
     public class ViewMessageBase
     {

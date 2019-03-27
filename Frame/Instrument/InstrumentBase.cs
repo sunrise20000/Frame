@@ -1,4 +1,5 @@
-﻿using Frame.Config.HardwareCfg.InstrumentCfg;
+﻿using Frame.Config.CommunicationCfg;
+using Frame.Config.HardwareCfg.InstrumentCfg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace Frame.Instrument
 {
-    public class InstrumentBase<T,K> where T: InstrumentCfgBase where K: class
+    public class InstrumentBase<T,K> where T: InstrumentCfgBase where K: CommunicationCfgBase
     {
-        protected InstrumentCfgBase Cfg { get; set; }
-        public InstrumentBase(InstrumentCfgBase cfg)
+        protected T InstrumentCfg { get; set; }
+        protected K CommunicationCfg { get; set; }
+        public InstrumentBase(T Instrumetcfg, K CommunicationCfg)
         {
-            Cfg = cfg;
+            this.InstrumentCfg = Instrumetcfg;
+            this.CommunicationCfg = CommunicationCfg;
         }
-
-        
-
     }
 }

@@ -44,7 +44,8 @@
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            //this.homeView1 = new Frame.View.HomeView();
+            this.ribbonGalleryBarItem1 = new DevExpress.XtraBars.RibbonGalleryBarItem();
+            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,12 +62,15 @@
             this.skinRibbonGalleryBarItem1,
             this.barStaticItem1,
             this.barCheckItem1,
-            this.barButtonItemPLC});
+            this.barButtonItemPLC,
+            this.ribbonGalleryBarItem1,
+            this.barStaticItem2});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 10;
+            this.ribbonControl2.MaxItemId = 12;
             this.ribbonControl2.Name = "ribbonControl2";
-            this.ribbonControl2.PageHeaderItemLinks.Add(this.skinRibbonGalleryBarItem1);
             this.ribbonControl2.PageHeaderItemLinks.Add(this.barButtonItemPLC);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.skinRibbonGalleryBarItem1);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.barStaticItem2);
             this.ribbonControl2.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2});
             this.ribbonControl2.Size = new System.Drawing.Size(907, 147);
@@ -138,8 +142,9 @@
             // 
             this.barButtonItemPLC.Caption = "PLC";
             this.barButtonItemPLC.Description = "PLC";
-            this.barButtonItemPLC.Enabled = false;
             this.barButtonItemPLC.Id = 9;
+            this.barButtonItemPLC.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.True;
+            this.barButtonItemPLC.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemPLC.ImageOptions.Image")));
             this.barButtonItemPLC.Name = "barButtonItemPLC";
             this.barButtonItemPLC.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             toolTipTitleItem1.Text = "PLC";
@@ -169,22 +174,28 @@
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Menu";
             // 
-            // homeView1
+            // ribbonGalleryBarItem1
             // 
-            //this.homeView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            //this.homeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            //this.homeView1.Location = new System.Drawing.Point(0, 147);
-            //this.homeView1.Name = "homeView1";
-            //this.homeView1.ReceiverList = ((System.Collections.Generic.List<Frame.Interface.ICommandAction>)(resources.GetObject("homeView1.ReceiverList")));
-            //this.homeView1.Size = new System.Drawing.Size(907, 490);
-            //this.homeView1.TabIndex = 4;
+            this.ribbonGalleryBarItem1.Caption = "ribbonGalleryBarItem1";
+            // 
+            // 
+            // 
+            this.ribbonGalleryBarItem1.Gallery.ShowItemText = true;
+            this.ribbonGalleryBarItem1.Id = 10;
+            this.ribbonGalleryBarItem1.Name = "ribbonGalleryBarItem1";
+            // 
+            // barStaticItem2
+            // 
+            this.barStaticItem2.Caption = "扫描枪";
+            this.barStaticItem2.Id = 11;
+            this.barStaticItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem2.ImageOptions.Image")));
+            this.barStaticItem2.Name = "barStaticItem2";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 637);
-            //this.Controls.Add(this.homeView1);
             this.Controls.Add(this.ribbonControl2);
             this.Name = "Form1";
             this.Ribbon = this.ribbonControl2;
@@ -212,6 +223,8 @@
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarCheckItem barCheckItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItemPLC;
+        private DevExpress.XtraBars.RibbonGalleryBarItem ribbonGalleryBarItem1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
     }
 }
 

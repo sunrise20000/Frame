@@ -1,4 +1,4 @@
-﻿using Frame.Class;
+﻿using Frame.Class.ViewCommunicationMessage;
 using Frame.Interface;
 using System;
 using System.Collections.Generic;

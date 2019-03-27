@@ -1,4 +1,5 @@
 ﻿using Frame.Class;
+using Frame.Class.ViewCommunicationMessage;
 using Frame.Definations;
 using Frame.Interface;
 using System;

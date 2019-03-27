@@ -56,6 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AbbRobotTests.cs" />
     <Compile Include="FxPLCTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ABBRobotLib\ABBRobotLib.csproj">
+      <Project>{3afaa758-7bb2-48e7-9d13-508fcb4f451e}</Project>
+      <Name>ABBRobotLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FXPLCCommunicationLib\FXPLCCommunicationLib.csproj">
       <Project>{3EDB3BCB-20B6-4733-93E5-2540D49DB651}</Project>
       <Name>FXPLCCommunicationLib</Name>

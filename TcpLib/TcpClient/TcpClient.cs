@@ -44,11 +44,11 @@ namespace TcpLib.TcpClient
             OnPackageRecieved?.Invoke(this, e);
         }
 
-        public async Task<bool> Connect(string IP, int Port)
+        public bool Connect(string IP, int Port)
         {
             this.IP = IP;
             this.Port = Port;
-            return await Client.ConnectAsync(new IPEndPoint(IPAddress.Parse(this.IP), Port));
+            return  Client.ConnectAsync(new IPEndPoint(IPAddress.Parse(this.IP), Port)).Result;
         }
         public void Send(byte[] data)
         {

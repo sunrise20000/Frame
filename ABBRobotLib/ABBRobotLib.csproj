@@ -42,12 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABBCmd\CmdGetCurPos.cs" />
     <Compile Include="ABBCmd\IRobotCmd.cs" />
     <Compile Include="ABBCmd\CmdCalibrate.cs" />
-    <Compile Include="ABBCmd\CmdInit.cs" />
     <Compile Include="ABBCmd\CmdMoveToPos.cs" />
     <Compile Include="ABBCmd\CmdRotate.cs" />
-    <Compile Include="ABBCmd\CmdStopRobot.cs" />
     <Compile Include="ABBCmd\CmdTest.cs" />
     <Compile Include="ABBCmd\RobotCmdBase.cs" />
     <Compile Include="ABBData\AbbPoint.cs" />

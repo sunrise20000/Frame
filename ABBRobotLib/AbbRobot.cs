@@ -1,4 +1,6 @@
-﻿using ABBRobotLib.Definations;
+﻿using ABBRobotLib.ABBCmd;
+using ABBRobotLib.ABBData;
+using ABBRobotLib.Definations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TcpLib;
 namespace ABBRobotLib
-{
-
-   
+{ 
     public class AbbRobot
     {
-
 
         TcpLib.TcpClient.TcpClient Client = new TcpLib.TcpClient.TcpClient("]");
         object TcpLock = new object();
@@ -19,7 +18,7 @@ namespace ABBRobotLib
         CmdCalibrate CalibrateCmd = new CmdCalibrate();
         CmdMoveToPos MoveToPosCmd = new CmdMoveToPos();
         CmdRotate RotateCmd = new CmdRotate();
-        CmdStopRobot StopRobotCmd = new CmdStopRobot();
+        CmdGetCurPos GetCurPosCmd = new CmdGetCurPos();
         CmdTest TestCmd = new CmdTest();
 
         #region Property
@@ -41,19 +40,15 @@ namespace ABBRobotLib
             RobotCmdBase cmd = null;
             switch (type)
             {
-                case EnumRobotCmd.Calibration:
-                    cmd = CalibrateCmd;
-                    break;
-                case EnumRobotCmd.MoveToPos:
+                case EnumRobotCmd.MOVEXYZ:
                     cmd = MoveToPosCmd;
                     break;
-                case EnumRobotCmd.Rotate:
+                case EnumRobotCmd.ROTATE:
                     cmd = RotateCmd;
                     break;
-                case EnumRobotCmd.StopRobot:
-                    cmd = StopRobotCmd;
-                    break;
-               
+                case EnumRobotCmd.GETCURPOSXYZ:
+                    cmd = GetCurPosCmd;
+                    break;  
                 default:
                     break;
             }
@@ -69,14 +64,14 @@ namespace ABBRobotLib
         {
             this.IP = IP;
             this.Port = Port;
-            return Client.Connect(IP, Port).Result;
+            return Client.Connect(IP, Port);
         }
         public void Close()
         {
             Client.Close();
         }
 
-        public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType,int TimeOut=3000)
+        public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType=EnumMoveType.MoveL,int TimeOut=3000)
         {
             MoveToPosCmd.I_Speed = speed;
             MoveToPosCmd.I_Tool = tool;
@@ -87,10 +82,32 @@ namespace ABBRobotLib
             var cmd=ExcuteCmd(MoveToPosCmd, TimeOut);
             return cmd != null;
         }
-    
-        public ABBData.AbbPoint GetCurrentPostion()
-        {
 
+        public bool MoveRel(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType=EnumMoveType.MoveL, int TimeOut = 3000)
+        {
+            var CurPoint=GetCurrentPostion(tool, TimeOut);
+            MoveToPosCmd.I_Speed = speed;
+            MoveToPosCmd.I_Tool = tool;
+            MoveToPosCmd.I_X = x+CurPoint.X;
+            MoveToPosCmd.I_Y = y+CurPoint.Y;
+            MoveToPosCmd.I_Z = z+CurPoint.Z;
+            MoveToPosCmd.MoveType = MoveType;
+            var cmd = ExcuteCmd(MoveToPosCmd, TimeOut);
+            return cmd != null;
+        }
+
+        public AbbPoint GetCurrentPostion(EnumRobotTool tool,int TimeOut=3000)
+        {
+            GetCurPosCmd.I_Tool = tool;
+            var cmd = ExcuteCmd(GetCurPosCmd, TimeOut) as CmdGetCurPos;
+            AbbPoint point = new AbbPoint();
+            if(cmd!=null)
+            {
+                point.X = cmd.Q_X;
+                point.Y = cmd.Q_Y;
+                point.Z = cmd.Q_Z;
+                return point;
+            }
             return null;
         }
 
