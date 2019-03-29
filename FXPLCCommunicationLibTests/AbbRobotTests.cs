@@ -31,7 +31,7 @@ namespace ABBRobotLib.Tests
             robot.Open("192.168.125.1", 4000);
             for (int i = 0; i < 150; i++)
             {
-                var pt = robot.Rotote(0,-3,0,Definations.EnumRobotSpeed.V10,Definations.EnumRobotTool.Tool0);
+                var pt = robot.Rotate(0,0,1,Definations.EnumRobotSpeed.V10,Definations.EnumRobotTool.Tool1);
                 
             }
             //robot.Close();

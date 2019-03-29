@@ -45,5 +45,19 @@ namespace FXPLCCommunicationLib.Tests
             var ret = plc.ReadDint("D10");
             Console.WriteLine(ret);
         }
+
+
+        [TestMethod()]
+        public void CheckReadIntBlock()
+        {
+            FxPLC plc = new FxPLC();
+            plc.Open(19);
+            var ret = plc.ReadIntBlock("D10",10);
+            foreach(var v in ret)
+                Console.WriteLine(v);
+        }
+
+
+
     }
 }

@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RapidSettingAttribute.cs" />
+    <Compile Include="Class\ViewCommunicationMessage\MsgUpdateInstrumentState.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgBase.cs" />
     <Compile Include="Instrument\InstrumentFxPLC.cs" />
     <Compile Include="Instrument\InstrumentMgr.cs" />
     <Compile Include="Instrument\InstrumentRobotABB.cs" />
+    <Compile Include="Instrument\InstrumentScanner.cs" />
     <Compile Include="Interface\IManagable.cs" />
     <Compile Include="Class\ViewCommunicationMessage\Msg1.cs" />
     <Compile Include="Class\ViewCommunicationMessage\Msg2.cs" />
@@ -94,8 +96,6 @@
     <Compile Include="Config\CommunicationCfg\EthernetCfg.cs" />
     <Compile Include="Config\ConfigManger.cs" />
     <Compile Include="Config\HardwareCfg\HardwareCfgEntry.cs" />
-    <Compile Include="Config\HardwareCfg\InstrumentCfg\AbbRobotCfg.cs" />
-    <Compile Include="Config\HardwareCfg\InstrumentCfg\FxPLCCfg.cs" />
     <Compile Include="Config\HardwareCfg\InstrumentCfg\InstrumentCfgBase.cs" />
     <Compile Include="Converts\DateTime2Text.cs" />
     <Compile Include="Converts\MsgType2Brush.cs" />
@@ -151,7 +151,6 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx" />
     <EmbeddedResource Include="View\HistoryView.resx">
       <DependentUpon>HistoryView.cs</DependentUpon>
@@ -199,10 +198,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\Administrator\Desktop\Display\Display\HDisplay\HDisplay.csproj">
-      <Project>{96cc5929-ee8a-4cb5-812e-5cee3c23820b}</Project>
-      <Name>HDisplay</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ABBRobotLib\ABBRobotLib.csproj">
       <Project>{3afaa758-7bb2-48e7-9d13-508fcb4f451e}</Project>
       <Name>ABBRobotLib</Name>
@@ -214,6 +209,14 @@
     <ProjectReference Include="..\HalconModle\HalconModle.csproj">
       <Project>{6b1e1cb0-1fe6-4d7d-b7ba-07e4debd6f3f}</Project>
       <Name>HalconModle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HDisplay\HDisplay.csproj">
+      <Project>{96cc5929-ee8a-4cb5-812e-5cee3c23820b}</Project>
+      <Name>HDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SymcodeConmunicationLib\SymcodeConmunicationLib.csproj">
+      <Project>{45749476-7476-4d6f-9ce3-ab949a0a9d8c}</Project>
+      <Name>SymcodeConmunicationLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

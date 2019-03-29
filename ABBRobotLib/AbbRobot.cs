@@ -111,7 +111,7 @@ namespace ABBRobotLib
             return null;
         }
 
-        public bool Rotote(double rx, double ry, double rz, EnumRobotSpeed speed, EnumRobotTool tool, int TimeOut=3000)
+        public bool Rotate(double rx, double ry, double rz, EnumRobotSpeed speed, EnumRobotTool tool, int TimeOut=3000)
         {
             RotateCmd.I_Speed = speed;
             RotateCmd.I_Tool = tool;

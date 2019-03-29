@@ -10,7 +10,7 @@ namespace Frame.Instrument
 {
     public class InstrumentFxPLC : InstrumentBase<InstrumentCfgBase, CommunicationCfgBase>
     {
-        public InstrumentFxPLC(FxPLCCfg InstrumentCfg, CommunicationCfgBase CommunicationCfg) : base(InstrumentCfg, CommunicationCfg)
+        public InstrumentFxPLC(InstrumentCfgBase InstrumentCfg, CommunicationCfgBase CommunicationCfg) : base(InstrumentCfg, CommunicationCfg)
         {
             
         }

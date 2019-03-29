@@ -8,12 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using HalconDotNet;
 using ViewROI;
-using HalWindow;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using FileOperate;
+using HalWindow;
 
 namespace HalconModle
 {

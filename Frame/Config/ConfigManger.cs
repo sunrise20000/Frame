@@ -61,8 +61,7 @@ namespace Frame.Config
                     {
                         if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
                         {
-                            var robotCfg = cfg as AbbRobotCfg;
-                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(robotCfg, commuCfg));
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(cfg, commuCfg));
                             break;
                         }
                     }
@@ -73,8 +72,18 @@ namespace Frame.Config
                     {
                         if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
                         {
-                            var robotCfg = cfg as AbbRobotCfg;
-                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(robotCfg, commuCfg));
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(cfg, commuCfg));
+                            break;
+                        }
+                    }
+                }
+                else if (cfg.Enable && cfg.Name.Equals("Scanner"))
+                {
+                    foreach (var commuCfg in CommunicationcfgEntry.Comports)
+                    {
+                        if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
+                        {
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentScanner(cfg, commuCfg));
                             break;
                         }
                     }

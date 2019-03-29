@@ -38,9 +38,32 @@ namespace Frame.Model
                     default:
                         ShowInfo("Default");
                         break;
+                        //拍照取料
+                        
+                        //Socket测试
+                        //socket之后取料
+                        //断面检测测试
+                        //夹取安装防尘帽
+                        //取料
+
                 }
             }
             return 0;
+        }
+
+        private void SnapAndPick()
+        {
+
+        }
+
+        private void SocketTest()
+        {
+
+        }
+
+        private void PickAfterSocket()
+        {
+
         }
     }
 }

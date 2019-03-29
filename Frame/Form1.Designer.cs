@@ -41,11 +41,13 @@
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
             this.barButtonItemPLC = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonGalleryBarItem1 = new DevExpress.XtraBars.RibbonGalleryBarItem();
+            this.StateScanner = new DevExpress.XtraBars.BarStaticItem();
+            this.StatePLC = new DevExpress.XtraBars.BarStaticItem();
+            this.StateRobot = new DevExpress.XtraBars.BarStaticItem();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonGalleryBarItem1 = new DevExpress.XtraBars.RibbonGalleryBarItem();
-            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,13 +66,16 @@
             this.barCheckItem1,
             this.barButtonItemPLC,
             this.ribbonGalleryBarItem1,
-            this.barStaticItem2});
+            this.StateScanner,
+            this.StatePLC,
+            this.StateRobot});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 12;
+            this.ribbonControl2.MaxItemId = 14;
             this.ribbonControl2.Name = "ribbonControl2";
-            this.ribbonControl2.PageHeaderItemLinks.Add(this.barButtonItemPLC);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.StateRobot);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.StatePLC);
+            this.ribbonControl2.PageHeaderItemLinks.Add(this.StateScanner);
             this.ribbonControl2.PageHeaderItemLinks.Add(this.skinRibbonGalleryBarItem1);
-            this.ribbonControl2.PageHeaderItemLinks.Add(this.barStaticItem2);
             this.ribbonControl2.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2});
             this.ribbonControl2.Size = new System.Drawing.Size(907, 147);
@@ -151,6 +156,37 @@
             superToolTip1.Items.Add(toolTipTitleItem1);
             this.barButtonItemPLC.SuperTip = superToolTip1;
             // 
+            // ribbonGalleryBarItem1
+            // 
+            this.ribbonGalleryBarItem1.Caption = "ribbonGalleryBarItem1";
+            // 
+            // 
+            // 
+            this.ribbonGalleryBarItem1.Gallery.ShowItemText = true;
+            this.ribbonGalleryBarItem1.Id = 10;
+            this.ribbonGalleryBarItem1.Name = "ribbonGalleryBarItem1";
+            // 
+            // StateScanner
+            // 
+            this.StateScanner.Caption = "扫描枪";
+            this.StateScanner.Id = 11;
+            this.StateScanner.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem2.ImageOptions.Image")));
+            this.StateScanner.Name = "StateScanner";
+            // 
+            // StatePLC
+            // 
+            this.StatePLC.Caption = "PLC";
+            this.StatePLC.Id = 12;
+            this.StatePLC.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem3.ImageOptions.Image")));
+            this.StatePLC.Name = "StatePLC";
+            // 
+            // StateRobot
+            // 
+            this.StateRobot.Caption = "Robot";
+            this.StateRobot.Id = 13;
+            this.StateRobot.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem4.ImageOptions.Image")));
+            this.StateRobot.Name = "StateRobot";
+            // 
             // ribbonPage2
             // 
             this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -173,23 +209,6 @@
             this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItemHistory);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Menu";
-            // 
-            // ribbonGalleryBarItem1
-            // 
-            this.ribbonGalleryBarItem1.Caption = "ribbonGalleryBarItem1";
-            // 
-            // 
-            // 
-            this.ribbonGalleryBarItem1.Gallery.ShowItemText = true;
-            this.ribbonGalleryBarItem1.Id = 10;
-            this.ribbonGalleryBarItem1.Name = "ribbonGalleryBarItem1";
-            // 
-            // barStaticItem2
-            // 
-            this.barStaticItem2.Caption = "扫描枪";
-            this.barStaticItem2.Id = 11;
-            this.barStaticItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem2.ImageOptions.Image")));
-            this.barStaticItem2.Name = "barStaticItem2";
             // 
             // Form1
             // 
@@ -224,7 +243,9 @@
         private DevExpress.XtraBars.BarCheckItem barCheckItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItemPLC;
         private DevExpress.XtraBars.RibbonGalleryBarItem ribbonGalleryBarItem1;
-        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+        private DevExpress.XtraBars.BarStaticItem StateScanner;
+        private DevExpress.XtraBars.BarStaticItem StatePLC;
+        private DevExpress.XtraBars.BarStaticItem StateRobot;
     }
 }
 

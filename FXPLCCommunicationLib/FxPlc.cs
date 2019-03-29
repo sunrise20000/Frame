@@ -161,6 +161,36 @@ namespace FXPLCCommunicationLib
             }
         }
 
+        public Int16[] ReadIntBlock(string strStartRegisterName, int Length)
+        {
+            if (Length > 124)
+                throw new Exception("不允许读取太多长度 的寄存器");
+            if (Comport == null || !Comport.IsOpen)
+                throw new Exception("请检查串口状态!");
+            Int32 dwAddress = -1;
+            int nLen = strStartRegisterName.Length;
+            if (!strStartRegisterName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            {
+                throw new Exception("寄存器地址输入错误");
+            }
+            dwAddress = Int32.Parse(strStartRegisterName.Substring(1, nLen - 1)); //D寄存器地址
+
+            //地址计算
+            Dec2Ascii((byte)(Length * 2), out byte LenAscii0, out byte LenAscii1);
+            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+            byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)CMD.R, addressArray[3], addressArray[2], addressArray[1], addressArray[0], LenAscii1, LenAscii0, (byte)CMD.ETX };
+            CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
+            var dataSendFinall = new List<byte>(dataSend);
+            dataSendFinall.Add(sum1);
+            dataSendFinall.Add(sum0);
+            //发送数据
+            lock (ComportLock)
+            {
+                Comport.Write(dataSendFinall.ToArray(), 0, dataSendFinall.Count);
+                return ReadBlockAck(Length);
+            }
+        }
+
         public bool IsOpen()
         {
             return Comport.IsOpen;
@@ -397,6 +427,46 @@ namespace FXPLCCommunicationLib
                     }
                 }
 
+                if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
+                    throw new Exception("通信超时");
+            }
+        }
+
+        Int16[] ReadBlockAck(int ExpectLength)
+        {
+            var StartTime = DateTime.Now.Ticks;
+            List<byte> listRead = new List<byte>();
+            bool IsHeaderFound = false;
+            while (true)
+            {
+                if (Comport.BytesToRead > 0)
+                {
+                    var ch = Comport.ReadByte();
+                    if (ch == (byte)CMD.STX)
+                    {
+                        IsHeaderFound = true;
+                    }
+                    if (IsHeaderFound)
+                    {
+                        listRead.Add((byte)ch);
+
+                        if (listRead.Count == (ExpectLength*4+2) && ch == (byte)CMD.ETX)
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            List<Int16> list = new List<short>();
+                            for (int i = 0; i < ExpectLength; i++)
+                            {
+                                sb.Clear();
+                                sb.Append((char)listRead[i * 4+3]);
+                                sb.Append((char)listRead[i * 4+4]);
+                                sb.Append((char)listRead[i * 4+1]);
+                                sb.Append((char)listRead[i * 4+2]);
+                                list.Add(Convert.ToInt16(sb.ToString(), 16));
+                            }
+                            return list.ToArray();
+                        }
+                    }
+                }
                 if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
                     throw new Exception("通信超时");
             }

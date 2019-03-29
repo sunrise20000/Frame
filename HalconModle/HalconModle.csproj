@@ -75,7 +75,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\Administrator\Desktop\Display\Display\HDisplay\HDisplay.csproj">
+    <ProjectReference Include="..\HDisplay\HDisplay.csproj">
       <Project>{96cc5929-ee8a-4cb5-812e-5cee3c23820b}</Project>
       <Name>HDisplay</Name>
     </ProjectReference>
