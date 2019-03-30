@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using ABBRobotLib;
 using Frame.Instrument;
 using Frame.Config.HardwareCfg.InstrumentCfg;
+using Frame.Camera;
 
 namespace Frame.Config
 {
@@ -22,8 +23,9 @@ namespace Frame.Config
         readonly string FILE_COMMUNICATION = @"Config\Communication.json";
         readonly string FILE_HARDWARE = @"Config\HardwareCfg.json";
 
-        private ConfigManger() {
 
+        private ConfigManger() {
+            LoadConfig();
         }
         private static readonly Lazy<ConfigManger> _instance = new Lazy<ConfigManger>(() => new ConfigManger());
         public static ConfigManger Instance
@@ -32,7 +34,7 @@ namespace Frame.Config
         }
         public HardwareCfgEntry HardwarecfgEntry { get; set; }
         public CommunicationCfgEntry CommunicationcfgEntry { get; set; }
-        public void LoadConfig()
+        private void LoadConfig()
         {
             try
             {
@@ -68,11 +70,11 @@ namespace Frame.Config
                 }
                 else if (cfg.Enable && cfg.Name.Equals("FX3UPLC"))
                 {
-                    foreach (var commuCfg in CommunicationcfgEntry.Ethernets)
+                    foreach (var commuCfg in CommunicationcfgEntry.Comports)
                     {
                         if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
                         {
-                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentRobotABB(cfg, commuCfg));
+                            InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(new InstrumentFxPLC(cfg, commuCfg));
                             break;
                         }
                     }
@@ -88,6 +90,10 @@ namespace Frame.Config
                         }
                     }
                 }
+            }
+            foreach (var cfg in HardwarecfgEntry.Cameras)
+            {
+                Camera.CameraManager.Instance.AddInstanse(new HaiKangCamera(cfg.NameForVision,CameraConnectType.GigEVision));
             }
         }
     }

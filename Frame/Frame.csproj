@@ -36,6 +36,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CLCamera, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CLCamera.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.BonusSkins.v17.1" />
     <Reference Include="DevExpress.Data.v17.1" />
     <Reference Include="DevExpress.Images.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -50,6 +54,10 @@
     <Reference Include="halcondotnet, Version=17.12.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="MvCameraControl.Net, Version=2.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MvCameraControl.Net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -73,13 +81,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\ViewROI.dll</HintPath>
     </Reference>
+    <Reference Include="VisionLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\VisionLib.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RapidSettingAttribute.cs" />
+    <Compile Include="Camera\CameraBase.cs" />
+    <Compile Include="Camera\CameraManager.cs" />
+    <Compile Include="Camera\CameraOperator.cs" />
+    <Compile Include="Camera\HaiKangCamera.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgUpdateInstrumentState.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgBase.cs" />
+    <Compile Include="Config\HardwareCfg\CameraCfg\CameraCfgBase.cs" />
     <Compile Include="Instrument\InstrumentFxPLC.cs" />
     <Compile Include="Instrument\InstrumentMgr.cs" />
     <Compile Include="Instrument\InstrumentRobotABB.cs" />
@@ -109,6 +126,7 @@
     </Compile>
     <Compile Include="Instrument\InstrumentBase.cs" />
     <Compile Include="Interface\ICommandAction.cs" />
+    <Compile Include="Model\CalibratePointModel.cs" />
     <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Model\RapidSettingModel.cs" />
     <Compile Include="Model\StationInfoModel.cs" />
@@ -120,6 +138,12 @@
     <Compile Include="Station\StationTest2.cs" />
     <Compile Include="Station\StationTest1.cs" />
     <Compile Include="Station\StationTest.cs" />
+    <Compile Include="View\CameraSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\CameraSetting.Designer.cs">
+      <DependentUpon>CameraSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\HistoryView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,7 +175,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="View\CameraSetting.resx">
+      <DependentUpon>CameraSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\HistoryView.resx">
       <DependentUpon>HistoryView.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,6 +202,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\camera.png" />
     <Content Include="images\PLC.png" />
     <Content Include="images\Robot.png" />
     <Content Include="images\Scanner.png" />

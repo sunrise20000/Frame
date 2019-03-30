@@ -16,6 +16,9 @@ namespace Frame.Instrument
         {
             this.InstrumentCfg = Instrumetcfg;
             this.CommunicationCfg = CommunicationCfg;
+            InstrumentName = InstrumentCfg.Name;
         }
+
+        public string InstrumentName { get; set; }
     }
 }

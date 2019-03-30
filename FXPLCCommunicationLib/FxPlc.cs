@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FXPLCCommunicationLib
 {
@@ -12,6 +13,9 @@ namespace FXPLCCommunicationLib
         #region Field
         SerialPort Comport = new SerialPort();
         object ComportLock = new object();
+        Task HeartTask = null;
+        CancellationTokenSource cts = null;
+        bool isOpen = false;
         #endregion
 
         #region UserAPI
@@ -29,7 +33,8 @@ namespace FXPLCCommunicationLib
             if (Comport.IsOpen)
                 Comport.Close();
             Comport.Open();
-            return Comport.IsOpen;
+            isOpen = Comport.IsOpen;
+            return isOpen;
         }
 
         public void CLose()

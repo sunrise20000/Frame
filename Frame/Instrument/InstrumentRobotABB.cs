@@ -54,5 +54,9 @@ namespace Frame.Instrument
             return Robot.Rotate(rx,ry,rz,speed,tool,TimeOut);
         }
 
+        public bool MoveToPoint(int PointID, int TimeOut=3000)
+        {
+            return Robot.MoveToPoint(PointID,TimeOut);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace ABBRobotLib.Definations
         MOVEXYZ,
         ROTATE,
         GETCURPOSXYZ,
-
+        MOVETOPOINT,
         NONE = 999,
     }
     public enum EnumRobotSpeed

@@ -1,4 +1,5 @@
-﻿using Frame.Config.HardwareCfg.InstrumentCfg;
+﻿using Frame.Config.HardwareCfg.CameraCfg;
+using Frame.Config.HardwareCfg.InstrumentCfg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Frame.Config.HardwareCfg
     public class HardwareCfgEntry
     {
         public InstrumentCfgBase[] Instruments { get; set; }
+
+        public CameraCfgBase[] Cameras { get; set; }
     }
 }

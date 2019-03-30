@@ -20,6 +20,8 @@ namespace ABBRobotLib
         CmdRotate RotateCmd = new CmdRotate();
         CmdGetCurPos GetCurPosCmd = new CmdGetCurPos();
         CmdTest TestCmd = new CmdTest();
+        CmdMoveToPoint MoveToPointCmd = new CmdMoveToPoint();
+
 
         #region Property
         public string IP { get; set; }
@@ -48,7 +50,10 @@ namespace ABBRobotLib
                     break;
                 case EnumRobotCmd.GETCURPOSXYZ:
                     cmd = GetCurPosCmd;
-                    break;  
+                    break;
+                case EnumRobotCmd.MOVETOPOINT:
+                    cmd = MoveToPointCmd;
+                    break;
                 default:
                     break;
             }
@@ -119,6 +124,12 @@ namespace ABBRobotLib
             RotateCmd.AngleY = ry;
             RotateCmd.AngleZ = rz;
             return ExcuteCmd(RotateCmd, TimeOut) !=null;
+        }
+
+        public bool MoveToPoint(int PointID,int TimeOut=3000)
+        {
+            MoveToPointCmd.I_PointID = PointID;  
+            return ExcuteCmd(MoveToPointCmd, TimeOut) != null;
         }
 
         private RobotCmdBase ExcuteCmd(RobotCmdBase cmd,int TimeOut)

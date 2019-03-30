@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
             this.ribbonControl2 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barButtonItemStart = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemStop = new DevExpress.XtraBars.BarButtonItem();
@@ -48,6 +48,7 @@
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.barButtonItemCamera = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,9 +69,10 @@
             this.ribbonGalleryBarItem1,
             this.StateScanner,
             this.StatePLC,
-            this.StateRobot});
+            this.StateRobot,
+            this.barButtonItemCamera});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 14;
+            this.ribbonControl2.MaxItemId = 15;
             this.ribbonControl2.Name = "ribbonControl2";
             this.ribbonControl2.PageHeaderItemLinks.Add(this.StateRobot);
             this.ribbonControl2.PageHeaderItemLinks.Add(this.StatePLC);
@@ -152,9 +154,9 @@
             this.barButtonItemPLC.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemPLC.ImageOptions.Image")));
             this.barButtonItemPLC.Name = "barButtonItemPLC";
             this.barButtonItemPLC.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            toolTipTitleItem1.Text = "PLC";
-            superToolTip1.Items.Add(toolTipTitleItem1);
-            this.barButtonItemPLC.SuperTip = superToolTip1;
+            toolTipTitleItem2.Text = "PLC";
+            superToolTip2.Items.Add(toolTipTitleItem2);
+            this.barButtonItemPLC.SuperTip = superToolTip2;
             // 
             // ribbonGalleryBarItem1
             // 
@@ -170,21 +172,21 @@
             // 
             this.StateScanner.Caption = "扫描枪";
             this.StateScanner.Id = 11;
-            this.StateScanner.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem2.ImageOptions.Image")));
+            this.StateScanner.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("StateScanner.ImageOptions.Image")));
             this.StateScanner.Name = "StateScanner";
             // 
             // StatePLC
             // 
             this.StatePLC.Caption = "PLC";
             this.StatePLC.Id = 12;
-            this.StatePLC.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem3.ImageOptions.Image")));
+            this.StatePLC.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("StatePLC.ImageOptions.Image")));
             this.StatePLC.Name = "StatePLC";
             // 
             // StateRobot
             // 
             this.StateRobot.Caption = "Robot";
             this.StateRobot.Id = 13;
-            this.StateRobot.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barStaticItem4.ImageOptions.Image")));
+            this.StateRobot.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("StateRobot.ImageOptions.Image")));
             this.StateRobot.Name = "StateRobot";
             // 
             // ribbonPage2
@@ -206,9 +208,19 @@
             // 
             this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItemHome);
             this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItemSetting);
+            this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItemCamera);
             this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItemHistory);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Menu";
+            // 
+            // barButtonItemCamera
+            // 
+            this.barButtonItemCamera.Caption = "Camera";
+            this.barButtonItemCamera.Id = 14;
+            this.barButtonItemCamera.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+            this.barButtonItemCamera.Name = "barButtonItemCamera";
+            this.barButtonItemCamera.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemCamera.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemCamera_ItemClick);
             // 
             // Form1
             // 
@@ -246,6 +258,7 @@
         private DevExpress.XtraBars.BarStaticItem StateScanner;
         private DevExpress.XtraBars.BarStaticItem StatePLC;
         private DevExpress.XtraBars.BarStaticItem StateRobot;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemCamera;
     }
 }
 

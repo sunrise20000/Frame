@@ -20,10 +20,10 @@ namespace Frame.Instrument
                 return;
             foreach (var it in Dic)
             {
-                if (it.Key == ins.GetType().Name)
+                if (it.Key == ins.InstrumentName)
                     return;
             }
-            Dic.Add(ins.GetType().Name, ins); ;
+            Dic.Add(ins.InstrumentName, ins); ;
         }
 
         public InstrumentBase<T, K> FindInstanseByIndex(int Index)

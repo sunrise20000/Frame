@@ -20,6 +20,7 @@ namespace Frame
         HomeView homeView = new HomeView();
         HistoryView historyView = new HistoryView();
         SettingView settingView = new SettingView();
+        CameraSetting settingCamView = new CameraSetting();
 
         public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
 
@@ -36,16 +37,19 @@ namespace Frame
             historyView.Dock = System.Windows.Forms.DockStyle.Fill;
             settingView.Dock = System.Windows.Forms.DockStyle.Fill;
             homeView.Dock= System.Windows.Forms.DockStyle.Fill;
+            settingCamView.Dock= System.Windows.Forms.DockStyle.Fill;
+
 
             Controls.Add(homeView);
             Controls.Add(historyView);
             Controls.Add(settingView);
-            
+            Controls.Add(settingCamView);
 
             ControlList.Add(homeView);
             ControlList.Add(historyView);
             ControlList.Add(settingView);
-            
+            ControlList.Add(settingCamView);
+
 
             //关注homeView发出的消息
             settingView.AddMonitorList(homeView);
@@ -63,7 +67,6 @@ namespace Frame
 
         private void LoadConfig()
         {
-            Config.ConfigManger.Instance.LoadConfig();
             var station = new StationTest();
             var station1 = new StationTest1();
             var station2 = new StationTest2();
@@ -96,6 +99,11 @@ namespace Frame
             ShowUserControl(historyView);
         }
 
+        private void barButtonItemCamera_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            ShowUserControl(settingCamView);
+        }
+
         private void ShowUserControl(MessageUserControl Ctrl)
         {
             if (ControlList.Contains(Ctrl))
@@ -116,6 +124,8 @@ namespace Frame
             StationMgr.Instance.StopAllStation();
            
         }
+
+
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -190,5 +200,7 @@ namespace Frame
                     break;
             }
         }
+
+      
     }
 }
