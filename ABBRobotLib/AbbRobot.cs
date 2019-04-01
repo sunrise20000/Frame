@@ -22,6 +22,7 @@ namespace ABBRobotLib
         CmdTest TestCmd = new CmdTest();
         CmdMoveToPoint MoveToPointCmd = new CmdMoveToPoint();
 
+        bool isOpen=false;
 
         #region Property
         public string IP { get; set; }
@@ -69,13 +70,18 @@ namespace ABBRobotLib
         {
             this.IP = IP;
             this.Port = Port;
-            return Client.Connect(IP, Port);
+            isOpen = Client.Connect(IP, Port);
+            return isOpen;
         }
         public void Close()
         {
             Client.Close();
+            isOpen = false;
         }
-
+        public bool IsOpen {
+            get { return isOpen; }
+        }
+        
         public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType=EnumMoveType.MoveL,int TimeOut=3000)
         {
             MoveToPosCmd.I_Speed = speed;

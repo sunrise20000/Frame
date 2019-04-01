@@ -28,6 +28,11 @@ namespace Frame.Instrument
             return Robot.Open(IP,Port);
         }
 
+        public bool IsOpen
+        {
+            get { return Robot.IsOpen; }
+        }
+
         public void Close()
         {
             Robot.Close();

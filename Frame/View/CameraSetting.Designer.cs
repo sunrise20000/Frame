@@ -28,19 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CameraSetting));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.hDisplay1 = new HalWindow.HDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBoxCalibrationMode = new System.Windows.Forms.ComboBox();
+            this.textBoxStepDistance = new System.Windows.Forms.TextBox();
             this.buttonGetWordPoint = new System.Windows.Forms.Button();
+            this.buttonCalibrate = new System.Windows.Forms.Button();
+            this.buttonRight = new System.Windows.Forms.Button();
+            this.buttonUp = new System.Windows.Forms.Button();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonGetImagePoint = new System.Windows.Forms.Button();
             this.dataGridViewCalibratePoint = new System.Windows.Forms.DataGridView();
             this.buttonContinues = new System.Windows.Forms.Button();
             this.buttonSnap = new System.Windows.Forms.Button();
             this.comboBoxCamList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonCalibrate = new System.Windows.Forms.Button();
+            this.buttonRegion = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -90,33 +96,32 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBoxCalibrationMode);
+            this.groupBox1.Controls.Add(this.buttonRegion);
+            this.groupBox1.Controls.Add(this.textBoxStepDistance);
             this.groupBox1.Controls.Add(this.buttonGetWordPoint);
             this.groupBox1.Controls.Add(this.buttonCalibrate);
+            this.groupBox1.Controls.Add(this.buttonRight);
+            this.groupBox1.Controls.Add(this.buttonUp);
+            this.groupBox1.Controls.Add(this.buttonDown);
+            this.groupBox1.Controls.Add(this.buttonLeft);
             this.groupBox1.Controls.Add(this.buttonGetImagePoint);
-            this.groupBox1.Location = new System.Drawing.Point(11, 371);
+            this.groupBox1.Location = new System.Drawing.Point(3, 307);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(483, 190);
+            this.groupBox1.Size = new System.Drawing.Size(491, 190);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "标定";
             // 
-            // comboBoxCalibrationMode
+            // textBoxStepDistance
             // 
-            this.comboBoxCalibrationMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCalibrationMode.FormattingEnabled = true;
-            this.comboBoxCalibrationMode.Items.AddRange(new object[] {
-            "EyeInHand",
-            "EyeToHandCamUp",
-            "EyeToHandCamDown"});
-            this.comboBoxCalibrationMode.Location = new System.Drawing.Point(259, 32);
-            this.comboBoxCalibrationMode.Name = "comboBoxCalibrationMode";
-            this.comboBoxCalibrationMode.Size = new System.Drawing.Size(121, 20);
-            this.comboBoxCalibrationMode.TabIndex = 9;
+            this.textBoxStepDistance.Location = new System.Drawing.Point(349, 91);
+            this.textBoxStepDistance.Name = "textBoxStepDistance";
+            this.textBoxStepDistance.Size = new System.Drawing.Size(54, 21);
+            this.textBoxStepDistance.TabIndex = 10;
             // 
             // buttonGetWordPoint
             // 
-            this.buttonGetWordPoint.Location = new System.Drawing.Point(138, 30);
+            this.buttonGetWordPoint.Location = new System.Drawing.Point(130, 21);
             this.buttonGetWordPoint.Name = "buttonGetWordPoint";
             this.buttonGetWordPoint.Size = new System.Drawing.Size(92, 23);
             this.buttonGetWordPoint.TabIndex = 7;
@@ -124,9 +129,59 @@
             this.buttonGetWordPoint.UseVisualStyleBackColor = true;
             this.buttonGetWordPoint.Click += new System.EventHandler(this.buttonGetWordPoint_Click);
             // 
+            // buttonCalibrate
+            // 
+            this.buttonCalibrate.Location = new System.Drawing.Point(9, 59);
+            this.buttonCalibrate.Name = "buttonCalibrate";
+            this.buttonCalibrate.Size = new System.Drawing.Size(92, 23);
+            this.buttonCalibrate.TabIndex = 8;
+            this.buttonCalibrate.Text = "执行标定";
+            this.buttonCalibrate.UseVisualStyleBackColor = true;
+            this.buttonCalibrate.Click += new System.EventHandler(this.buttonCalibrate_Click);
+            // 
+            // buttonRight
+            // 
+            this.buttonRight.Image = ((System.Drawing.Image)(resources.GetObject("buttonRight.Image")));
+            this.buttonRight.Location = new System.Drawing.Point(416, 84);
+            this.buttonRight.Name = "buttonRight";
+            this.buttonRight.Size = new System.Drawing.Size(64, 34);
+            this.buttonRight.TabIndex = 8;
+            this.buttonRight.UseVisualStyleBackColor = true;
+            this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
+            // 
+            // buttonUp
+            // 
+            this.buttonUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonUp.Image")));
+            this.buttonUp.Location = new System.Drawing.Point(356, 15);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(40, 52);
+            this.buttonUp.TabIndex = 8;
+            this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+            // 
+            // buttonDown
+            // 
+            this.buttonDown.Image = ((System.Drawing.Image)(resources.GetObject("buttonDown.Image")));
+            this.buttonDown.Location = new System.Drawing.Point(356, 133);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(40, 52);
+            this.buttonDown.TabIndex = 8;
+            this.buttonDown.UseVisualStyleBackColor = true;
+            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
+            // 
+            // buttonLeft
+            // 
+            this.buttonLeft.Image = ((System.Drawing.Image)(resources.GetObject("buttonLeft.Image")));
+            this.buttonLeft.Location = new System.Drawing.Point(267, 84);
+            this.buttonLeft.Name = "buttonLeft";
+            this.buttonLeft.Size = new System.Drawing.Size(64, 34);
+            this.buttonLeft.TabIndex = 8;
+            this.buttonLeft.UseVisualStyleBackColor = true;
+            this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
+            // 
             // buttonGetImagePoint
             // 
-            this.buttonGetImagePoint.Location = new System.Drawing.Point(17, 30);
+            this.buttonGetImagePoint.Location = new System.Drawing.Point(9, 21);
             this.buttonGetImagePoint.Name = "buttonGetImagePoint";
             this.buttonGetImagePoint.Size = new System.Drawing.Size(92, 23);
             this.buttonGetImagePoint.TabIndex = 8;
@@ -143,7 +198,7 @@
             this.dataGridViewCalibratePoint.Location = new System.Drawing.Point(3, 67);
             this.dataGridViewCalibratePoint.Name = "dataGridViewCalibratePoint";
             this.dataGridViewCalibratePoint.RowTemplate.Height = 23;
-            this.dataGridViewCalibratePoint.Size = new System.Drawing.Size(488, 297);
+            this.dataGridViewCalibratePoint.Size = new System.Drawing.Size(488, 234);
             this.dataGridViewCalibratePoint.TabIndex = 5;
             // 
             // buttonContinues
@@ -154,6 +209,7 @@
             this.buttonContinues.TabIndex = 4;
             this.buttonContinues.Text = "连续";
             this.buttonContinues.UseVisualStyleBackColor = true;
+            this.buttonContinues.Click += new System.EventHandler(this.buttonContinues_Click);
             // 
             // buttonSnap
             // 
@@ -167,6 +223,7 @@
             // 
             // comboBoxCamList
             // 
+            this.comboBoxCamList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamList.FormattingEnabled = true;
             this.comboBoxCamList.Location = new System.Drawing.Point(47, 17);
             this.comboBoxCamList.Name = "comboBoxCamList";
@@ -182,15 +239,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "相机";
             // 
-            // buttonCalibrate
+            // buttonRegion
             // 
-            this.buttonCalibrate.Location = new System.Drawing.Point(17, 68);
-            this.buttonCalibrate.Name = "buttonCalibrate";
-            this.buttonCalibrate.Size = new System.Drawing.Size(92, 23);
-            this.buttonCalibrate.TabIndex = 8;
-            this.buttonCalibrate.Text = "执行标定";
-            this.buttonCalibrate.UseVisualStyleBackColor = true;
-            this.buttonCalibrate.Click += new System.EventHandler(this.buttonCalibrate_Click);
+            this.buttonRegion.Location = new System.Drawing.Point(130, 59);
+            this.buttonRegion.Name = "buttonRegion";
+            this.buttonRegion.Size = new System.Drawing.Size(92, 23);
+            this.buttonRegion.TabIndex = 11;
+            this.buttonRegion.Text = "区域";
+            this.buttonRegion.UseVisualStyleBackColor = true;
+            this.buttonRegion.Click += new System.EventHandler(this.buttonRegion_Click);
             // 
             // CameraSetting
             // 
@@ -203,6 +260,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCalibratePoint)).EndInit();
             this.ResumeLayout(false);
 
@@ -219,9 +277,14 @@
         private System.Windows.Forms.Button buttonSnap;
         private System.Windows.Forms.DataGridView dataGridViewCalibratePoint;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboBoxCalibrationMode;
         private System.Windows.Forms.Button buttonGetWordPoint;
         private System.Windows.Forms.Button buttonGetImagePoint;
         private System.Windows.Forms.Button buttonCalibrate;
+        private System.Windows.Forms.Button buttonLeft;
+        private System.Windows.Forms.Button buttonRight;
+        private System.Windows.Forms.Button buttonUp;
+        private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.TextBox textBoxStepDistance;
+        private System.Windows.Forms.Button buttonRegion;
     }
 }

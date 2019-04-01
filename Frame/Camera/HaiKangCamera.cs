@@ -35,7 +35,7 @@ namespace Frame.Camera
             catch (Exception ex)
             {
                 this.m_IsConnected = false;
-                throw new Exception(m_Cameraname + "打开失败");
+                throw new Exception($"{m_Cameraname}打开失败:{ex.Message}");
             }
         }
         public override void CloseCamera()
