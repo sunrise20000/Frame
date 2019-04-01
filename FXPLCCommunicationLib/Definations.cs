@@ -12,6 +12,8 @@ namespace FXPLCCommunicationLib
     public enum REGISTER_TYPE
     {
       D,
+      M,
+      M_SINGAL,
     }
     public enum CMD
     {
@@ -21,5 +23,7 @@ namespace FXPLCCommunicationLib
         ETX = 0x03,
         ACK = 0x06,
         NCK = 0x15,
+        FORCE_ON=0x37,
+        FORCE_OFF=0x38,
     };
 }

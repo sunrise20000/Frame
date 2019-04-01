@@ -103,17 +103,24 @@ namespace Frame.View
 
         private void buttonSnap_Click(object sender, EventArgs e)
         {
-            if (cts != null)
-                cts.Cancel();
-            var Cam = Camera.CameraManager.Instance.FindInstanseByName(comboBoxCamList.Text) as HaiKangCamera;
-            if (!Cam.m_IsConnected)
+            try
             {
-                Cam.OpenCamera();
-                Cam.SetTriggerMode("Off");
-                Cam.ImageAcquired -= Cam_ImageAcquired;
-                Cam.ImageAcquired += Cam_ImageAcquired;
+                if (cts != null)
+                    cts.Cancel();
+                var Cam = Camera.CameraManager.Instance.FindInstanseByName(comboBoxCamList.Text) as HaiKangCamera;
+                if (!Cam.m_IsConnected)
+                {
+                    Cam.OpenCamera();
+                    Cam.SetTriggerMode("Off");
+                    Cam.ImageAcquired -= Cam_ImageAcquired;
+                    Cam.ImageAcquired += Cam_ImageAcquired;
+                }
+                Cam.SnapShot();
             }
-            Cam.SnapShot();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             
         }
 
@@ -287,6 +294,32 @@ namespace Frame.View
                 Robot.MoveRel(0, -s, 0, ABBRobotLib.Definations.EnumRobotSpeed.V10, ABBRobotLib.Definations.EnumRobotTool.Tool1, ABBRobotLib.Definations.EnumMoveType.MoveJ);
             }
         }
+
+        private void buttonZUp_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(textBoxStepDistance.Text, out int step))
+            {
+                int s = Math.Min(Math.Abs(step), MAX_DISTANCE);
+                if (!Robot.IsOpen)
+                {
+                    Robot.Open();
+                }
+                Robot.MoveRel(0, 0, s, ABBRobotLib.Definations.EnumRobotSpeed.V10, ABBRobotLib.Definations.EnumRobotTool.Tool1, ABBRobotLib.Definations.EnumMoveType.MoveJ);
+            }
+        }
+
+        private void buttonZDown_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(textBoxStepDistance.Text, out int step))
+            {
+                int s = Math.Min(Math.Abs(step), MAX_DISTANCE);
+                if (!Robot.IsOpen)
+                {
+                    Robot.Open();
+                }
+                Robot.MoveRel(0, 0, -s, ABBRobotLib.Definations.EnumRobotSpeed.V10, ABBRobotLib.Definations.EnumRobotTool.Tool1, ABBRobotLib.Definations.EnumMoveType.MoveJ);
+            }
+        }
         #endregion
 
         private void buttonContinues_Click(object sender, EventArgs e)
@@ -298,13 +331,21 @@ namespace Frame.View
                 ContinueGrabTask = new Task(() => {
                     while (!cts.IsCancellationRequested)
                     {
-                        if (!Cam.m_IsConnected)
+                        try
                         {
-                            Cam.OpenCamera();
-                            Cam.SetTriggerMode("Off");
+                            if (!Cam.m_IsConnected)
+                            {
+                                Cam.OpenCamera();
+                                Cam.SetTriggerMode("Off");
+                            }
+                            Cam.SnapShot();
+                            Thread.Sleep(50);
                         }
-                        Cam.SnapShot();
-                        Thread.Sleep(50);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            break;
+                        }
                     }
                 }, cts.Token);
                 ContinueGrabTask.Start();
@@ -316,5 +357,7 @@ namespace Frame.View
             hDisplay1.AddRegion("旋转矩形", true);
             
         }
+
+      
     }
 }

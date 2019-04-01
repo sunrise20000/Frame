@@ -39,6 +39,10 @@ namespace FXPLCCommunicationLib
 
         public void CLose()
         {
+            if (cts != null)
+                cts.Cancel();
+            if (HeartTask != null)
+                HeartTask.Wait();
             Comport.Close();
         }
 
@@ -196,11 +200,50 @@ namespace FXPLCCommunicationLib
             }
         }
 
+        public bool ForceMBit(string MName, bool Value)
+        {
+            if (Comport == null || !Comport.IsOpen)
+                throw new Exception("请检查串口状态!");
+            Int32 dwAddress = -1;
+            int nLen = MName.Length;
+            if (!MName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            {
+                throw new Exception("寄存器地址输入错误");
+            }
+            dwAddress = Int32.Parse(MName.Substring(1, nLen - 1)); //M地址
+            AddressToAscii(REGISTER_TYPE.M_SINGAL, dwAddress, out byte[] addressArray);
+            byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)(Value? CMD.FORCE_ON : CMD.FORCE_OFF), addressArray[3], addressArray[2], addressArray[1], addressArray[0],(byte)CMD.ETX };
+            CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
+            List<byte> dataSendFinall = new List<byte>(dataSend);
+            dataSendFinall.Add(sum1);
+            dataSendFinall.Add(sum0);
+            //发送数据
+            lock (ComportLock)
+            {
+                Comport.Write(dataSendFinall.ToArray(), 0, dataSendFinall.Count);
+                return ReadVoidAck();
+            }
+        }
+
         public bool IsOpen()
         {
             return Comport.IsOpen;
         }
 
+
+        public void StartHeartBeat(string RegisterName, Int16 ExpectValue, int TimeInterval=3000)
+        {
+            if (HeartTask==null || HeartTask.Status == TaskStatus.Canceled || HeartTask.Status == TaskStatus.RanToCompletion)
+            {
+                cts = new CancellationTokenSource();
+                HeartTask = new Task(() => {
+                    if (!WriteInt(RegisterName, ExpectValue))
+                        throw new Exception("PLC 断开连接");
+                    Thread.Sleep(TimeInterval);
+                }, cts.Token);
+                HeartTask.Start();
+            }
+        }
         #endregion
 
         #region Private Method
@@ -253,17 +296,17 @@ namespace FXPLCCommunicationLib
             switch (nType)
             {
                 case REGISTER_TYPE.D:
-                {
-                    dwAddress = dwAddress * 2 + 0x1000;
-                    var strAddress = string.Format("{0:X4}", dwAddress).ToUpper();
-                    for (int i = 0; i < 4; i++)
-                        outAddress[3 - i] = (byte)strAddress[i];
-                }
-                break;
-                default:
+                    dwAddress = dwAddress * 2 + 0x1000; 
                     break;
-            
+                case REGISTER_TYPE.M:
+                    dwAddress = dwAddress * 2 + 0x100;
+                    break;
+                default:
+                    return;
             }
+            var strAddress = string.Format("{0:X4}", dwAddress).ToUpper();
+            for (int i = 0; i < 4; i++)
+                outAddress[3 - i] = (byte)strAddress[i];
         }
 
         /// <summary>

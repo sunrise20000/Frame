@@ -75,13 +75,12 @@ namespace Frame
             StationMgr.Instance.AddInstanse(station1);
             StationMgr.Instance.AddInstanse(station2);
 
-            homeView.AddMonitorList(station);
-            homeView.AddMonitorList(station1);
-            homeView.AddMonitorList(station2);
+            homeView.AddMonitorList(station,station1,station2);
+            historyView.AddMonitorList(station, station1, station2);
 
-
-            //可以接收Station的消息
+            //可以接收Station的ShowInfo消息
             homeView.SetStationBinding(station, station1, station2);
+
 
         }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -201,6 +200,15 @@ namespace Frame
             }
         }
 
-      
+        private void barCheckItem2_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            barCheckItem2.Caption = barCheckItem2.Checked ? "Manual" : "Auto";
+            barCheckItem2.ImageIndex = barCheckItem2.Checked ? 1 : 2;
+        }
+
+        private void barButtonItemReset_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
     }
 }

@@ -36,6 +36,14 @@ namespace Frame.View
                 MonitorCtrl.ReceiverList.Add(this);
         }
 
+        public void AddMonitorList(params ICommandAction[] MonitorCtrl)
+        {
+            foreach (var it in MonitorCtrl)
+            {
+                if (!it.ReceiverList.Contains(this))
+                    it.ReceiverList.Add(this);
+            }
+        }
         /// <summary>
         /// 删除监视窗体
         /// </summary>

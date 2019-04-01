@@ -103,7 +103,7 @@
             this.dockPanel1.ID = new System.Guid("631c4360-0b68-43de-a63f-94e78a7551af");
             this.dockPanel1.Location = new System.Drawing.Point(4, 27);
             this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.OriginalSize = new System.Drawing.Size(792, 107);
+            this.dockPanel1.OriginalSize = new System.Drawing.Size(792, 104);
             this.dockPanel1.Size = new System.Drawing.Size(792, 104);
             this.dockPanel1.Text = "输出信息";
             // 
@@ -137,7 +137,7 @@
             this.dockPanel2.ID = new System.Guid("160f8951-90e7-4152-8240-e2cc2ca54e03");
             this.dockPanel2.Location = new System.Drawing.Point(4, 27);
             this.dockPanel2.Name = "dockPanel2";
-            this.dockPanel2.OriginalSize = new System.Drawing.Size(792, 107);
+            this.dockPanel2.OriginalSize = new System.Drawing.Size(792, 104);
             this.dockPanel2.Size = new System.Drawing.Size(792, 104);
             this.dockPanel2.Text = "工位状态";
             // 

@@ -64,7 +64,6 @@ namespace Frame.Config
                         if (commuCfg.Enable && commuCfg.PortName == cfg.PortName)
                         {
                             var Robot = new InstrumentRobotABB(cfg, commuCfg);
-                            
                             InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.AddInstanse(Robot);
                             break;
                         }

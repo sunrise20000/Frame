@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Threading;
 namespace Frame.Instrument
 {
     public class InstrumentFxPLC : InstrumentBase<InstrumentCfgBase, CommunicationCfgBase>
     {
+
+
+        public event EventHandler<string> RegisterDataChanged;
+        
         public InstrumentFxPLC(InstrumentCfgBase InstrumentCfg, CommunicationCfgBase CommunicationCfg) : base(InstrumentCfg, CommunicationCfg)
         {
             
@@ -45,5 +49,14 @@ namespace Frame.Instrument
             return PLC.WriteDint(RegisterName, Value);
         }
 
+        public bool ForceMBit(string MBitName, bool Value)
+        {
+            return PLC.ForceMBit(MBitName, Value);
+        }
+
+        public void StartHeartBeat(string RegisterName, Int16 Value)
+        {
+            PLC.StartHeartBeat(RegisterName,Value);
+        }
     }
 }

@@ -32,7 +32,6 @@ namespace Frame.View
             //
             propertyGridControl1.SelectedObject = rapidSetting;
 
-
             //初始化DataGrid
             _dt.Columns.Add("Time", Type.GetType("System.DateTime"));
             _dt.Columns.Add("Type", Type.GetType("System.String"));
@@ -81,6 +80,11 @@ namespace Frame.View
             }
         }
 
+
+        /// <summary>
+        /// 显示Station消息时候需要绑定Station才能显示
+        /// </summary>
+        /// <param name="stations"></param>
         public void SetStationBinding(params StationBase[] stations)
         {
             uC_StationInfo1.SetStationList(stations);

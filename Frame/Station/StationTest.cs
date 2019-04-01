@@ -10,6 +10,7 @@ using Frame.Definations;
 using Frame.Instrument;
 using Frame.Config.HardwareCfg.InstrumentCfg;
 using Frame.Config.CommunicationCfg;
+using Frame.Class.ViewCommunicationMessage;
 
 namespace Frame.Model
 {
@@ -36,9 +37,11 @@ namespace Frame.Model
         protected override bool UserInit()
         {
             Console.WriteLine("Getit");
-                     
-            var ret = Robot.GetCurrentPostion(ABBRobotLib.Definations.EnumRobotTool.Tool0);
-            ShowInfo($"{ret}");
+
+            //var ret = Robot.GetCurrentPostion(ABBRobotLib.Definations.EnumRobotTool.Tool0);
+            //ShowInfo($"{ret}");
+            ShowInfo("读取条码：12345678");
+            SendMessage(new MsgOutput() {msg=new MessageModel(EnumMsgType.Info,"12345678") });
             return true;
         }
         protected override int WorkFlow()
