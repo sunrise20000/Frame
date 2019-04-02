@@ -12,7 +12,51 @@ namespace ABBRobotLib.Definations
         ROTATE,
         GETCURPOSXYZ,
         MOVETOPOINT,
+
+        READDIN,
+        READDOUT,
+        WRITEDOUT,
         NONE = 999,
+    }
+
+    public enum EnumDin
+    {
+        Din1,
+        Din2,
+        Din3,
+        Din4,
+        Din5,
+        Din6,
+        Din7,
+        Din8,
+        Din9,
+        Din10,
+        Din11,
+        Din12,
+        Din13,
+        Din14,
+        Din15,
+        Din16,
+    }
+
+    public enum EnumDout
+    {
+        Dout1,
+        Dout2,
+        Dout3,
+        Dout4,
+        Dout5,
+        Dout6,
+        Dout7,
+        Dout8,
+        Dout9,
+        Dout10,
+        Dout11,
+        Dout12,
+        Dout13,
+        Dout14,
+        Dout15,
+        Dout16,
     }
     public enum EnumRobotSpeed
     {

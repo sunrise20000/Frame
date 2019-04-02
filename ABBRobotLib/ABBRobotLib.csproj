@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="ABBCmd\CmdGetCurPos.cs" />
     <Compile Include="ABBCmd\CmdMoveToPoint.cs" />
+    <Compile Include="ABBCmd\CmdReadDinBit.cs" />
+    <Compile Include="ABBCmd\CmdReadDoutBit.cs" />
+    <Compile Include="ABBCmd\CmdSetDoutBit.cs" />
     <Compile Include="ABBCmd\IRobotCmd.cs" />
     <Compile Include="ABBCmd\CmdCalibrate.cs" />
     <Compile Include="ABBCmd\CmdMoveToPos.cs" />

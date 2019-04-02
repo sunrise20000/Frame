@@ -301,6 +301,9 @@ namespace FXPLCCommunicationLib
                 case REGISTER_TYPE.M:
                     dwAddress = dwAddress * 2 + 0x100;
                     break;
+                case REGISTER_TYPE.M_SINGAL:
+                    dwAddress = dwAddress * 2 + 0x800;
+                    break;
                 default:
                     return;
             }

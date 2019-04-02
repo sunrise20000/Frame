@@ -4,6 +4,7 @@ using ABBRobotLib.Definations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TcpLib;
@@ -21,8 +22,9 @@ namespace ABBRobotLib
         CmdGetCurPos GetCurPosCmd = new CmdGetCurPos();
         CmdTest TestCmd = new CmdTest();
         CmdMoveToPoint MoveToPointCmd = new CmdMoveToPoint();
-
-        bool isOpen=false;
+        CmdSetDoutBit SetDoutBitCmd = new CmdSetDoutBit();
+        CmdReadDinBit ReadDinBitCmd = new CmdReadDinBit();
+        CmdReadDoutBit ReadDoutBitCmd = new CmdReadDoutBit();
 
         #region Property
         public string IP { get; set; }
@@ -70,16 +72,16 @@ namespace ABBRobotLib
         {
             this.IP = IP;
             this.Port = Port;
-            isOpen = Client.Connect(IP, Port);
-            return isOpen;
+            IsOpen = Client.Connect(IP, Port);
+            return IsOpen;
         }
         public void Close()
         {
             Client.Close();
-            isOpen = false;
+            IsOpen = false;
         }
         public bool IsOpen {
-            get { return isOpen; }
+            get;private set;
         }
         
         public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType=EnumMoveType.MoveL,int TimeOut=3000)
@@ -129,13 +131,53 @@ namespace ABBRobotLib
             RotateCmd.AngleX = rx;
             RotateCmd.AngleY = ry;
             RotateCmd.AngleZ = rz;
-            return ExcuteCmd(RotateCmd, TimeOut) !=null;
+            var cmd= ExcuteCmd(RotateCmd, TimeOut);
+            if (cmd == null)
+                throw new Exception("TimeOut for Rotate");
+            else
+                return true;
         }
 
         public bool MoveToPoint(int PointID,int TimeOut=3000)
         {
             MoveToPointCmd.I_PointID = PointID;  
-            return ExcuteCmd(MoveToPointCmd, TimeOut) != null;
+            var cmd= ExcuteCmd(MoveToPointCmd, TimeOut);
+            if (cmd == null)
+                throw new Exception("TimeOut for MoveToPoint");
+            else
+                return true;
+        }
+
+
+        public bool SetDoutBit(EnumDout Dout, bool Value, int TimeOut=3000)
+        {
+            SetDoutBitCmd.I_Dout = Dout;
+            SetDoutBitCmd.I_State = Value;
+            var cmd= ExcuteCmd(SetDoutBitCmd,TimeOut) as CmdSetDoutBit;
+            if (cmd == null)
+                throw new Exception("TimeOut for SetDoutBit");
+            else
+                return true;
+        }
+
+        public bool ReadDoutBit(EnumDout Dout, int TimeOut = 3000)
+        {
+            ReadDoutBitCmd.I_Dout = Dout;
+            var cmd= ExcuteCmd(ReadDoutBitCmd, TimeOut) as CmdReadDoutBit;
+            if (cmd == null)
+                throw new Exception("TimeOut for ReadDoutBit");
+            else
+                return cmd.Q_State;
+        }
+        public bool ReadDinBit(EnumDin Din, int TimeOut = 3000)
+        {
+            ReadDinBitCmd.I_Din = Din;
+            
+            var cmd= ExcuteCmd(ReadDinBitCmd, TimeOut) as CmdReadDinBit;
+            if (cmd == null)
+                throw new Exception("TimeOut to ReadDinBit");
+            else
+                return cmd.Q_State;
         }
 
         private RobotCmdBase ExcuteCmd(RobotCmdBase cmd,int TimeOut)
@@ -178,6 +220,7 @@ namespace ABBRobotLib
             }
 
         }
+
         #endregion
 
     }

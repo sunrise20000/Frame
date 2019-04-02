@@ -213,7 +213,6 @@
             // 
             // barCheckItem2
             // 
-            this.barCheckItem2.Caption = "Manual";
             this.barCheckItem2.Id = 16;
             this.barCheckItem2.ImageOptions.Image = global::Frame.Properties.Resources.手动同步;
             this.barCheckItem2.Name = "barCheckItem2";

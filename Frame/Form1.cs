@@ -60,9 +60,9 @@ namespace Frame
 
             //关注settingView发出的消息
             homeView.AddMonitorList(settingView);
-            
 
 
+            barCheckItem2.Caption = barCheckItem2.Checked ? "Manual" : "Auto";
         }
 
         private void LoadConfig()
