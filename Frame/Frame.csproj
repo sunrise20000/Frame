@@ -103,8 +103,6 @@
     <Compile Include="Instrument\InstrumentRobotABB.cs" />
     <Compile Include="Instrument\InstrumentScanner.cs" />
     <Compile Include="Interface\IManagable.cs" />
-    <Compile Include="Class\ViewCommunicationMessage\Msg1.cs" />
-    <Compile Include="Class\ViewCommunicationMessage\Msg2.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgOutput.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgStationInfo.cs" />
     <Compile Include="Class\Singleton.cs" />

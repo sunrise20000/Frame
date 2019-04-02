@@ -216,7 +216,6 @@
             this.Controls.Add(this.panelContainer1);
             this.Name = "HomeView";
             this.Size = new System.Drawing.Size(800, 554);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HomeView_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).EndInit();
             this.panelContainer1.ResumeLayout(false);

@@ -21,14 +21,10 @@ namespace Frame.View
             MsgCollect=this.uC_HistoryPanel1.MsgCollect = new System.Collections.ObjectModel.ObservableCollection<Model.MessageModel>();
         }
 
-        public void OnMsg1(Msg1 msg)
-        {
-            MessageBox.Show(msg.ID);
-        }
-        public void OnMsg2(Msg2 msg)
-        {
-            MessageBox.Show("HistoryView"+msg.dt.GetDateTimeFormats()[35]);
-        }
+        /// <summary>
+        /// 将消息显示到消息框
+        /// </summary>
+        /// <param name="msg"></param>
         public void OnMsgOutput(MsgOutput msg)
         {
             MsgCollect.Add(msg.msg);

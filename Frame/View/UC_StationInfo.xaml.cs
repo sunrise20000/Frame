@@ -27,6 +27,11 @@ namespace Frame.View
             InitializeComponent();
         }
 
+        
+        /// <summary>
+        /// 为ShowInfo绑定消息源，有几个Station就生成几个ObservableCollection
+        /// </summary>
+        /// <param name="stations"></param>
         public void SetStationList(params StationBase[] stations)
         {
             foreach (var it in stations)
@@ -39,7 +44,7 @@ namespace Frame.View
 
         public void ShowInfo(string msg,string stationName, int maxCount=5)
         {
-            var modellist = InfoList.Where(m => m.StationName.Equals(stationName)).First();
+            var modellist = InfoList.Where(m => m.StationName.Equals(stationName)).FirstOrDefault();
             if (modellist != null)
             {
                 modellist.InfoCollect.Add(msg);
@@ -50,7 +55,7 @@ namespace Frame.View
 
         public void ShowInfo(string msg, StationBase station, int maxCount = 5)
         {
-            var modellist = InfoList.Where(m => m.StationName.Equals(station.StationName)).First();
+            var modellist = InfoList.Where(m => m.StationName.Equals(station.StationName)).FirstOrDefault();
             if (modellist != null)
             {
                 modellist.InfoCollect.Add(msg);

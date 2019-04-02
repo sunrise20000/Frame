@@ -120,7 +120,6 @@
             this.Controls.Add(this.groupControl1);
             this.Name = "SettingView";
             this.Size = new System.Drawing.Size(537, 537);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SettingView_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.ResumeLayout(false);

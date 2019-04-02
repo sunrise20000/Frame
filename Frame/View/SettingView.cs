@@ -23,20 +23,9 @@ namespace Frame.View
         {
             InitializeComponent();
         }
-        public void OnMsg2(Msg2 msg)
-        {
-            MessageBox.Show("SettingView"+msg.dt.GetDateTimeFormats()[10]);
-        }
 
-        private void SettingView_KeyPress(object sender, KeyPressEventArgs e)
+        public void OnMsgFindModel(MsgFindModel msg)
         {
-            SendMessage(new MsgOutput() {
-                 //MsgTime=DateT
-            });
-        }
-        public void OnFindModel(MsgFindModel msg)
-        {
-
             shapeModle1.LoadModle(@"Vision/Model/UpModel");
             var ret=shapeModle1.FindSimple();
         }

@@ -21,7 +21,7 @@ namespace Frame.Model
         protected CancellationTokenSource cts =new CancellationTokenSource();
         protected Queue<int> nStepQueue=new Queue<int>();
         protected Task t = null; 
-        public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
+        public List<ICommandAction> ListenerList { get; set; } = new List<ICommandAction>();
         protected virtual bool CheckStationStatusChanged() { return bPused; }
         protected T PeekStep<T>() where T:struct
         {
@@ -102,24 +102,49 @@ namespace Frame.Model
 
 
 
-        public virtual void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
+        public virtual void SendMessage<T>(T msg, ICommandAction Listener = null) where T : ViewMessageBase
         {
-            if (Receive == null)
+            if (Listener == null)
             {
-                foreach (var it in ReceiverList)
+                foreach (var it in ListenerList)
                     it.OnRecvMessage(msg);
             }
             else
             {
-                Receive.OnRecvMessage(msg);
+                Listener.OnRecvMessage(msg);
             }
         }
 
         public virtual void OnRecvMessage<T>(T msg)
         {
-            throw new NotImplementedException();
+            var msgType = msg.GetType();
+            string MethodName = "On" + msgType.Name;
+            var method = GetType().GetMethod(MethodName);
+            if (method != null)
+            {
+                method.Invoke(this, new object[] { msg });
+            }
         }
 
+        public void AddListener(ICommandAction ListernerCtrl)
+        {
+            if (!ListenerList.Contains(ListernerCtrl))
+                ListenerList.Add(ListernerCtrl);
+        }
 
+        public void AddListener(params ICommandAction[] ListernerCtrl)
+        {
+            foreach (var it in ListernerCtrl)
+            {
+                if (!ListenerList.Contains(it))
+                    ListenerList.Add(it);
+            }
+        }
+
+        public void RemoveListenerList(ICommandAction ListernerCtrl)
+        {
+            if (!ListenerList.Contains(ListernerCtrl))
+                ListenerList.Remove(ListernerCtrl);
+        }
     }
 }
