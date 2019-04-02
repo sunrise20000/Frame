@@ -25,7 +25,7 @@ namespace ABBRobotLib
         CmdSetDoutBit SetDoutBitCmd = new CmdSetDoutBit();
         CmdReadDinBit ReadDinBitCmd = new CmdReadDinBit();
         CmdReadDoutBit ReadDoutBitCmd = new CmdReadDoutBit();
-
+        CmdGetPointPos GetPointPosCmd = new CmdGetPointPos();
         #region Property
         public string IP { get; set; }
         public int Port { get; set; }
@@ -56,6 +56,15 @@ namespace ABBRobotLib
                     break;
                 case EnumRobotCmd.MOVETOPOINT:
                     cmd = MoveToPointCmd;
+                    break;
+                case EnumRobotCmd.READDIN:
+                    break;
+                case EnumRobotCmd.READDOUT:
+                    break;
+                case EnumRobotCmd.WRITEDOUT:
+                    break;
+                case EnumRobotCmd.GETPOINTPOS:
+                    cmd = GetPointPosCmd;
                     break;
                 default:
                     break;
@@ -221,6 +230,20 @@ namespace ABBRobotLib
 
         }
 
+        public bool GetPointPos(int PointID, out double X, out double Y, out double Z, int TimeOut=3000)
+        {
+            GetPointPosCmd.I_PointID = PointID;
+            var cmd = ExcuteCmd(GetPointPosCmd, TimeOut) as CmdGetPointPos;
+            if (cmd == null)
+                throw new Exception("TimeOut to GetPointPos");
+            else
+            {
+                X = cmd.Q_X;
+                Y = cmd.Q_Y;
+                Z = cmd.Q_Z;
+                return true;
+            }
+        }
         #endregion
 
     }

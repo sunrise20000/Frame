@@ -32,6 +32,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.hDisplay1 = new HalWindow.HDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonSaveImage = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonZDown = new System.Windows.Forms.Button();
             this.buttonZUp = new System.Windows.Forms.Button();
@@ -49,6 +50,7 @@
             this.buttonSnap = new System.Windows.Forms.Button();
             this.comboBoxCamList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,6 +86,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonSaveImage);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.dataGridViewCalibratePoint);
             this.panel1.Controls.Add(this.buttonContinues);
@@ -96,8 +99,19 @@
             this.panel1.Size = new System.Drawing.Size(494, 564);
             this.panel1.TabIndex = 1;
             // 
+            // buttonSaveImage
+            // 
+            this.buttonSaveImage.Location = new System.Drawing.Point(410, 15);
+            this.buttonSaveImage.Name = "buttonSaveImage";
+            this.buttonSaveImage.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveImage.TabIndex = 7;
+            this.buttonSaveImage.Text = "保存图片";
+            this.buttonSaveImage.UseVisualStyleBackColor = true;
+            this.buttonSaveImage.Click += new System.EventHandler(this.buttonSaveImage_Click);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.buttonZDown);
             this.groupBox1.Controls.Add(this.buttonZUp);
             this.groupBox1.Controls.Add(this.buttonRegion);
@@ -237,7 +251,7 @@
             // 
             // buttonContinues
             // 
-            this.buttonContinues.Location = new System.Drawing.Point(316, 16);
+            this.buttonContinues.Location = new System.Drawing.Point(316, 15);
             this.buttonContinues.Name = "buttonContinues";
             this.buttonContinues.Size = new System.Drawing.Size(75, 23);
             this.buttonContinues.TabIndex = 4;
@@ -247,9 +261,9 @@
             // 
             // buttonSnap
             // 
-            this.buttonSnap.Location = new System.Drawing.Point(215, 16);
+            this.buttonSnap.Location = new System.Drawing.Point(215, 15);
             this.buttonSnap.Name = "buttonSnap";
-            this.buttonSnap.Size = new System.Drawing.Size(83, 23);
+            this.buttonSnap.Size = new System.Drawing.Size(75, 23);
             this.buttonSnap.TabIndex = 3;
             this.buttonSnap.Text = "单帧";
             this.buttonSnap.UseVisualStyleBackColor = true;
@@ -272,6 +286,16 @@
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "相机";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(44, 120);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CameraSetting
             // 
@@ -312,5 +336,7 @@
         private System.Windows.Forms.Button buttonRegion;
         private System.Windows.Forms.Button buttonZDown;
         private System.Windows.Forms.Button buttonZUp;
+        private System.Windows.Forms.Button buttonSaveImage;
+        private System.Windows.Forms.Button button1;
     }
 }

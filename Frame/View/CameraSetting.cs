@@ -15,6 +15,8 @@ using Frame.Config.HardwareCfg.InstrumentCfg;
 using Frame.Config.CommunicationCfg;
 using System.Threading;
 using ViewROI;
+using HalconDotNet;
+using Frame.Class.ViewCommunicationMessage;
 
 namespace Frame.View
 {
@@ -28,6 +30,7 @@ namespace Frame.View
         Instrument.InstrumentRobotABB Robot = null;
         const string CAMUP_CALIBFILE = @"Vision/Calib/Up.tup";
         const string CAMDOWN_CALIBFILE = @"Vision/Calib/Down.tup";
+        const string IMAGE_SAVED_PATH= @"Vision/ImageSaved/";
         Task ContinueGrabTask = null;
         CancellationTokenSource cts = null;
         public CameraSetting()
@@ -177,7 +180,7 @@ namespace Frame.View
                     else if (comboBoxCamList.Text.Equals("Cam_Down"))
                     {
                         PtModel = (from pts in PointList where pts.Name.Equals(rows[0].Cells[0].Value.ToString()) select pts).First();
-                        Vision.FindShapeModel(hDisplay1.HImageX, "ModelUp.shm", out HalconDotNet.HTuple Row, out HalconDotNet.HTuple Col,
+                        Vision.FindShapeModel(hDisplay1.HImageX, "Vision/Model/DownCalibrateModel/DownCalibrateModle.shm", out HalconDotNet.HTuple Row, out HalconDotNet.HTuple Col,
                             out HalconDotNet.HTuple Angle, out HalconDotNet.HTuple Score);
                         if (Col != null && Col.Length > 0)
                         {
@@ -358,6 +361,15 @@ namespace Frame.View
             
         }
 
-      
+        private void buttonSaveImage_Click(object sender, EventArgs e)
+        {
+            var time = DateTime.Now;
+            HOperatorSet.WriteImage(hDisplay1.HImageX, "bmp", 0, $"{IMAGE_SAVED_PATH}{time.Hour}_{time.Minute}_{time.Second}.bmp");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SendMessage(new MsgFindModel());
+        }
     }
 }

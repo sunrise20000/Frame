@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ABBCmd\CmdGetCurPos.cs" />
+    <Compile Include="ABBCmd\CmdGetPointPos.cs" />
     <Compile Include="ABBCmd\CmdMoveToPoint.cs" />
     <Compile Include="ABBCmd\CmdReadDinBit.cs" />
     <Compile Include="ABBCmd\CmdReadDoutBit.cs" />

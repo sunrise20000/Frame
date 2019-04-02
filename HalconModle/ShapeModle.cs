@@ -126,7 +126,7 @@ namespace HalconModle
 
         private void btn_AddModleRegion_Click(object sender, EventArgs e)
         {
-            if (hDisplay1.GetSearchRegions().Count == 0)
+            if (hDisplay1.GetTrainRegions().Count == 0)
             {
                 hDisplay1.AddRegion("矩形", false);
                 return;
@@ -146,13 +146,13 @@ namespace HalconModle
                 HObject _imagereduced = new HObject();
                 HOperatorSet.ReduceDomain(m_image, hDisplay1.GetTrainRegions().ElementAt(0), out _imagereduced);
                 HOperatorSet.CreateShapeModel(_imagereduced, m_paramTrain.NumLevels, m_paramTrain.AngleStart, m_paramTrain.AngleExtent,
-                    m_paramTrain.AngleStep, m_paramTrain.Optimization, m_paramTrain.Metric, m_paramTrain.Contrast, m_paramTrain.MinContrast, out m_modleHandle);
+                    /*m_paramTrain.AngleStep*/"auto", m_paramTrain.Optimization, m_paramTrain.Metric, m_paramTrain.Contrast, m_paramTrain.MinContrast, out m_modleHandle);
 
                 HTuple _column = new HTuple(), _angle = new HTuple(), _score = new HTuple();
 
                 HOperatorSet.FindShapeModel(_imagereduced, m_modleHandle, m_paramFind.AngleStart, m_paramFind.AngleExtent, m_paramFind.MinScore,
                     m_paramFind.NumMatch, m_paramFind.MaxOverLap, m_paramFind.SubPixel, m_paramFind.NumLevels, m_paramFind.Greediness, out HTuple _row, out _column, out _angle, out _score);
-                HOperatorSet.WriteShapeModel(m_modleHandle, AppDomain.CurrentDomain.BaseDirectory + "123.shm");
+               // HOperatorSet.WriteShapeModel(m_modleHandle, AppDomain.CurrentDomain.BaseDirectory + "123.shm");
                 if (_row.TupleLength() > 0)
                 {
                     HObject _modlecountor = new HObject();
@@ -372,7 +372,7 @@ namespace HalconModle
 
                             m_paramTrain = (ShapeModleParameterTrain)datas[0];
                             m_paramFind = (ShapeModelParameterFind)datas[1];
-
+                            hDisplay1.SetROIList(datas[2] as System.Collections.ArrayList);
                             RemoveRvent();
 
                             nmUD_TrainAngleStart.Value = m_paramTrain.AngleStart;

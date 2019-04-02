@@ -94,6 +94,7 @@
     <Compile Include="Camera\CameraManager.cs" />
     <Compile Include="Camera\CameraOperator.cs" />
     <Compile Include="Camera\HaiKangCamera.cs" />
+    <Compile Include="Class\ViewCommunicationMessage\MsgFindModel.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgUpdateInstrumentState.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgBase.cs" />
     <Compile Include="Config\HardwareCfg\CameraCfg\CameraCfgBase.cs" />
@@ -180,6 +181,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>

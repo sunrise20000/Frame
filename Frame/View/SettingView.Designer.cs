@@ -29,10 +29,13 @@
         private void InitializeComponent()
         {
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.shapeModle1 = new HalconModle.ShapeModle();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonGetTranslate = new System.Windows.Forms.Button();
+            this.buttonGetRotate = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
-            this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,15 +49,6 @@
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "相机设置";
             // 
-            // groupControl1
-            // 
-            this.groupControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupControl1.Location = new System.Drawing.Point(0, 0);
-            this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(219, 537);
-            this.groupControl1.TabIndex = 0;
-            this.groupControl1.Text = "工艺参数";
-            // 
             // shapeModle1
             // 
             this.shapeModle1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -64,18 +58,70 @@
             this.shapeModle1.Size = new System.Drawing.Size(314, 514);
             this.shapeModle1.TabIndex = 0;
             // 
+            // groupControl1
+            // 
+            this.groupControl1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupControl1.Location = new System.Drawing.Point(0, 0);
+            this.groupControl1.Name = "groupControl1";
+            this.groupControl1.Size = new System.Drawing.Size(219, 537);
+            this.groupControl1.TabIndex = 0;
+            this.groupControl1.Text = "工艺参数";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(33, 80);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonGetTranslate
+            // 
+            this.buttonGetTranslate.Location = new System.Drawing.Point(94, 118);
+            this.buttonGetTranslate.Name = "buttonGetTranslate";
+            this.buttonGetTranslate.Size = new System.Drawing.Size(75, 23);
+            this.buttonGetTranslate.TabIndex = 3;
+            this.buttonGetTranslate.Text = "获取平移";
+            this.buttonGetTranslate.UseVisualStyleBackColor = true;
+            this.buttonGetTranslate.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // buttonGetRotate
+            // 
+            this.buttonGetRotate.Location = new System.Drawing.Point(3, 118);
+            this.buttonGetRotate.Name = "buttonGetRotate";
+            this.buttonGetRotate.Size = new System.Drawing.Size(75, 23);
+            this.buttonGetRotate.TabIndex = 4;
+            this.buttonGetRotate.Text = "获取旋转";
+            this.buttonGetRotate.UseVisualStyleBackColor = true;
+            this.buttonGetRotate.Click += new System.EventHandler(this.buttonGetRotate_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 158);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // SettingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonGetRotate);
+            this.Controls.Add(this.buttonGetTranslate);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupControl2);
             this.Controls.Add(this.groupControl1);
             this.Name = "SettingView";
             this.Size = new System.Drawing.Size(537, 537);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SettingView_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
-            this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.ResumeLayout(false);
 
@@ -86,5 +132,9 @@
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraEditors.GroupControl groupControl2;
         private HalconModle.ShapeModle shapeModle1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonGetTranslate;
+        private System.Windows.Forms.Button buttonGetRotate;
+        private System.Windows.Forms.Button button2;
     }
 }

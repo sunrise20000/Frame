@@ -41,7 +41,7 @@ namespace Frame.Instrument
         
         public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType = EnumMoveType.MoveL, int TimeOut = 3000)
         {
-            return Robot.MoveAbs(x,y,z,speed,tool,MoveType);
+            return Robot.MoveAbs(x,y,z,speed,tool,MoveType,TimeOut);
         }
 
         public bool MoveRel(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType = EnumMoveType.MoveL, int TimeOut = 3000)
@@ -62,6 +62,10 @@ namespace Frame.Instrument
         public bool MoveToPoint(int PointID, int TimeOut=3000)
         {
             return Robot.MoveToPoint(PointID,TimeOut);
+        }
+        public bool GetPointPos(int PointID,out double X,out double Y,out double Z, int TimeOut = 3000)
+        {
+            return Robot.GetPointPos(PointID, out X, out Y, out Z, TimeOut);
         }
     }
 }

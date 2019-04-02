@@ -16,6 +16,8 @@ namespace ABBRobotLib.Definations
         READDIN,
         READDOUT,
         WRITEDOUT,
+
+        GETPOINTPOS,
         NONE = 999,
     }
 
@@ -94,4 +96,6 @@ namespace ABBRobotLib.Definations
         MoveL,
         MoveJ,
     }
+
+
 }
