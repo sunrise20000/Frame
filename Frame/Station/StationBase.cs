@@ -30,7 +30,6 @@ namespace Frame.Model
                 return result;
             else
                 return default(T);
-
         }
         protected void PushStep<T>(T nStep) where T:struct { nStepQueue.Enqueue(nStep.GetHashCode()); }
         protected void PopAndPushStep<T>(T nStep) where T:struct { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep.GetHashCode()); }
@@ -97,11 +96,12 @@ namespace Frame.Model
                 return true;
         }
 
-        private static int ThreadFunc(object o) { return (o as StationBase).WorkFlow(); }
+        private static int ThreadFunc<T>(T t) where T:StationBase { return t.WorkFlow(); }
         protected virtual int WorkFlow() { return 0; }
 
 
 
+        #region 赋予Station发送消息的功能
         public virtual void SendMessage<T>(T msg, ICommandAction Listener = null) where T : ViewMessageBase
         {
             if (Listener == null)
@@ -146,5 +146,7 @@ namespace Frame.Model
             if (!ListenerList.Contains(ListernerCtrl))
                 ListenerList.Remove(ListernerCtrl);
         }
+        #endregion
+
     }
 }
