@@ -22,7 +22,7 @@ namespace Frame
         SettingView settingView = new SettingView();
         CameraSetting settingCamView = new CameraSetting();
 
-        public List<ICommandAction> ListenerList { get; set; } = new List<ICommandAction>();
+        public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
 
         public Form1()
         {
@@ -52,9 +52,15 @@ namespace Frame
 
 
             //关注homeView发出的消息
-            homeView.AddListener(settingView);
-            settingCamView.AddListener(settingView, homeView);
-            homeView.AddListener(this);
+            settingView.AddMonitorList(homeView);
+            historyView.AddMonitorList(homeView);
+            this.AddMonitorList(homeView);
+
+
+
+            //关注settingView发出的消息
+            homeView.AddMonitorList(settingView);
+
 
             barCheckItem2.Caption = barCheckItem2.Checked ? "Manual" : "Auto";
         }
@@ -69,12 +75,13 @@ namespace Frame
             StationMgr.Instance.AddInstanse(station1);
             StationMgr.Instance.AddInstanse(station2);
 
-            station.AddListener(homeView, historyView);
-            station1.AddListener(homeView,historyView);
-            station1.AddListener(homeView,historyView);
+            homeView.AddMonitorList(station,station1,station2);
+            historyView.AddMonitorList(station, station1, station2);
 
-            //设定ShowInfo的绑定，用来动态生成ListBox
-            homeView.SetStationBinding(station,station1,station2);
+            //可以接收Station的ShowInfo消息
+            homeView.SetStationBinding(station, station1, station2);
+
+
         }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -126,16 +133,16 @@ namespace Frame
        
         }
 
-        public void SendMessage<T>(T msg, ICommandAction Listener = null) where T : ViewMessageBase
+        public void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
         {
-            if (Listener == null)
+            if (Receive == null)
             {
-                foreach (var it in ListenerList)
+                foreach (var it in ReceiverList)
                     it.OnRecvMessage(msg);
             }
             else
             {
-                Listener.OnRecvMessage(msg);
+                Receive.OnRecvMessage(msg);
             }
         }
 
@@ -143,20 +150,20 @@ namespace Frame
         /// 添加监视窗体
         /// </summary>
         /// <param name="MonitorCtrl">要监视的窗体</param>
-        public void AddListenerList(ICommandAction ListenerCtrl)
+        public void AddMonitorList(ICommandAction MonitorCtrl)
         {
-            if (ListenerList.Contains(ListenerCtrl))
-               ListenerList.Add(ListenerCtrl);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Add(this);
         }
 
         /// <summary>
         /// 删除监视窗体
         /// </summary>
         /// <param name="MonitorCtrl">要监视的窗体</param>
-        public void RemoveMonitorList(ICommandAction ListenerCtrl)
+        public void RemoveMonitorList(ICommandAction MonitorCtrl)
         {
-            if (!ListenerList.Contains(ListenerCtrl))
-                ListenerList.Remove(ListenerCtrl);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Remove(this);
         }
 
         public void OnRecvMessage<T>(T msg)
@@ -202,27 +209,6 @@ namespace Frame
         private void barButtonItemReset_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
 
-        }
-
-        public void AddListener(ICommandAction ListernerCtrl)
-        {
-            if (!ListenerList.Contains(ListernerCtrl))
-                ListenerList.Add(ListernerCtrl);
-        }
-
-        public void AddListener(params ICommandAction[] ListernerCtrl)
-        {
-            foreach (var it in ListernerCtrl)
-            {
-                if (!ListenerList.Contains(it))
-                    ListenerList.Add(it);
-            }
-        }
-
-        public void RemoveListenerList(ICommandAction ListernerCtrl)
-        {
-            if (!ListenerList.Contains(ListernerCtrl))
-                ListenerList.Remove(ListernerCtrl);
         }
     }
 }

@@ -59,13 +59,17 @@ namespace Frame.Instrument
             return Robot.Rotate(rx,ry,rz,speed,tool,TimeOut);
         }
 
-        public bool MoveToPoint(int PointID, int TimeOut=3000)
+        public bool MoveToPoint(int PointID, EnumRobotSpeed speed, int TimeOut=3000)
         {
-            return Robot.MoveToPoint(PointID,TimeOut);
+            return Robot.MoveToPoint(PointID,speed, TimeOut);
         }
         public bool GetPointPos(int PointID,out double X,out double Y,out double Z, int TimeOut = 3000)
         {
             return Robot.GetPointPos(PointID, out X, out Y, out Z, TimeOut);
+        }
+        public bool SetDoutBit(EnumDout Dout, bool Value, int TimeOut = 3000)
+        {
+            return Robot.SetDoutBit(Dout, Value, TimeOut);
         }
     }
 }

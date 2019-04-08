@@ -43,10 +43,6 @@ namespace Frame.View
             dataGridView1.Columns[2].FillWeight = 65;
         }
 
-        /// <summary>
-        /// Output列表框
-        /// </summary>
-        /// <param name="msg"></param>
         public void OnMsgOutput(MsgOutput msg)
         {
             if (this.InvokeRequired)
@@ -68,12 +64,10 @@ namespace Frame.View
             }
         }
 
-        /// <summary>
-        /// Station的消息处理
-        /// </summary>
-        /// <param name="msg"></param>
+        //消息处理
         public void OnMsgStationInfo(MsgStationInfo msg)
         {
+         
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action(()=>OnMsgStationInfo(msg)));
@@ -82,13 +76,26 @@ namespace Frame.View
             {
                 var station = StationMgr.Instance.FindInstanseByName(msg.SenderName);
                 if (station != null)
-                    uC_StationInfo1.ShowInfo(msg.Infomation, station);
+                    uC_StationInfo1.ShowInfo(msg.Infomation, station,20);
             }
         }
 
-
+        public void OnMsgShowImage(MsgShowImage msg)
+        {
+            if (this.InvokeRequired)
+            {
+                Invoke(new Action(()=> {
+                    OnMsgShowImage(msg);
+                }));
+            }
+            else
+            {
+                
+                hDisplay1.HImageX = msg.Image;
+            }
+        }
         /// <summary>
-        /// 显示Station消息时候需要绑定Station才能显示，动态生成ShowInfo用的状态栏
+        /// 显示Station消息时候需要绑定Station才能显示
         /// </summary>
         /// <param name="stations"></param>
         public void SetStationBinding(params StationBase[] stations)
@@ -96,6 +103,16 @@ namespace Frame.View
             uC_StationInfo1.SetStationList(stations);
         }
 
-       
+        //Debug
+        private int i=0;
+        private void HomeView_MouseClick(object sender, MouseEventArgs e)
+        {
+            var msg = new MsgOutput()
+            {
+                msg = new MessageModel(Definations.EnumMsgType.Error, i++.ToString())
+            };
+            SendMessage(msg);
+            OnMsgOutput(msg);
+        }
     }
 }

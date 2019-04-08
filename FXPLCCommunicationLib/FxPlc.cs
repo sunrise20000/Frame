@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace FXPLCCommunicationLib
 {
@@ -33,6 +34,8 @@ namespace FXPLCCommunicationLib
             if (Comport.IsOpen)
                 Comport.Close();
             Comport.Open();
+            Comport.DiscardOutBuffer();
+            Comport.DiscardInBuffer();
             isOpen = Comport.IsOpen;
             return isOpen;
         }
@@ -170,7 +173,7 @@ namespace FXPLCCommunicationLib
             }
         }
 
-        public Int16[] ReadIntBlock(string strStartRegisterName, int Length)
+        public Int16[] ReadIntBlock(string strStartRegisterName, int Length,int TimeOut=3000)
         {
             if (Length > 124)
                 throw new Exception("不允许读取太多长度 的寄存器");
@@ -196,7 +199,7 @@ namespace FXPLCCommunicationLib
             lock (ComportLock)
             {
                 Comport.Write(dataSendFinall.ToArray(), 0, dataSendFinall.Count);
-                return ReadBlockAck(Length);
+                return ReadBlockAck(Length, TimeOut);
             }
         }
 
@@ -206,7 +209,7 @@ namespace FXPLCCommunicationLib
                 throw new Exception("请检查串口状态!");
             Int32 dwAddress = -1;
             int nLen = MName.Length;
-            if (!MName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if (!MName.Substring(0, 1).ToUpper().Equals("M") || nLen < 2)
             {
                 throw new Exception("寄存器地址输入错误");
             }
@@ -381,7 +384,7 @@ namespace FXPLCCommunicationLib
         /// 不需要返回值的时候的读取
         /// </summary>
         /// <returns></returns>
-        bool ReadVoidAck()
+        bool ReadVoidAck([CallerMemberName]string CallerName="")
         {
             var StartTime = DateTime.Now.Ticks;
             while (true)
@@ -390,12 +393,24 @@ namespace FXPLCCommunicationLib
                 {
                     var ch = Comport.ReadByte();
                     if (ch == (byte)CMD.ACK)
+                    {
+                        while (Comport.BytesToRead != 0)
+                        {
+                            Comport.ReadByte();
+                        }
                         return true;
+                    }
                     else
+                    {
+                        while (Comport.BytesToRead != 0)
+                        {
+                            Comport.ReadByte();
+                        }
                         return false;
+                    }
                 }
                 if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
-                    throw new Exception("通信超时");
+                    throw new Exception($"通信超时,调用者{CallerName}");
             }
         }
 
@@ -403,7 +418,7 @@ namespace FXPLCCommunicationLib
         /// 读取int的返回值
         /// </summary>
         /// <returns></returns>
-        Int16 ReadIntAck()
+        Int16 ReadIntAck([CallerMemberName]string CallerName="")
         {
             var StartTime = DateTime.Now.Ticks;
             List<byte> listRead = new List<byte>();
@@ -429,12 +444,16 @@ namespace FXPLCCommunicationLib
                             sb.Append((char)listRead[4]);
                             sb.Append((char)listRead[1]);
                             sb.Append((char)listRead[2]);
+                            while (Comport.BytesToRead != 0)
+                            {
+                                Comport.ReadByte();
+                            }
                             return Convert.ToInt16(sb.ToString(), 16);
                         }
                     }
                 }
                 if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
-                    throw new Exception("通信超时");
+                    throw new Exception($"通信超时,调用者{CallerName}");
             }
         }
 
@@ -442,7 +461,7 @@ namespace FXPLCCommunicationLib
         /// 读取Dint的返回值
         /// </summary>
         /// <returns></returns>
-        Int32 ReadDintAck()
+        Int32 ReadDintAck([CallerMemberName]string CallerName="")
         {
             var StartTime = DateTime.Now.Ticks;
             List<byte> listRead = new List<byte>();
@@ -472,18 +491,21 @@ namespace FXPLCCommunicationLib
                             sb.Append((char)listRead[4]);
                             sb.Append((char)listRead[1]);
                             sb.Append((char)listRead[2]);
-
+                            while (Comport.BytesToRead != 0)
+                            {
+                                Comport.ReadByte();
+                            }
                             return Convert.ToInt32(sb.ToString(), 16);
                         }
                     }
                 }
 
                 if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
-                    throw new Exception("通信超时");
+                    throw new Exception($"通信超时,调用者{CallerName}");
             }
         }
 
-        Int16[] ReadBlockAck(int ExpectLength)
+        Int16[] ReadBlockAck(int ExpectLength,int TimeOut=3000,[CallerMemberName]string CallerName="")
         {
             var StartTime = DateTime.Now.Ticks;
             List<byte> listRead = new List<byte>();
@@ -514,12 +536,16 @@ namespace FXPLCCommunicationLib
                                 sb.Append((char)listRead[i * 4+2]);
                                 list.Add(Convert.ToInt16(sb.ToString(), 16));
                             }
+                            while (Comport.BytesToRead != 0)
+                            {
+                                Comport.ReadByte();
+                            }
                             return list.ToArray();
                         }
                     }
                 }
-                if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > 1000)
-                    throw new Exception("通信超时");
+                if (TimeSpan.FromTicks(DateTime.Now.Ticks - StartTime).TotalMilliseconds > TimeOut)
+                    throw new Exception($"通信超时,调用者{CallerName}");
             }
         }
         #endregion

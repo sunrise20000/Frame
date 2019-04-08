@@ -13,14 +13,9 @@ namespace Frame.Interface
     /// </summary>
     public interface ICommandAction
     {
-        void SendMessage<T>(T msg,ICommandAction Listener=null) where T : ViewMessageBase;
+        void SendMessage<T>(T msg,ICommandAction Receive=null) where T : ViewMessageBase;
         void OnRecvMessage<T>(T msg);
-        List<ICommandAction> ListenerList { get; set; }
-
-        void AddListener(ICommandAction ListernerCtrl);
-
-        void AddListener(params ICommandAction[] ListernerCtrl);
-
-        void RemoveListenerList(ICommandAction ListernerCtrl);
+        List<ICommandAction> ReceiverList { get; set; }
+         
     }
 }

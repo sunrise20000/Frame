@@ -23,7 +23,7 @@ namespace Frame.Instrument
 
         public void Open()
         {
-            PLC.Open(int.Parse(CommunicationCfg.PortName.Replace("COM", "")));
+            PLC.Open(int.Parse((CommunicationCfg as ComportCfg).Port.Replace("COM", "")));
         }
         public void Close()
         {
@@ -57,6 +57,16 @@ namespace Frame.Instrument
         public void StartHeartBeat(string RegisterName, Int16 Value)
         {
             PLC.StartHeartBeat(RegisterName,Value);
+        }
+
+        public Int16[] ReadBlockInt(string StartRegisterName, int Length,int TimeOut=3000)
+        {
+            return PLC.ReadIntBlock(StartRegisterName, Length,TimeOut);
+        }
+
+        public bool WriteMbit(string MName,bool Value)
+        {
+            return PLC.ForceMBit(MName, Value);
         }
     }
 }

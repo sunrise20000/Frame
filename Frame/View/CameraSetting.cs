@@ -111,13 +111,16 @@ namespace Frame.View
                 if (cts != null)
                     cts.Cancel();
                 var Cam = Camera.CameraManager.Instance.FindInstanseByName(comboBoxCamList.Text) as HaiKangCamera;
+
+
                 if (!Cam.m_IsConnected)
                 {
                     Cam.OpenCamera();
                     Cam.SetTriggerMode("Off");
-                    Cam.ImageAcquired -= Cam_ImageAcquired;
-                    Cam.ImageAcquired += Cam_ImageAcquired;
+                    
                 }
+                Cam.ImageAcquired -= Cam_ImageAcquired;
+                Cam.ImageAcquired += Cam_ImageAcquired;
                 Cam.SnapShot();
             }
             catch (Exception ex)

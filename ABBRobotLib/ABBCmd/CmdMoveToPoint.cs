@@ -26,7 +26,7 @@ namespace ABBRobotLib.ABBCmd
 
         protected override void SetProfile()
         {
-            Paras[0]=I_PointID.ToString();
+            Paras[0]=I_PointID.ToString();           
         }
     }
 }

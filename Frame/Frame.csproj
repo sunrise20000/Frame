@@ -95,6 +95,7 @@
     <Compile Include="Camera\CameraOperator.cs" />
     <Compile Include="Camera\HaiKangCamera.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgFindModel.cs" />
+    <Compile Include="Class\ViewCommunicationMessage\MsgShowImage.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgUpdateInstrumentState.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgBase.cs" />
     <Compile Include="Config\HardwareCfg\CameraCfg\CameraCfgBase.cs" />
@@ -215,7 +216,6 @@
     <Content Include="images\PLC.png" />
     <Content Include="images\Robot.png" />
     <Content Include="images\Scanner.png" />
-    <Content Include="images\主页 %281%29.png" />
     <Content Include="images\主页.png" />
     <Content Include="images\infomation.png" />
     <Content Include="images\停止.png" />

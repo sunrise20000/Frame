@@ -21,10 +21,7 @@ namespace Frame.View
             MsgCollect=this.uC_HistoryPanel1.MsgCollect = new System.Collections.ObjectModel.ObservableCollection<Model.MessageModel>();
         }
 
-        /// <summary>
-        /// 将消息显示到消息框
-        /// </summary>
-        /// <param name="msg"></param>
+      
         public void OnMsgOutput(MsgOutput msg)
         {
             MsgCollect.Add(msg.msg);

@@ -11,18 +11,18 @@ namespace Frame.View
 {
     public class MessageUserControl : UserControl, ICommandAction
     {
-        public List<ICommandAction> ListenerList { get; set; }= new List<ICommandAction>();
+        public List<ICommandAction> ReceiverList { get; set; }= new List<ICommandAction>();
 
-        public void SendMessage<T>(T msg, ICommandAction Listener = null) where T : ViewMessageBase
+        public void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
         {
-            if (Listener == null)
+            if (Receive == null)
             {
-                foreach (var it in ListenerList)
+                foreach (var it in ReceiverList)
                     it.OnRecvMessage(msg);
             }
             else
             {
-                Listener.OnRecvMessage(msg);
+                Receive.OnRecvMessage(msg);
             }
         }
 
@@ -30,28 +30,28 @@ namespace Frame.View
         /// 添加监视窗体
         /// </summary>
         /// <param name="MonitorCtrl">要监视的窗体</param>
-        public void AddListener(ICommandAction ListernerCtrl)
+        public void AddMonitorList(ICommandAction MonitorCtrl)
         {
-            if (ListenerList.Contains(ListernerCtrl))
-                ListenerList.Add(ListernerCtrl);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Add(this);
         }
 
-        public void AddListener(params ICommandAction[] ListernerCtrl)
+        public void AddMonitorList(params ICommandAction[] MonitorCtrl)
         {
-            foreach (var it in ListernerCtrl)
+            foreach (var it in MonitorCtrl)
             {
-                if (!ListenerList.Contains(it))
-                    ListenerList.Add(it);
+                if (!it.ReceiverList.Contains(this))
+                    it.ReceiverList.Add(this);
             }
         }
         /// <summary>
         /// 删除监视窗体
         /// </summary>
         /// <param name="MonitorCtrl">要监视的窗体</param>
-        public void RemoveListenerList(ICommandAction ListernerCtrl)
+        public void RemoveMonitorList(ICommandAction MonitorCtrl)
         {
-            if (!ListenerList.Contains(ListernerCtrl))
-                ListenerList.Remove(ListernerCtrl);
+            if (!MonitorCtrl.ReceiverList.Contains(this))
+                MonitorCtrl.ReceiverList.Remove(this);
         }
 
         public void OnRecvMessage<T>(T msg)

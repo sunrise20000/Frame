@@ -23,9 +23,17 @@ namespace Frame.View
         {
             InitializeComponent();
         }
+       
 
-        public void OnMsgFindModel(MsgFindModel msg)
+        private void SettingView_KeyPress(object sender, KeyPressEventArgs e)
         {
+            SendMessage(new MsgOutput() {
+                 //MsgTime=DateT
+            });
+        }
+        public void OnFindModel(MsgFindModel msg)
+        {
+
             shapeModle1.LoadModle(@"Vision/Model/UpModel");
             var ret=shapeModle1.FindSimple();
         }
@@ -88,6 +96,27 @@ namespace Frame.View
                 Robot.Open();
             }
             Robot.GetPointPos(1, out double x, out double y, out double z);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Robot = Instrument.InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.FindInstanseByName("RobotAbb") as Instrument.InstrumentRobotABB;
+            if (!Robot.IsOpen)
+            {
+                Robot.Open();
+            }
+            Robot.SetDoutBit(ABBRobotLib.Definations.EnumDout.Dout1, true);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Robot = Instrument.InstrumentMgr<InstrumentCfgBase, CommunicationCfgBase>.Instance.FindInstanseByName("RobotAbb") as Instrument.InstrumentRobotABB;
+            if (!Robot.IsOpen)
+            {
+                Robot.Open();
+            }
+            Robot.SetDoutBit(ABBRobotLib.Definations.EnumDout.Dout1, false);
+
         }
     }
 }

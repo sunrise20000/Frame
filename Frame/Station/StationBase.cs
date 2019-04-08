@@ -21,7 +21,7 @@ namespace Frame.Model
         protected CancellationTokenSource cts =new CancellationTokenSource();
         protected Queue<int> nStepQueue=new Queue<int>();
         protected Task t = null; 
-        public List<ICommandAction> ListenerList { get; set; } = new List<ICommandAction>();
+        public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
         protected virtual bool CheckStationStatusChanged() { return bPused; }
         protected T PeekStep<T>() where T:struct
         {
@@ -30,6 +30,7 @@ namespace Frame.Model
                 return result;
             else
                 return default(T);
+
         }
         protected void PushStep<T>(T nStep) where T:struct { nStepQueue.Enqueue(nStep.GetHashCode()); }
         protected void PopAndPushStep<T>(T nStep) where T:struct { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep.GetHashCode()); }
@@ -96,57 +97,29 @@ namespace Frame.Model
                 return true;
         }
 
-        private static int ThreadFunc<T>(T t) where T:StationBase { return t.WorkFlow(); }
+        private static int ThreadFunc(object o) { return (o as StationBase).WorkFlow(); }
         protected virtual int WorkFlow() { return 0; }
 
 
 
-        #region 赋予Station发送消息的功能
-        public virtual void SendMessage<T>(T msg, ICommandAction Listener = null) where T : ViewMessageBase
+        public virtual void SendMessage<T>(T msg, ICommandAction Receive = null) where T : ViewMessageBase
         {
-            if (Listener == null)
+            if (Receive == null)
             {
-                foreach (var it in ListenerList)
+                foreach (var it in ReceiverList)
                     it.OnRecvMessage(msg);
             }
             else
             {
-                Listener.OnRecvMessage(msg);
+                Receive.OnRecvMessage(msg);
             }
         }
 
         public virtual void OnRecvMessage<T>(T msg)
         {
-            var msgType = msg.GetType();
-            string MethodName = "On" + msgType.Name;
-            var method = GetType().GetMethod(MethodName);
-            if (method != null)
-            {
-                method.Invoke(this, new object[] { msg });
-            }
+            throw new NotImplementedException();
         }
 
-        public void AddListener(ICommandAction ListernerCtrl)
-        {
-            if (!ListenerList.Contains(ListernerCtrl))
-                ListenerList.Add(ListernerCtrl);
-        }
-
-        public void AddListener(params ICommandAction[] ListernerCtrl)
-        {
-            foreach (var it in ListernerCtrl)
-            {
-                if (!ListenerList.Contains(it))
-                    ListenerList.Add(it);
-            }
-        }
-
-        public void RemoveListenerList(ICommandAction ListernerCtrl)
-        {
-            if (!ListenerList.Contains(ListernerCtrl))
-                ListenerList.Remove(ListernerCtrl);
-        }
-        #endregion
 
     }
 }

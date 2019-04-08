@@ -62,6 +62,7 @@ namespace ABBRobotLib
                 case EnumRobotCmd.READDOUT:
                     break;
                 case EnumRobotCmd.WRITEDOUT:
+                    cmd = SetDoutBitCmd;
                     break;
                 case EnumRobotCmd.GETPOINTPOS:
                     cmd = GetPointPosCmd;
@@ -147,9 +148,10 @@ namespace ABBRobotLib
                 return true;
         }
 
-        public bool MoveToPoint(int PointID,int TimeOut=3000)
+        public bool MoveToPoint(int PointID, EnumRobotSpeed speed, int TimeOut=3000)
         {
-            MoveToPointCmd.I_PointID = PointID;  
+            MoveToPointCmd.I_PointID = PointID;
+            MoveToPointCmd.I_Speed = speed;
             var cmd= ExcuteCmd(MoveToPointCmd, TimeOut);
             if (cmd == null)
                 throw new Exception("TimeOut for MoveToPoint");
