@@ -22,31 +22,37 @@ namespace FXPLCCommunicationLib
         #region UserAPI
         public bool Open(int Port)
         {
-            Comport.PortName = $"COM{Port}";
-            Comport.BaudRate = 9600;
-            Comport.Parity = Parity.Even;
-            Comport.DataBits = 7;
-            Comport.StopBits = StopBits.One;
-            Comport.ReadTimeout = 1000;
-            Comport.WriteTimeout = 1000;
-            Comport.ReadBufferSize = 1024;
-            Comport.WriteBufferSize = 1024;
-            if (Comport.IsOpen)
-                Comport.Close();
-            Comport.Open();
-            Comport.DiscardOutBuffer();
-            Comport.DiscardInBuffer();
-            isOpen = Comport.IsOpen;
-            return isOpen;
+            lock (ComportLock)
+            {
+                Comport.PortName = $"COM{Port}";
+                Comport.BaudRate = 9600;
+                Comport.Parity = Parity.Even;
+                Comport.DataBits = 7;
+                Comport.StopBits = StopBits.One;
+                Comport.ReadTimeout = 1000;
+                Comport.WriteTimeout = 1000;
+                Comport.ReadBufferSize = 1024;
+                Comport.WriteBufferSize = 1024;
+                if (Comport.IsOpen)
+                    Comport.Close();
+                Comport.Open();
+                Comport.DiscardOutBuffer();
+                Comport.DiscardInBuffer();
+                isOpen = Comport.IsOpen;
+                return isOpen;
+            }
         }
 
         public void CLose()
         {
-            if (cts != null)
-                cts.Cancel();
-            if (HeartTask != null)
-                HeartTask.Wait();
-            Comport.Close();
+            lock (ComportLock)
+            {
+                if (cts != null)
+                    cts.Cancel();
+                if (HeartTask != null)
+                    HeartTask.Wait();
+                Comport.Close();
+            }
         }
 
         /// <summary>
@@ -60,7 +66,7 @@ namespace FXPLCCommunicationLib
                 throw new Exception("请检查串口状态!");
             Int32 dwAddress = -1;
             int nLen = strRegisterName.Length;
-            if (!strRegisterName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if ((!strRegisterName.Substring(0, 1).ToUpper().Equals("D") && !strRegisterName.Substring(0, 1).ToUpper().Equals("M") )|| nLen < 2)
             {
                 throw new Exception("寄存器地址输入错误");
             }
@@ -230,7 +236,10 @@ namespace FXPLCCommunicationLib
 
         public bool IsOpen()
         {
-            return Comport.IsOpen;
+            lock (ComportLock)
+            {
+                return Comport.IsOpen;
+            }
         }
 
 
@@ -240,9 +249,13 @@ namespace FXPLCCommunicationLib
             {
                 cts = new CancellationTokenSource();
                 HeartTask = new Task(() => {
-                    if (!WriteInt(RegisterName, ExpectValue))
-                        throw new Exception("PLC 断开连接");
-                    Thread.Sleep(TimeInterval);
+                    while (!cts.IsCancellationRequested)
+                    {
+                        if (!WriteInt(RegisterName, ExpectValue))
+                            throw new Exception("PLC 断开连接");
+
+                        Thread.Sleep(TimeInterval);
+                    }
                 }, cts.Token);
                 HeartTask.Start();
             }
@@ -302,17 +315,18 @@ namespace FXPLCCommunicationLib
                     dwAddress = dwAddress * 2 + 0x1000; 
                     break;
                 case REGISTER_TYPE.M:
-                    dwAddress = dwAddress * 2 + 0x100;
+                    dwAddress = dwAddress + 0x100;
                     break;
                 case REGISTER_TYPE.M_SINGAL:
-                    dwAddress = dwAddress * 2 + 0x800;
+                    dwAddress = dwAddress + 0x800;
                     break;
                 default:
                     return;
             }
             var strAddress = string.Format("{0:X4}", dwAddress).ToUpper();
             for (int i = 0; i < 4; i++)
-                outAddress[3 - i] = (byte)strAddress[i];
+                outAddress[3-i] = (byte)strAddress[i];
+            
         }
 
         /// <summary>

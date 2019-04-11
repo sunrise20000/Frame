@@ -14,7 +14,7 @@ namespace Frame.Model
     public class StationBase : ICommandAction
     {
         private string OldMsg = "";
-        private bool bPused { get; set; } = false;
+        public  bool bPused { get; set; } = false;
         public bool Enable { get; set; } = false;
         public string StationName { get; set; }
         public int StationIndex { get; set; } = 0;

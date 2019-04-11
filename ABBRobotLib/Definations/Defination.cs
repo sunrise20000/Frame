@@ -12,7 +12,7 @@ namespace ABBRobotLib.Definations
         ROTATE,
         GETCURPOSXYZ,
         MOVETOPOINT,
-
+        MOVETOPOINTREPLACEXYZ,
         READDIN,
         READDOUT,
         WRITEDOUT,
@@ -95,6 +95,11 @@ namespace ABBRobotLib.Definations
     {
         MoveL,
         MoveJ,
+    }
+    public enum EnumProductType
+    {
+        OK=1,
+        NG,
     }
 
 

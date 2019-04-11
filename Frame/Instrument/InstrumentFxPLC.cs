@@ -25,6 +25,9 @@ namespace Frame.Instrument
         {
             PLC.Open(int.Parse((CommunicationCfg as ComportCfg).Port.Replace("COM", "")));
         }
+        public bool IsOpen {
+            get { return PLC.IsOpen(); }
+        }
         public void Close()
         {
             PLC.CLose();

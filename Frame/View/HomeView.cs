@@ -90,7 +90,6 @@ namespace Frame.View
             }
             else
             {
-                
                 hDisplay1.HImageX = msg.Image;
             }
         }

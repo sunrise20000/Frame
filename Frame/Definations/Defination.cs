@@ -25,7 +25,7 @@ namespace Frame.Definations
 
         SocketTest,
 
-        PlayToFaceTest,//把产品放置在端面检测位置
+        UnLoadFromSocket,//把产品从socket测试位置拿走
 
         FaceTest,//端面检测
 
@@ -34,8 +34,9 @@ namespace Frame.Definations
         EquipDustPlug,//安装防尘塞
 
 
-        UnloadProduct,//卸载产品
-
+        UnloadFromEndFaceTest,//卸载产品
+        PlayToNgPoint,//放置到ng点位
+        PlayToOkPoint,//放置到ok点位
         REST,   //复位
     }
     public enum STEP2
@@ -48,6 +49,8 @@ namespace Frame.Definations
         //station1
         INIT,
     }
+
+    
 
    
 

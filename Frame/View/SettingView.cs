@@ -40,10 +40,8 @@ namespace Frame.View
 
         private void button1_Click(object sender, EventArgs e)
         {
-            shapeModle1.LoadModle(@"Vision/Model/UpModel");
-            var ret = shapeModle1.FindSimple();
-            HOperatorSet.ReadTuple(@"Vision/Calib/UP.tup", out HTuple hom2D);
-            HOperatorSet.AffineTransPoint2d(hom2D,ret.Column, ret.Row, out HTuple Qx, out HTuple Qy);
+           
+            //var v=PLC.ReadWord("M100");
         }
 
         private void button2_Click(object sender, EventArgs e)

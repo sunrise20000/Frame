@@ -53,6 +53,7 @@
     <Compile Include="ABBCmd\CmdMoveToPos.cs" />
     <Compile Include="ABBCmd\CmdRotate.cs" />
     <Compile Include="ABBCmd\CmdTest.cs" />
+    <Compile Include="ABBCmd\CmdMoveToPointReplaceXYZ.cs" />
     <Compile Include="ABBCmd\RobotCmdBase.cs" />
     <Compile Include="ABBData\AbbPoint.cs" />
     <Compile Include="AbbRobot.cs" />

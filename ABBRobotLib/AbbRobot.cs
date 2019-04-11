@@ -15,7 +15,7 @@ namespace ABBRobotLib
 
         TcpLib.TcpClient.TcpClient Client = new TcpLib.TcpClient.TcpClient("]");
         object TcpLock = new object();
-
+        bool isOpen = false;
         CmdCalibrate CalibrateCmd = new CmdCalibrate();
         CmdMoveToPos MoveToPosCmd = new CmdMoveToPos();
         CmdRotate RotateCmd = new CmdRotate();
@@ -26,6 +26,7 @@ namespace ABBRobotLib
         CmdReadDinBit ReadDinBitCmd = new CmdReadDinBit();
         CmdReadDoutBit ReadDoutBitCmd = new CmdReadDoutBit();
         CmdGetPointPos GetPointPosCmd = new CmdGetPointPos();
+        CmdMoveToPointReplaceXYZ MoveToPointReplaceXYZCmd = new CmdMoveToPointReplaceXYZ();
         #region Property
         public string IP { get; set; }
         public int Port { get; set; }
@@ -67,6 +68,9 @@ namespace ABBRobotLib
                 case EnumRobotCmd.GETPOINTPOS:
                     cmd = GetPointPosCmd;
                     break;
+                case EnumRobotCmd.MOVETOPOINTREPLACEXYZ:
+                    cmd = MoveToPointReplaceXYZCmd;
+                    break;
                 default:
                     break;
             }
@@ -80,18 +84,29 @@ namespace ABBRobotLib
 
         public bool Open(string IP, int Port)
         {
-            this.IP = IP;
-            this.Port = Port;
-            IsOpen = Client.Connect(IP, Port);
-            return IsOpen;
+            lock (TcpLock)
+            {
+                this.IP = IP;
+                this.Port = Port;
+                isOpen = Client.Connect(IP, Port);
+                return isOpen;
+            }
         }
         public void Close()
         {
-            Client.Close();
-            IsOpen = false;
+            lock (TcpLock)
+            {
+                Client.Close();
+                isOpen = false;
+            }
         }
         public bool IsOpen {
-            get;private set;
+            get {
+                lock (TcpLock)
+                {
+                    return isOpen;
+                }
+            }
         }
         
         public bool MoveAbs(double x, double y, double z, EnumRobotSpeed speed, EnumRobotTool tool, EnumMoveType MoveType=EnumMoveType.MoveL,int TimeOut=3000)
@@ -246,6 +261,21 @@ namespace ABBRobotLib
                 return true;
             }
         }
+
+        public bool MoveToPointReplaceXYZ(EnumProductType ProType, double X,double Y,double Z, EnumRobotSpeed Speed, EnumRobotTool Tool, int TimeOut=3000)
+        {
+            MoveToPointReplaceXYZCmd.I_Type = ProType;
+            MoveToPointReplaceXYZCmd.I_X = X;
+            MoveToPointReplaceXYZCmd.I_Y = Y;
+            MoveToPointReplaceXYZCmd.I_Z = Z;
+            MoveToPointReplaceXYZCmd.I_Speed = Speed;
+            MoveToPointReplaceXYZCmd.I_Tool = Tool;
+            var cmd = ExcuteCmd(MoveToPointReplaceXYZCmd, TimeOut) as CmdMoveToPointReplaceXYZ;
+            if (cmd == null)
+                throw new Exception("TimeOut to MoveToPointReplaceXYZ");
+            return true;
+        }
+    
         #endregion
 
     }

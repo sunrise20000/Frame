@@ -24,7 +24,12 @@ namespace Frame.View
       
         public void OnMsgOutput(MsgOutput msg)
         {
-            MsgCollect.Add(msg.msg);
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => OnMsgOutput(msg)));
+            }
+            else
+                MsgCollect.Add(msg.msg);
         }
     }
 }

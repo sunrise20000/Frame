@@ -35,7 +35,7 @@ namespace Frame.Model
                 switch (nStep)
                 {
                     default:
-                        break;
+                        return 0;
                 }
             }
             return 0;

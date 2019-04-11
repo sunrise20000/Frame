@@ -68,7 +68,7 @@ namespace Frame
         private void LoadConfig()
         {
             var station = new StationTest();
-            var station1 = new StationTest1();
+            var station1 = new StationReadAlarm();
             var station2 = new StationTest2();
 
             StationMgr.Instance.AddInstanse(station);
@@ -80,8 +80,6 @@ namespace Frame
 
             //可以接收Station的ShowInfo消息
             homeView.SetStationBinding(station, station1, station2);
-
-
         }
         private void barButtonItemHome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {

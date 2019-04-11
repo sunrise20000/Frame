@@ -128,6 +128,7 @@
     <Compile Include="Interface\ICommandAction.cs" />
     <Compile Include="Model\CalibratePointModel.cs" />
     <Compile Include="Model\MessageModel.cs" />
+    <Compile Include="Model\PlatteInfoModel.cs" />
     <Compile Include="Model\RapidSettingModel.cs" />
     <Compile Include="Model\StationInfoModel.cs" />
     <Compile Include="Program.cs" />
@@ -138,10 +139,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Model\PointModel.cs" />
     <Compile Include="Station\StationBase.cs" />
     <Compile Include="Station\StationMgr.cs" />
     <Compile Include="Station\StationTest2.cs" />
-    <Compile Include="Station\StationTest1.cs" />
+    <Compile Include="Station\StationReadAlarm.cs" />
     <Compile Include="Station\StationTest.cs" />
     <Compile Include="View\CameraSetting.cs">
       <SubType>UserControl</SubType>
@@ -180,7 +182,6 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>

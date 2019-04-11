@@ -71,5 +71,10 @@ namespace Frame.Instrument
         {
             return Robot.SetDoutBit(Dout, Value, TimeOut);
         }
+
+        public bool MoveToPointReplaceXYZ(EnumProductType ProType, double X, double Y, double Z, EnumRobotSpeed Speed, EnumRobotTool Tool, int TimeOut = 3000)
+        {
+            return Robot.MoveToPointReplaceXYZ(ProType, X, Y, Z, Speed, Tool,TimeOut);
+        }
     }
 }

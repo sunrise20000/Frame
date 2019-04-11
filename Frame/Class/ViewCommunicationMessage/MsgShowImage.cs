@@ -9,5 +9,6 @@ namespace Frame.Class.ViewCommunicationMessage
     public class MsgShowImage : ViewMessageBase
     {
         public HObject Image { get; set; }
+        public string mess { get; set; }
     }
 }
