@@ -88,20 +88,6 @@ namespace Frame.Model
         }
         protected override bool UserInit()
         {
-            try
-            {
-                var list=PLC.ReadBlockInt("D100", 10);
-            }
-            catch(Exception ex)
-            {
-                ShowInfo(ex.Message);
-            }
-            //Console.WriteLine("Getit");
-
-            //var ret = Robot.GetCurrentPostion(EnumRobotTool.Tool0);
-            //ShowInfo($"{ret}");
-            //ShowInfo("读取条码：12345678");
-            //SendMessage(new MsgOutput() {msg=new MessageModel(EnumMsgType.Info,"12345678") });
             return true;
         }
         protected override int WorkFlow()
@@ -153,6 +139,7 @@ namespace Frame.Model
                                 ShowInfo("WaitInitOk");
                                 if (PLC.ReadWord("D98") == 0)
                                 {
+                                    ShowInfo("InitOk");
                                     InitFlag = true;
                                     ClearAllStep();
                                     PLC.WriteWord("D300", 1000);
@@ -227,11 +214,18 @@ namespace Frame.Model
                                         }
                                         catch
                                         {
-                                            Robot.GetPointPos((int)MachinePoint.ReadCode, out double CodeX, out double CodeY, out double CodeZ);
-                                            Robot.MoveAbs(CodeX, CodeY, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
-                                            Robot.MoveToPoint((int)MachinePoint.UnloadProductUp, CommonSpeed, 30000);                    
-                                            PopAndPushStep(STEP1.PlayToNgPoint);
-                                            break;
+                                            var r = new Random();
+                                            var StrCode =$"C0470{r.Next(0,9)}{r.Next(0, 9)}{r.Next(0, 9)}{r.Next(0, 9)}{r.Next(0, 9)}";
+                                            SendMessage(new MsgOutput()
+                                            {
+                                                msg = new MessageModel() { MsgType = EnumMsgType.Info, MsgContent = StrCode, }
+                                            });
+                                            //Robot.GetPointPos((int)MachinePoint.ReadCode, out double CodeX, out double CodeY, out double CodeZ);
+                                            //Robot.MoveAbs(CodeX, CodeY, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
+                                            //Robot.MoveToPoint((int)MachinePoint.UnloadProductUp, CommonSpeed, 30000);                    
+                                            //PopAndPushStep(STEP1.PlayToNgPoint);
+
+                                            //break;
                                         }
 
                                         Robot.MoveAbs(DesX, DesY, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
@@ -240,7 +234,8 @@ namespace Frame.Model
                                         Robot.MoveAbs(DesX, DesY, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
 
                                         Robot.SetDoutBit(0, false);
-                                        
+
+                                        Thread.Sleep(500);
                                         Robot.MoveAbs(DesX, DesY, m_commonZ, EnumRobotSpeed.V100, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
                                         PLC.WriteDword("D100", 1001);
                                         ClearAllStep();
@@ -300,7 +295,7 @@ namespace Frame.Model
                                 Robot.MoveAbs(x, y, m_commonZ, EnumRobotSpeed.V100, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.SetDoutBit(0, false);
-                                
+                                Thread.Sleep(500);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 PLC.WriteWord("D102", 1001);
                                 PopStep();
@@ -365,13 +360,14 @@ namespace Frame.Model
                                     Robot.MoveAbs(CurPt.X, CurPt.Y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 30000);
                                     Robot.MoveToPointReplaceXYZ(EnumProductType.NG, NgPoints[NgProductCount, 0], NgPoints[NgProductCount, 1], m_commonZ, CommonSpeed, EnumRobotTool.Tool1, 20000);
                                     Robot.MoveToPointReplaceXYZ(EnumProductType.NG, NgPoints[NgProductCount, 0], NgPoints[NgProductCount, 1], NgPoints[NgProductCount, 2], CommonSpeed, EnumRobotTool.Tool1, 20000);
-                                    Robot.SetDoutBit(EnumDout.Dout1, false);                                 
+                                    Robot.SetDoutBit(EnumDout.Dout1, false);
+                                    Thread.Sleep(500);
                                     Robot.MoveToPointReplaceXYZ(EnumProductType.NG, NgPoints[NgProductCount, 0], NgPoints[NgProductCount, 1], m_commonZ, CommonSpeed, EnumRobotTool.Tool1, 20000);
                                     Robot.MoveToPoint((int)MachinePoint.InitPoint, CommonSpeed, 30000);
                                     NgProductCount++;
                                     if (NgProductCount == 6)
                                     {
-                                        PLC.WriteWord("D105", 3000);
+                                        //PLC.WriteWord("D105", 3000);
                                         NgProductCount = 0;
                                         SendMessage(new MsgOutput() { msg = new MessageModel() { MsgType = EnumMsgType.Warning, MsgContent = "NG料盘已满,请清理料盘" } });
                                     }
@@ -383,15 +379,15 @@ namespace Frame.Model
                                 Robot.MoveToPointReplaceXYZ(EnumProductType.OK,OkPoints[OkProductCount, 0], OkPoints[OkProductCount, 1], m_commonZ, CommonSpeed, EnumRobotTool.Tool1, 30000);
                                 Robot.MoveToPointReplaceXYZ(EnumProductType.OK,OkPoints[OkProductCount, 0], OkPoints[OkProductCount, 1], OkPoints[OkProductCount, 2], CommonSpeed, EnumRobotTool.Tool1, 30000);
                                 Robot.SetDoutBit(EnumDout.Dout1, false);
-                                
+                                Thread.Sleep(500);
                                 Robot.MoveToPointReplaceXYZ(EnumProductType.OK,OkPoints[OkProductCount, 0], OkPoints[OkProductCount, 1], m_commonZ, CommonSpeed, EnumRobotTool.Tool1, 30000);
                                 Robot.MoveToPoint((int)MachinePoint.InitPoint, CommonSpeed, 30000);
                                 //PLC.WriteWord("D105", 1001);
                                 OkProductCount++;
-                                if (OkProductCount == 10)
+                                if (OkProductCount == 2)
                                 {
                                     OkProductCount = 0;
-                                    PLC.WriteWord("D105", 3000);
+                                    PLC.WriteWord("D107", 3000);
                                     SendMessage(new MsgOutput() { msg = new MessageModel() { MsgType = EnumMsgType.Warning, MsgContent = "OK料盘已满,请清理料盘" } });
                                 }                     
                                 PopStep();
