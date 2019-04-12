@@ -1,4 +1,8 @@
 ﻿using Frame.Class.ViewCommunicationMessage;
+using Frame.Config.CommunicationCfg;
+using Frame.Config.HardwareCfg.InstrumentCfg;
+using Frame.Definations;
+using Frame.Instrument;
 using Frame.Interface;
 using Frame.Model;
 using Frame.View;
@@ -21,7 +25,8 @@ namespace Frame
         HistoryView historyView = new HistoryView();
         SettingView settingView = new SettingView();
         CameraSetting settingCamView = new CameraSetting();
-
+        EnumSystemState systemState = EnumSystemState.IDLE;
+        
         public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
 
         public Form1()
@@ -63,6 +68,7 @@ namespace Frame
 
 
             barCheckItem2.Caption = barCheckItem2.Checked ? "Manual" : "Auto";
+            UpdateButtonState();
         }
 
         private void LoadConfig()
@@ -113,7 +119,10 @@ namespace Frame
 
         private void barButtonItemStart_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            StationMgr.Instance.StartAllStation();
+            if (StationMgr.Instance.StartAllStation())
+            {
+
+            }
         }
 
         private void barButtonItemStop_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -198,15 +207,79 @@ namespace Frame
             }
         }
 
+        /// <summary>
+        /// Manual和Auto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void barCheckItem2_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            var PLC = InstrumentMgr<InstrumentCfgBase,CommunicationCfgBase>.Instance.FindInstanseByName("FX3UPLC") as InstrumentFxPLC;
             barCheckItem2.Caption = barCheckItem2.Checked ? "Manual" : "Auto";
             barCheckItem2.ImageIndex = barCheckItem2.Checked ? 1 : 2;
+            if (PLC != null)
+            {
+                if (!PLC.IsOpen)
+                    PLC.Open();
+                if (PLC.IsOpen)
+                {
+                    PLC.WriteWord("D300",(short)(barCheckItem2.Checked ? 1000: 0));
+                }
+            }
         }
 
+        public EnumSystemState SystemState
+        {
+            set {
+                if (systemState != value)
+                {
+                    systemState = value;
+                    UpdateButtonState();
+                }
+            }
+            get
+            {
+                return systemState;
+            }
+        }
+
+        /// <summary>
+        /// Reset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void barButtonItemReset_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            var station = StationMgr.Instance.FindInstanseByName("StationTest") as StationTest;
+            if (station != null)
+                station.PushStep(0);
+        }
 
+        private void UpdateButtonState()
+        {
+            switch (systemState)
+            {
+                case EnumSystemState.IDLE:
+                    barButtonItemStart.Enabled = true;
+                    barButtonItemStop.Enabled = false;
+                    barButtonItemPuse.Enabled = true;
+                    break;
+                case EnumSystemState.PUSE:
+                    barButtonItemStart.Enabled = true;
+                    barButtonItemStop.Enabled = true;
+                    barButtonItemPuse.Enabled = false;
+                    break;
+                case EnumSystemState.RUN:
+                    barButtonItemStart.Enabled = false;
+                    barButtonItemStop.Enabled = true;
+                    barButtonItemPuse.Enabled = true;
+                    break;
+            }
+        }
+
+        private void barButtonItemPuse_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            StationMgr.Instance.PuseAllStation();
         }
     }
 }

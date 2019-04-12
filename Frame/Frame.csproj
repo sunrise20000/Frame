@@ -97,6 +97,7 @@
     <Compile Include="Class\ViewCommunicationMessage\MsgFindModel.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgShowImage.cs" />
     <Compile Include="Class\ViewCommunicationMessage\MsgUpdateInstrumentState.cs" />
+    <Compile Include="Class\ViewCommunicationMessage\MsgUpdateTestState.cs" />
     <Compile Include="Config\CommunicationCfg\CommunicationCfgBase.cs" />
     <Compile Include="Config\HardwareCfg\CameraCfg\CameraCfgBase.cs" />
     <Compile Include="Instrument\InstrumentFxPLC.cs" />
@@ -175,6 +176,9 @@
     <Compile Include="View\UC_HistoryPanel.xaml.cs">
       <DependentUpon>UC_HistoryPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UC_ResultPanel.xaml.cs">
+      <DependentUpon>UC_ResultPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UC_StationInfo.xaml.cs">
       <DependentUpon>UC_StationInfo.xaml</DependentUpon>
     </Compile>
@@ -182,6 +186,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
@@ -228,6 +233,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\UC_HistoryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UC_ResultPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

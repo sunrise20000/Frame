@@ -50,7 +50,12 @@ namespace Frame.Definations
         INIT,
     }
 
-    
+    public enum EnumSystemState
+    {
+        RUN,
+        IDLE,
+        PUSE,
+    }
 
    
 

@@ -23,7 +23,7 @@ namespace Frame.Model
         protected Task t = null; 
         public List<ICommandAction> ReceiverList { get; set; } = new List<ICommandAction>();
         protected virtual bool CheckStationStatusChanged() { return bPused; }
-        protected T PeekStep<T>() where T:struct
+        public T PeekStep<T>() where T:struct
         {
             int i = nStepQueue.Peek();
             if (Enum.TryParse(i.ToString(), out T result))
@@ -32,16 +32,16 @@ namespace Frame.Model
                 return default(T);
 
         }
-        protected void PushStep<T>(T nStep) where T:struct { nStepQueue.Enqueue(nStep.GetHashCode()); }
-        protected void PopAndPushStep<T>(T nStep) where T:struct { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep.GetHashCode()); }
-        protected void PushBatchStep<T>(params T[] nSteps) where T:struct
+        public void PushStep<T>(T nStep) where T:struct { nStepQueue.Enqueue(nStep.GetHashCode()); }
+        public void PopAndPushStep<T>(T nStep) where T:struct { nStepQueue.Dequeue(); nStepQueue.Enqueue(nStep.GetHashCode()); }
+        public void PushBatchStep<T>(params T[] nSteps) where T:struct
         {
             foreach (var step in nSteps)
                 nStepQueue.Enqueue(step.GetHashCode());
         }
-        protected void PopStep() { nStepQueue.Dequeue(); }
-        protected void ClearAllStep() { nStepQueue.Clear(); }
-        protected int GetCurStepCount() { return nStepQueue.Count; }
+        public void PopStep() { nStepQueue.Dequeue(); }
+        public void ClearAllStep() { nStepQueue.Clear(); }
+        public int GetCurStepCount() { return nStepQueue.Count; }
         protected virtual bool UserInit() { return true; }
         protected void ShowInfo(string strMsg,bool IsCanRepeat=false)
         {

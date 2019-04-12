@@ -46,12 +46,21 @@ namespace Frame.Model
         STEP1 nStep;
         public StationTest()
         {
+          
+        }
+     
+        ~StationTest()
+        {
+            Robot.Close();
+        }
+        protected override bool UserInit()
+        {
             CommonSpeed = EnumRobotSpeed.V100;
-            if(!Robot.IsOpen)
+            if (!Robot.IsOpen)
                 Robot.Open();
 
             upCam = Camera.CameraManager.Instance.FindInstanseByName("Cam_Up") as Frame.Camera.HaiKangCamera;
-            if (!upCam.m_IsConnected)
+            if (upCam!=null && !upCam.m_IsConnected)
             {
                 upCam.OpenCamera();
                 upCam.SetTriggerMode("Off");
@@ -61,33 +70,25 @@ namespace Frame.Model
 
 
             downCam = Camera.CameraManager.Instance.FindInstanseByName("Cam_Down") as Frame.Camera.HaiKangCamera;
-            if (!downCam.m_IsConnected)
+            if (downCam!=null && !downCam.m_IsConnected)
             {
                 downCam.OpenCamera();
                 downCam.SetTriggerMode("Off");
                 downCam.ImageAcquired -= DownCam_ImageAcquired;
                 downCam.ImageAcquired += DownCam_ImageAcquired;
             }
-            if (!PLC.IsOpen)
+            if (PLC!=null && !PLC.IsOpen)
                 PLC.Open();
+            if(Scanner!=null)
+                Scanner.Open();
 
-            Scanner.Open();
             MappingDic.Add(0, STEP1.GrapProduct);
             MappingDic.Add(1, STEP1.SocketTest);
             MappingDic.Add(2, STEP1.UnLoadFromSocket);
             MappingDic.Add(3, STEP1.FaceTest);
             MappingDic.Add(4, STEP1.GetDustPlug);
             MappingDic.Add(5, STEP1.UnloadFromEndFaceTest);
-        }
 
-       
-
-        ~StationTest()
-        {
-            Robot.Close();
-        }
-        protected override bool UserInit()
-        {
             return true;
         }
         protected override int WorkFlow()

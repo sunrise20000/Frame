@@ -48,6 +48,7 @@
             this.barButtonItemCamera = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemReset = new DevExpress.XtraBars.BarButtonItem();
             this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
+            this.barButtonItemPuse = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -74,9 +75,10 @@
             this.StateRobot,
             this.barButtonItemCamera,
             this.barButtonItemReset,
-            this.barCheckItem2});
+            this.barCheckItem2,
+            this.barButtonItemPuse});
             this.ribbonControl2.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl2.MaxItemId = 17;
+            this.ribbonControl2.MaxItemId = 18;
             this.ribbonControl2.Name = "ribbonControl2";
             this.ribbonControl2.PageHeaderItemLinks.Add(this.StateRobot);
             this.ribbonControl2.PageHeaderItemLinks.Add(this.StatePLC);
@@ -219,6 +221,15 @@
             this.barCheckItem2.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.barCheckItem2.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem2_CheckedChanged);
             // 
+            // barButtonItemPuse
+            // 
+            this.barButtonItemPuse.Caption = "Puse";
+            this.barButtonItemPuse.Id = 17;
+            this.barButtonItemPuse.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemPuse.ImageOptions.Image")));
+            this.barButtonItemPuse.Name = "barButtonItemPuse";
+            this.barButtonItemPuse.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemPuse.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemPuse_ItemClick);
+            // 
             // ribbonPage2
             // 
             this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -232,6 +243,7 @@
             this.ribbonPageGroup2.Glyph = ((System.Drawing.Image)(resources.GetObject("ribbonPageGroup2.Glyph")));
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItemStart);
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItemStop);
+            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItemPuse);
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItemReset);
             this.ribbonPageGroup2.ItemLinks.Add(this.barCheckItem2);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
@@ -285,6 +297,7 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItemCamera;
         private DevExpress.XtraBars.BarButtonItem barButtonItemReset;
         private DevExpress.XtraBars.BarCheckItem barCheckItem2;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemPuse;
     }
 }
 

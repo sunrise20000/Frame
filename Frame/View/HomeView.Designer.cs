@@ -41,9 +41,14 @@
             this.uC_StationInfo1 = new Frame.View.UC_StationInfo();
             this.dockPanelSettingRapid = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel2_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.hDisplay1 = new HalWindow.HDisplay();
+            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
+            this.uC_ResultPanel1 = new Frame.View.UC_ResultPanel();
+            this.elementHost3 = new System.Windows.Forms.Integration.ElementHost();
+            this.uC_ResultPanel2 = new Frame.View.UC_ResultPanel();
+            this.elementHost4 = new System.Windows.Forms.Integration.ElementHost();
+            this.uC_ResultPanel3 = new Frame.View.UC_ResultPanel();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
             this.panelContainer1.SuspendLayout();
@@ -54,7 +59,6 @@
             this.controlContainer1.SuspendLayout();
             this.dockPanelSettingRapid.SuspendLayout();
             this.dockPanel2_Container.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -168,23 +172,17 @@
             this.dockPanelSettingRapid.Name = "dockPanelSettingRapid";
             this.dockPanelSettingRapid.OriginalSize = new System.Drawing.Size(216, 200);
             this.dockPanelSettingRapid.Size = new System.Drawing.Size(216, 391);
-            this.dockPanelSettingRapid.Text = "快速设置";
+            this.dockPanelSettingRapid.Text = "当前状态";
             // 
             // dockPanel2_Container
             // 
-            this.dockPanel2_Container.Controls.Add(this.propertyGridControl1);
+            this.dockPanel2_Container.Controls.Add(this.elementHost4);
+            this.dockPanel2_Container.Controls.Add(this.elementHost3);
+            this.dockPanel2_Container.Controls.Add(this.elementHost2);
             this.dockPanel2_Container.Location = new System.Drawing.Point(5, 23);
             this.dockPanel2_Container.Name = "dockPanel2_Container";
             this.dockPanel2_Container.Size = new System.Drawing.Size(207, 364);
             this.dockPanel2_Container.TabIndex = 0;
-            // 
-            // propertyGridControl1
-            // 
-            this.propertyGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridControl1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridControl1.Name = "propertyGridControl1";
-            this.propertyGridControl1.Size = new System.Drawing.Size(207, 364);
-            this.propertyGridControl1.TabIndex = 0;
             // 
             // panel1
             // 
@@ -207,6 +205,33 @@
             this.hDisplay1.Size = new System.Drawing.Size(584, 391);
             this.hDisplay1.TabIndex = 0;
             // 
+            // elementHost2
+            // 
+            this.elementHost2.Location = new System.Drawing.Point(4, 3);
+            this.elementHost2.Name = "elementHost2";
+            this.elementHost2.Size = new System.Drawing.Size(200, 100);
+            this.elementHost2.TabIndex = 0;
+            this.elementHost2.Text = "elementHost2";
+            this.elementHost2.Child = this.uC_ResultPanel1;
+            // 
+            // elementHost3
+            // 
+            this.elementHost3.Location = new System.Drawing.Point(4, 109);
+            this.elementHost3.Name = "elementHost3";
+            this.elementHost3.Size = new System.Drawing.Size(200, 100);
+            this.elementHost3.TabIndex = 0;
+            this.elementHost3.Text = "elementHost2";
+            this.elementHost3.Child = this.uC_ResultPanel2;
+            // 
+            // elementHost4
+            // 
+            this.elementHost4.Location = new System.Drawing.Point(0, 215);
+            this.elementHost4.Name = "elementHost4";
+            this.elementHost4.Size = new System.Drawing.Size(204, 100);
+            this.elementHost4.TabIndex = 0;
+            this.elementHost4.Text = "elementHost2";
+            this.elementHost4.Child = this.uC_ResultPanel3;
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -227,7 +252,6 @@
             this.controlContainer1.ResumeLayout(false);
             this.dockPanelSettingRapid.ResumeLayout(false);
             this.dockPanel2_Container.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -238,7 +262,6 @@
         //private DevExpress.XtraBars.Docking2010.DocumentManager documentManager1;
         private DevExpress.XtraBars.Docking.DockPanel dockPanelSettingRapid;
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel2_Container;
-        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl1;
         private DevExpress.XtraBars.Docking.DockPanel dockPanel1;
     
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
@@ -252,6 +275,12 @@
         private UC_StationInfo uC_StationInfo1;
         private System.Windows.Forms.Panel panel1;
         private HalWindow.HDisplay hDisplay1;
+        private System.Windows.Forms.Integration.ElementHost elementHost2;
+        private UC_ResultPanel uC_ResultPanel1;
+        private System.Windows.Forms.Integration.ElementHost elementHost4;
+        private UC_ResultPanel uC_ResultPanel3;
+        private System.Windows.Forms.Integration.ElementHost elementHost3;
+        private UC_ResultPanel uC_ResultPanel2;
         //private DevExpress.XtraEditors.PanelControl panelControlCamera;
     }
 }

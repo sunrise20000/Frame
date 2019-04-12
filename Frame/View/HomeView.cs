@@ -29,9 +29,6 @@ namespace Frame.View
 
         private void InitCtrl()
         {
-            //
-            propertyGridControl1.SelectedObject = rapidSetting;
-
             //初始化DataGrid
             _dt.Columns.Add("Time", Type.GetType("System.DateTime"));
             _dt.Columns.Add("Type", Type.GetType("System.String"));
@@ -41,6 +38,16 @@ namespace Frame.View
             dataGridView1.Columns[0].FillWeight = 15;
             dataGridView1.Columns[1].FillWeight = 15;
             dataGridView1.Columns[2].FillWeight = 65;
+
+            uC_ResultPanel1.Header = "SN读取结果";
+            uC_ResultPanel1.SetContent("", "NG", "WAIT");
+
+            uC_ResultPanel2.Header = "Socket测试结果";
+            uC_ResultPanel2.SetContent("OK","NG","WAIT");
+
+            uC_ResultPanel3.Header = "端面测试结果";
+            uC_ResultPanel2.SetContent("OK", "NG", "WAIT");
+
         }
 
         public void OnMsgOutput(MsgOutput msg)
@@ -93,6 +100,23 @@ namespace Frame.View
                 hDisplay1.HImageX = msg.Image;
             }
         }
+
+        public void OnMsgUpdateTestState(MsgUpdateTestState msg)
+        {
+            switch (msg.UpdateType)
+            {
+                case EnumUpdateType.Socket:
+                    uC_ResultPanel1.State = (EnumState)msg.State;
+                    break;
+                case EnumUpdateType.ScannerCode:
+                    uC_ResultPanel1.SetContent(msg.StrMessage, "NG", "WAIT");
+                    uC_ResultPanel2.State = (EnumState)msg.State;
+                    break;
+                case EnumUpdateType.FaceTest:
+                    uC_ResultPanel3.State = (EnumState)msg.State;
+                    break;
+            }
+        }
         /// <summary>
         /// 显示Station消息时候需要绑定Station才能显示
         /// </summary>
@@ -113,5 +137,7 @@ namespace Frame.View
             SendMessage(msg);
             OnMsgOutput(msg);
         }
+
+
     }
 }
