@@ -59,8 +59,10 @@ namespace ABBRobotLib
                     cmd = MoveToPointCmd;
                     break;
                 case EnumRobotCmd.READDIN:
+                    cmd = ReadDinBitCmd;
                     break;
                 case EnumRobotCmd.READDOUT:
+                    cmd = ReadDoutBitCmd;
                     break;
                 case EnumRobotCmd.WRITEDOUT:
                     cmd = SetDoutBitCmd;

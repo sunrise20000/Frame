@@ -46,7 +46,7 @@ namespace Frame.View
             uC_ResultPanel2.SetContent("OK","NG","WAIT");
 
             uC_ResultPanel3.Header = "端面测试结果";
-            uC_ResultPanel2.SetContent("OK", "NG", "WAIT");
+            uC_ResultPanel3.SetContent("OK", "NG", "WAIT");
 
         }
 
@@ -103,18 +103,29 @@ namespace Frame.View
 
         public void OnMsgUpdateTestState(MsgUpdateTestState msg)
         {
-            switch (msg.UpdateType)
+            if (this.InvokeRequired)
             {
-                case EnumUpdateType.Socket:
-                    uC_ResultPanel1.State = (EnumState)msg.State;
-                    break;
-                case EnumUpdateType.ScannerCode:
-                    uC_ResultPanel1.SetContent(msg.StrMessage, "NG", "WAIT");
-                    uC_ResultPanel2.State = (EnumState)msg.State;
-                    break;
-                case EnumUpdateType.FaceTest:
-                    uC_ResultPanel3.State = (EnumState)msg.State;
-                    break;
+                Invoke(new Action(() =>
+                {
+                    OnMsgUpdateTestState(msg);
+                }));
+            }
+            else
+            {
+
+                switch (msg.UpdateType)
+                {
+                    case EnumUpdateType.ScannerCode:
+                        uC_ResultPanel1.SetContent(msg.StrMessage, "NG", "WAIT");
+                        uC_ResultPanel1.State = (EnumState)msg.State;
+                        break;
+                    case EnumUpdateType.Socket:
+                        uC_ResultPanel2.State = (EnumState)msg.State;
+                        break;
+                    case EnumUpdateType.FaceTest:
+                        uC_ResultPanel3.State = (EnumState)msg.State;
+                        break;
+                }
             }
         }
         /// <summary>

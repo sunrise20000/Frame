@@ -25,7 +25,10 @@ namespace ABBRobotLib.ABBCmd
 
         protected override void ReadProfile()
         {
+            if (Paras[0].Equals("2"))
+                throw new Exception("当前点位不存在");
             Q_State=Paras[0].Equals("1");
+
         }
 
         protected override void SetProfile()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Frame.View
     /// <summary>
     /// UC_ResultPanel.xaml 的交互逻辑
     /// </summary>
-    public partial class UC_ResultPanel : UserControl
+    public partial class UC_ResultPanel : UserControl, INotifyPropertyChanged
     {
         private string oKCOntent;
 
@@ -32,16 +33,28 @@ namespace Frame.View
 
         private string waitingContent;
 
+        EnumState state;
+
 
         public UC_ResultPanel()
         {
             InitializeComponent();
+            state = EnumState.WAITING;
         }
 
         public EnumState State
         {
-            get; set;
-        } = EnumState.WAITING;
+            get { return state; }
+            set {
+                if (state != value)
+                {
+                    state = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("State"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Text"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BackGroundColor"));
+                }
+            }
+        }
         public string Header { get; set; }
 
         public string Text { get {
@@ -71,6 +84,9 @@ namespace Frame.View
                         return new SolidColorBrush(Color.FromRgb(0,0,0));
                 }
             } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void SetContent(string OkContent, string NGContent, string WaitingContent)
         {
             oKCOntent = OkContent;

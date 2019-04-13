@@ -19,7 +19,7 @@ namespace Frame.Class.ViewCommunicationMessage
         NG,
         WAITING,
     }
-    public class MsgUpdateTestState
+    public class MsgUpdateTestState : ViewMessageBase
     {
         public EnumUpdateType UpdateType { get; set; }
         public EnumTestState State { get; set; }

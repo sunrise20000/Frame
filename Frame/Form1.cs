@@ -121,13 +121,16 @@ namespace Frame
         {
             if (StationMgr.Instance.StartAllStation())
             {
-
+                SystemState = EnumSystemState.RUN;
             }
         }
 
         private void barButtonItemStop_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            StationMgr.Instance.StopAllStation();
+            if (StationMgr.Instance.StopAllStation())
+            {
+                SystemState = EnumSystemState.IDLE;
+            }
            
         }
 
@@ -279,7 +282,10 @@ namespace Frame
 
         private void barButtonItemPuse_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            StationMgr.Instance.PuseAllStation();
+            if (StationMgr.Instance.PuseAllStation())
+            {
+                SystemState = EnumSystemState.PUSE;
+            }
         }
     }
 }

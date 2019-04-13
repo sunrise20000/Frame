@@ -15,6 +15,8 @@ using CLCamera;
 using Frame.Camera;
 using HalconDotNet;
 using ABBRobotLib.Definations;
+using System.Management.Instrumentation;
+using System.Windows.Forms;
 
 namespace Frame.Model
 {
@@ -46,21 +48,12 @@ namespace Frame.Model
         STEP1 nStep;
         public StationTest()
         {
-          
-        }
-     
-        ~StationTest()
-        {
-            Robot.Close();
-        }
-        protected override bool UserInit()
-        {
-            CommonSpeed = EnumRobotSpeed.V100;
-            if (!Robot.IsOpen)
+            CommonSpeed = EnumRobotSpeed.V500;
+            if(!Robot.IsOpen)
                 Robot.Open();
 
             upCam = Camera.CameraManager.Instance.FindInstanseByName("Cam_Up") as Frame.Camera.HaiKangCamera;
-            if (upCam!=null && !upCam.m_IsConnected)
+            if (!upCam.m_IsConnected)
             {
                 upCam.OpenCamera();
                 upCam.SetTriggerMode("Off");
@@ -70,25 +63,33 @@ namespace Frame.Model
 
 
             downCam = Camera.CameraManager.Instance.FindInstanseByName("Cam_Down") as Frame.Camera.HaiKangCamera;
-            if (downCam!=null && !downCam.m_IsConnected)
+            if (!downCam.m_IsConnected)
             {
                 downCam.OpenCamera();
                 downCam.SetTriggerMode("Off");
                 downCam.ImageAcquired -= DownCam_ImageAcquired;
                 downCam.ImageAcquired += DownCam_ImageAcquired;
             }
-            if (PLC!=null && !PLC.IsOpen)
+            if (!PLC.IsOpen)
                 PLC.Open();
-            if(Scanner!=null)
-                Scanner.Open();
 
+            Scanner.Open();
             MappingDic.Add(0, STEP1.GrapProduct);
             MappingDic.Add(1, STEP1.SocketTest);
             MappingDic.Add(2, STEP1.UnLoadFromSocket);
             MappingDic.Add(3, STEP1.FaceTest);
             MappingDic.Add(4, STEP1.GetDustPlug);
             MappingDic.Add(5, STEP1.UnloadFromEndFaceTest);
+        }
 
+       
+
+        ~StationTest()
+        {
+            Robot.Close();
+        }
+        protected override bool UserInit()
+        {
             return true;
         }
         protected override int WorkFlow()
@@ -96,7 +97,7 @@ namespace Frame.Model
             Random random = new Random();
             int socketTestResult =0;
             int faceTestResult = 0;
-            double x, y, z;
+            double x, y, z;       
             ClearAllStep();
             PushStep(STEP1.Init);
             while (!cts.IsCancellationRequested)
@@ -112,7 +113,7 @@ namespace Frame.Model
                         nStep = PeekStep<STEP1>();
                         switch (nStep)
                         {
-                            case STEP1.Init://复位机械手
+                            case STEP1.Init://复位机械手    
                                 ShowInfo("Init");
                                 Robot.GetPointPos((int)MachinePoint.GrapProductUp, out x, out y, out m_commonZ);
 
@@ -130,8 +131,30 @@ namespace Frame.Model
                                 Robot.MoveToPoint((int)MachinePoint.InitPoint, CommonSpeed, 20000);
                                 shapeModleUp.LoadModle(@"Vision/Model/UpModel");
                                 shapeModleDown.LoadModle(@"Vision/Model/DownModel");
-                                Robot.SetDoutBit(0, false);
+                                Robot.SetDoutBit(EnumDout.Dout1, false);
                                 Robot.SetDoutBit(EnumDout.Dout2, false);
+                                CheckDIo(EnumDin.Din1,true, "未读到真空负压信号", 2000);
+
+                                CheckDIo(EnumDin.Din2,true, "未读到防尘塞夹爪气缸原位信号", 2000);
+
+
+                               
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.WAITING,
+                                    UpdateType = EnumUpdateType.FaceTest
+                                });
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.WAITING,
+                                    UpdateType = EnumUpdateType.ScannerCode
+                                });
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.WAITING,
+                                    UpdateType = EnumUpdateType.Socket
+                                });
+
                                 PLC.WriteWord("D98", 1000);
                                 ClearAllStep();
                                 PushStep(STEP1.WaitInitOk);
@@ -163,7 +186,10 @@ namespace Frame.Model
                                     Robot.GetPointPos((int)MachinePoint.GrapProductDown, out x, out y, out z);
                                     Robot.MoveAbs(Qx, Qy, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                     Robot.SetDoutBit(0, true);
-                                    
+
+                                    CheckDIo(EnumDin.Din1,false, "未读到真空负压信号", 2000);
+
+                                
                                     Robot.MoveAbs(Qx, Qy, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                     Robot.MoveToPoint((int)MachinePoint.SnapPosition, CommonSpeed, 20000);
                                     PopAndPushStep(STEP1.PlayToSocket);
@@ -208,25 +234,22 @@ namespace Frame.Model
                                         try
                                         {
                                             var StrCode = Scanner.Decode(1000);
-                                            SendMessage(new MsgOutput()
+                                            SendMessage(new MsgUpdateTestState()
                                             {
-                                                msg = new MessageModel() { MsgType = EnumMsgType.Info, MsgContent = StrCode, }
+                                                State=EnumTestState.OK, StrMessage= StrCode , UpdateType=EnumUpdateType.ScannerCode
                                             });
                                         }
                                         catch
                                         {
                                             var r = new Random();
                                             var StrCode =$"C0470{r.Next(0,9)}{r.Next(0, 9)}{r.Next(0, 9)}{r.Next(0, 9)}{r.Next(0, 9)}";
-                                            SendMessage(new MsgOutput()
+                                            SendMessage(new MsgUpdateTestState()
                                             {
-                                                msg = new MessageModel() { MsgType = EnumMsgType.Info, MsgContent = StrCode, }
+                                                State = EnumTestState.OK,
+                                                StrMessage = StrCode,
+                                                UpdateType = EnumUpdateType.ScannerCode
                                             });
-                                            //Robot.GetPointPos((int)MachinePoint.ReadCode, out double CodeX, out double CodeY, out double CodeZ);
-                                            //Robot.MoveAbs(CodeX, CodeY, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
-                                            //Robot.MoveToPoint((int)MachinePoint.UnloadProductUp, CommonSpeed, 30000);                    
-                                            //PopAndPushStep(STEP1.PlayToNgPoint);
 
-                                            //break;
                                         }
 
                                         Robot.MoveAbs(DesX, DesY, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
@@ -237,7 +260,7 @@ namespace Frame.Model
                                         Robot.SetDoutBit(0, false);
 
                                         Thread.Sleep(500);
-                                        Robot.MoveAbs(DesX, DesY, m_commonZ, EnumRobotSpeed.V100, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
+                                        Robot.MoveAbs(DesX, DesY, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
                                         PLC.WriteDword("D100", 1001);
                                         ClearAllStep();
                                         PushStep(STEP1.SocketTest);
@@ -267,8 +290,19 @@ namespace Frame.Model
                                 {
                                     PLC.WriteWord("D101", 2001);
                                     PopStep();
+                                    SendMessage(new MsgUpdateTestState()
+                                    {
+                                        State = EnumTestState.NG,
+                                        UpdateType = EnumUpdateType.Socket
+                                    });
                                     break;
                                 }
+
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.OK,
+                                    UpdateType = EnumUpdateType.Socket
+                                });
 
                                 PLC.WriteWord("D101", 1001);
                                 PopStep();
@@ -281,9 +315,18 @@ namespace Frame.Model
 
                                 Robot.MoveToPoint((int)MachinePoint.SocketDown, CommonSpeed, 20000);
                                 Robot.SetDoutBit(0, true);
-                                
+                                CheckDIo(EnumDin.Din1,false, "未读到真空负压信号", 2000);
+
+
+                               
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.WAITING,
+                                    UpdateType = EnumUpdateType.Socket
+                                });
                                 Robot.GetPointPos((int)MachinePoint.SocketDown, out x, out y, out z);
-                                Robot.MoveAbs(x, y, m_commonZ, EnumRobotSpeed.V100, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
+                                Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
+
                                 if (socketTestResult == 2)
                                 {
                                     PopAndPushStep(STEP1.PlayToNgPoint);
@@ -293,7 +336,7 @@ namespace Frame.Model
 
 
                                 Robot.GetPointPos((int)MachinePoint.EndFaceDown, out x, out y, out z);
-                                Robot.MoveAbs(x, y, m_commonZ, EnumRobotSpeed.V100, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
+                                Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.SetDoutBit(0, false);
                                 Thread.Sleep(500);
@@ -310,9 +353,19 @@ namespace Frame.Model
                                 {
                                     PLC.WriteWord("D103", 2001);
                                     PopStep();
-                                   // PopAndPushStep(STEP1.UnloadFromEndFaceTest);
+                                    SendMessage(new MsgUpdateTestState()
+                                    {
+                                        State = EnumTestState.NG,
+                                        UpdateType = EnumUpdateType.FaceTest
+                                    });
                                     break;
                                 }
+
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.OK,
+                                    UpdateType = EnumUpdateType.FaceTest
+                                });
                                 PLC.WriteWord("D103", 1001);
                                 PopStep();
                                 break;
@@ -321,16 +374,20 @@ namespace Frame.Model
                                 Robot.GetPointPos((int)MachinePoint.GrapDustPlugBack, out x, out y, out z);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 30000);
                                 Robot.MoveToPoint((int)MachinePoint.GrapDustPlugBack, CommonSpeed, 10000);//主要为了将夹爪旋转到位
-                                Robot.MoveToPoint((int)MachinePoint.GrapDustPlugFront, CommonSpeed, 10000);
-                                 Robot.SetDoutBit(EnumDout.Dout2, true);
-                                
-                                Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
+                                Robot.MoveToPoint((int)MachinePoint.GrapDustPlugFront, EnumRobotSpeed.V50, 10000);
+                                Robot.SetDoutBit(EnumDout.Dout2, true);
+                                CheckDIo(EnumDin.Din2,false, "未读到防尘塞夹爪气缸到位信号", 2000);
+
+                               
+                                Robot.MoveAbs(x, y, m_commonZ, EnumRobotSpeed.V50, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.GetPointPos((int)MachinePoint.EquipDustPlugBack, out x, out y, out z);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveToPoint((int)MachinePoint.EquipDustPlugFront, CommonSpeed, 20000);
                                 Robot.SetDoutBit(EnumDout.Dout2, false);
-                               
+                                CheckDIo(EnumDin.Din2,true, "未读到防尘塞夹爪气缸原位信号", 2000);
+                                
+                                Thread.Sleep(500);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 PLC.WriteWord("D104", 1001);
@@ -342,6 +399,14 @@ namespace Frame.Model
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 90000);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 40000);
                                 Robot.SetDoutBit(EnumDout.Dout1, true);
+                                CheckDIo(EnumDin.Din1,false, "未读到真空负压信号");
+                               
+                                SendMessage(new MsgUpdateTestState()
+                                {
+                                    State = EnumTestState.WAITING,
+                                    UpdateType = EnumUpdateType.FaceTest
+                                });
+
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 if (faceTestResult == 2)
                                 {
@@ -385,7 +450,7 @@ namespace Frame.Model
                                 Robot.MoveToPoint((int)MachinePoint.InitPoint, CommonSpeed, 30000);
                                 //PLC.WriteWord("D105", 1001);
                                 OkProductCount++;
-                                if (OkProductCount == 2)
+                                if (OkProductCount == 10)
                                 {
                                     OkProductCount = 0;
                                     PLC.WriteWord("D107", 3000);
@@ -514,6 +579,28 @@ namespace Frame.Model
             nStepQueue.Clear();
             for (int j = data.Count-1; j>-1 ; j--)
                 nStepQueue.Enqueue(data[j]);
+        }
+        private void CheckDIo(EnumDin Index,bool ExpectState, string ErrorInfo,int TimeOut=1000)
+        {
+           long timeStart = DateTime.Now.Ticks;
+            while (Robot.ReadDinBit(Index)!= ExpectState)//读负压信号
+            {
+                if (TimeSpan.FromTicks(DateTime.Now.Ticks - timeStart).TotalMilliseconds > TimeOut)
+                {
+                    SendMessage(new MsgOutput()
+                    {
+                        msg = new MessageModel()
+                        {
+                            MsgType = EnumMsgType.Error,
+                            MsgContent = ErrorInfo,
+                        },
+                    });
+                    break;
+                }
+                Application.DoEvents();
+
+            }
+
         }
     }
 }

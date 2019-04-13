@@ -22,6 +22,7 @@ namespace Frame.View
     /// </summary>
     public partial class UC_HistoryPanel : UserControl
     {
+        public event EventHandler OnClearClicked;
         public UC_HistoryPanel()
         {
             InitializeComponent();
@@ -31,6 +32,8 @@ namespace Frame.View
         private void MenuClear_Click(object sender, RoutedEventArgs e)
         {
             MsgCollect.Clear();
+            if (OnClearClicked != null)
+                OnClearClicked.Invoke(this, null);
         }
     }
 }
