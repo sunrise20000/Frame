@@ -12,7 +12,7 @@ namespace FXPLCCommunicationLib
     public enum REGISTER_TYPE
     {
       D,
-      M,
+      M_GROUP,
       M_SINGAL,
     }
     public enum CMD

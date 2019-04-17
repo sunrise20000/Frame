@@ -15,7 +15,7 @@ namespace FXPLCCommunicationLib.Tests
         {
             FxPLC plc = new FxPLC();
             plc.Open(20);
-            var ret=plc.WriteInt("D100",-987);
+            var ret=plc.WriteInt(FXPLCCommunicationLib.REGISTER_TYPE.D,100,-987);
             Console.WriteLine(ret);
         }
 
@@ -24,7 +24,7 @@ namespace FXPLCCommunicationLib.Tests
         {
             FxPLC plc = new FxPLC();
             plc.Open(20);
-            var ret = plc.ReadInt("D100");
+            var ret = plc.ReadInt(FXPLCCommunicationLib.REGISTER_TYPE.D,100);
             Console.WriteLine(ret);
         }
 
@@ -33,7 +33,7 @@ namespace FXPLCCommunicationLib.Tests
         {
             FxPLC plc = new FxPLC();
             plc.Open(20);
-            var ret = plc.WriteDint("D10",-87767556);
+            var ret = plc.WriteDint(FXPLCCommunicationLib.REGISTER_TYPE.D,10,-87767556);
             Console.WriteLine(ret);
         }
 
@@ -42,7 +42,7 @@ namespace FXPLCCommunicationLib.Tests
         {
             FxPLC plc = new FxPLC();
             plc.Open(20);
-            var ret = plc.ReadDint("D10");
+            var ret = plc.ReadDint(FXPLCCommunicationLib.REGISTER_TYPE.D,10);
             Console.WriteLine(ret);
         }
 
@@ -51,10 +51,20 @@ namespace FXPLCCommunicationLib.Tests
         public void CheckReadIntBlock()
         {
             FxPLC plc = new FxPLC();
-            plc.Open(19);
-            var ret = plc.ReadIntBlock("D10",10);
+            plc.Open(20);
+            var ret = plc.ReadIntBlock(FXPLCCommunicationLib.REGISTER_TYPE.D,10,10);
             foreach(var v in ret)
                 Console.WriteLine(v);
+        }
+
+        [TestMethod()]
+        public void CheckReadM()
+        {
+            FxPLC plc = new FxPLC();
+            plc.Open(20);
+            plc.ForceMBit(FXPLCCommunicationLib.REGISTER_TYPE.M_SINGAL,1, true);
+            var ret = plc.ReadInt(FXPLCCommunicationLib.REGISTER_TYPE.M_GROUP,0);
+            plc.CLose();
         }
 
 

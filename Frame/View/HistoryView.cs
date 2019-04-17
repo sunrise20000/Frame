@@ -36,7 +36,7 @@ namespace Frame.View
 
                 }
                 if(PLC.IsOpen)
-                    PLC.WriteWord("D301",1000);
+                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,301,1000);
             }
             
         }

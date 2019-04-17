@@ -60,20 +60,16 @@ namespace FXPLCCommunicationLib
         /// </summary>
         /// <param name="strRegisterName"></param>
         /// <returns></returns>
-        public Int16 ReadInt(string strRegisterName)
+        public Int16 ReadInt(REGISTER_TYPE RegisterType, int RegisterNumber)
         {
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = strRegisterName.Length;
-            if ((!strRegisterName.Substring(0, 1).ToUpper().Equals("D") && !strRegisterName.Substring(0, 1).ToUpper().Equals("M") )|| nLen < 2)
+            if (RegisterType != REGISTER_TYPE.D && RegisterType != REGISTER_TYPE.M_GROUP)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(strRegisterName.Substring(1, nLen - 1)); //D寄存器地址
-
             //地址计算
-            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
             byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)CMD.R, addressArray[3], addressArray[2], addressArray[1], addressArray[0], 0x30, 0x32, (byte)CMD.ETX };
             CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
             var dataSendFinall = new List<byte>(dataSend);
@@ -89,20 +85,16 @@ namespace FXPLCCommunicationLib
             }
 
         }
-        public Int32 ReadDint(string strRegisterStartName)
+        public Int32 ReadDint(REGISTER_TYPE RegisterType, int RegisterNumber)
         {
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = strRegisterStartName.Length;
-            if (!strRegisterStartName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if (RegisterType!=REGISTER_TYPE.D && RegisterType!=REGISTER_TYPE.M_GROUP)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(strRegisterStartName.Substring(1, nLen - 1)); //D寄存器地址
-
             //地址计算
-            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
 
             byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)CMD.R, addressArray[3], addressArray[2], addressArray[1], addressArray[0], 0x30, 0x34, (byte)CMD.ETX };
             CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
@@ -119,19 +111,17 @@ namespace FXPLCCommunicationLib
             }
 
         }
-        public bool WriteInt(string strRegisterName, Int16 value)
+        public bool WriteInt(REGISTER_TYPE RegisterType, int RegisterNumber, int value)
         {
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = strRegisterName.Length;
-            if (!strRegisterName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if (RegisterType!=REGISTER_TYPE.D && RegisterType!=REGISTER_TYPE.M_GROUP)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(strRegisterName.Substring(1, nLen - 1)); //D寄存器地址
             //地址计算
-            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
+
             Dec2Ascii((byte)(value & 0xFF), out byte ascii0, out byte ascii1);
             Dec2Ascii((byte)((value >> 8) & 0xFF), out byte ascii2, out byte ascii3);
             byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)CMD.W, addressArray[3], addressArray[2], addressArray[1], addressArray[0], 0x30, 0x32, ascii1, ascii0, ascii3, ascii2, (byte)CMD.ETX };
@@ -147,19 +137,17 @@ namespace FXPLCCommunicationLib
                 return ReadVoidAck();
             }
         }
-        public bool WriteDint(string strRegisterName, Int32 value)
+        public bool WriteDint(REGISTER_TYPE RegisterType, int RegisterNumber, Int32 value)
         {
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = strRegisterName.Length;
-            if (!strRegisterName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if (RegisterType!=REGISTER_TYPE.D && RegisterType!=REGISTER_TYPE.M_GROUP)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(strRegisterName.Substring(1, nLen - 1)); //D寄存器地址
             //地址计算
-            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
+
             Dec2Ascii((byte)(value & 0xFF), out byte ascii0, out byte ascii1);
             Dec2Ascii((byte)((value >> 8) & 0xFF), out byte ascii2, out byte ascii3);
             Dec2Ascii((byte)((value>>16) & 0xFF), out byte ascii4, out byte ascii5);
@@ -179,23 +167,21 @@ namespace FXPLCCommunicationLib
             }
         }
 
-        public Int16[] ReadIntBlock(string strStartRegisterName, int Length,int TimeOut=3000)
+        public Int16[] ReadIntBlock(REGISTER_TYPE RegisterType, int RegisterNumber, int Length,int TimeOut=3000)
         {
             if (Length > 124)
                 throw new Exception("不允许读取太多长度 的寄存器");
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = strStartRegisterName.Length;
-            if (!strStartRegisterName.Substring(0, 1).ToUpper().Equals("D") || nLen < 2)
+            if (RegisterType!=REGISTER_TYPE.D && RegisterType!=REGISTER_TYPE.M_GROUP)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(strStartRegisterName.Substring(1, nLen - 1)); //D寄存器地址
-
             //地址计算
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
+
             Dec2Ascii((byte)(Length * 2), out byte LenAscii0, out byte LenAscii1);
-            AddressToAscii(REGISTER_TYPE.D, dwAddress, out byte[] addressArray);
+
             byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)CMD.R, addressArray[3], addressArray[2], addressArray[1], addressArray[0], LenAscii1, LenAscii0, (byte)CMD.ETX };
             CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
             var dataSendFinall = new List<byte>(dataSend);
@@ -209,19 +195,17 @@ namespace FXPLCCommunicationLib
             }
         }
 
-        public bool ForceMBit(string MName, bool Value)
+        public bool ForceMBit(REGISTER_TYPE RegisterType, int RegisterNumber, bool Value)
         {
             if (Comport == null || !Comport.IsOpen)
                 throw new Exception("请检查串口状态!");
-            Int32 dwAddress = -1;
-            int nLen = MName.Length;
-            if (!MName.Substring(0, 1).ToUpper().Equals("M") || nLen < 2)
+            if (RegisterType!=REGISTER_TYPE.M_SINGAL)
             {
                 throw new Exception("寄存器地址输入错误");
             }
-            dwAddress = Int32.Parse(MName.Substring(1, nLen - 1)); //M地址
-            AddressToAscii(REGISTER_TYPE.M_SINGAL, dwAddress, out byte[] addressArray);
-            byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)(Value? CMD.FORCE_ON : CMD.FORCE_OFF), addressArray[3], addressArray[2], addressArray[1], addressArray[0],(byte)CMD.ETX };
+            //地址计算
+            AddressToAscii(RegisterType, RegisterNumber, out byte[] addressArray);
+            byte[] dataSend = new byte[] { (byte)CMD.STX, (byte)(Value? CMD.FORCE_ON : CMD.FORCE_OFF), addressArray[1], addressArray[0], addressArray[3], addressArray[2],(byte)CMD.ETX };
             CheckSum(dataSend, 1, dataSend.Length - 1, out byte sum0, out byte sum1);
             List<byte> dataSendFinall = new List<byte>(dataSend);
             dataSendFinall.Add(sum1);
@@ -243,7 +227,7 @@ namespace FXPLCCommunicationLib
         }
 
 
-        public void StartHeartBeat(string RegisterName, Int16 ExpectValue, int TimeInterval=3000)
+        public void StartHeartBeat(REGISTER_TYPE RegisterType, int RegisterNumber, Int16 ExpectValue, int TimeInterval=3000)
         {
             if (HeartTask==null || HeartTask.Status == TaskStatus.Canceled || HeartTask.Status == TaskStatus.RanToCompletion)
             {
@@ -251,7 +235,7 @@ namespace FXPLCCommunicationLib
                 HeartTask = new Task(() => {
                     while (!cts.IsCancellationRequested)
                     {
-                        if (!WriteInt(RegisterName, ExpectValue))
+                        if (!WriteInt(RegisterType,RegisterNumber, ExpectValue))
                             throw new Exception("PLC 断开连接");
 
                         Thread.Sleep(TimeInterval);
@@ -309,24 +293,27 @@ namespace FXPLCCommunicationLib
         void AddressToAscii(REGISTER_TYPE nType, Int32 dwAddress, out byte[] outAddress)
         {
             outAddress = new byte[4];
+            string strAddress = "";
             switch (nType)
             {
                 case REGISTER_TYPE.D:
-                    dwAddress = dwAddress * 2 + 0x1000; 
+                    dwAddress = dwAddress * 2 + 0x1000;
                     break;
-                case REGISTER_TYPE.M:
+                case REGISTER_TYPE.M_GROUP:
                     dwAddress = dwAddress + 0x100;
+
                     break;
                 case REGISTER_TYPE.M_SINGAL:
                     dwAddress = dwAddress + 0x800;
+                    
                     break;
                 default:
                     return;
             }
-            var strAddress = string.Format("{0:X4}", dwAddress).ToUpper();
+            strAddress = string.Format("{0:X4}", dwAddress).ToUpper();
             for (int i = 0; i < 4; i++)
-                outAddress[3-i] = (byte)strAddress[i];
-            
+                outAddress[3 - i] = (byte)strAddress[i];
+
         }
 
         /// <summary>

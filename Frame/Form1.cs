@@ -6,6 +6,7 @@ using Frame.Instrument;
 using Frame.Interface;
 using Frame.Model;
 using Frame.View;
+using FXPLCCommunicationLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -226,7 +227,7 @@ namespace Frame
                     PLC.Open();
                 if (PLC.IsOpen)
                 {
-                    PLC.WriteWord("D300",(short)(barCheckItem2.Checked ? 1000: 0));
+                    PLC.WriteWord(REGISTER_TYPE.D,300,(short)(barCheckItem2.Checked ? 1000: 0));
                 }
             }
         }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using FXPLCCommunicationLib;
+
 namespace Frame.Instrument
 {
     public class InstrumentFxPLC : InstrumentBase<InstrumentCfgBase, CommunicationCfgBase>
@@ -33,43 +35,43 @@ namespace Frame.Instrument
             PLC.CLose();
         }
 
-        public short ReadWord(string RegisterName)
+        public short ReadWord(REGISTER_TYPE RegisterType, int RegisterNumber)
         {
-            return PLC.ReadInt(RegisterName);
+            return PLC.ReadInt(RegisterType, RegisterNumber);
         }
 
-        public Int32 ReadDword(string RegisterName)
+        public Int32 ReadDword(REGISTER_TYPE RegisterType, int RegisterNumber)
         {
-            return PLC.ReadDint(RegisterName);
+            return PLC.ReadDint(RegisterType, RegisterNumber);
         }
 
-        public bool WriteWord(string RegisterName,Int16 Value)
+        public bool WriteWord(REGISTER_TYPE RegisterType, int RegisterNumber,Int16 Value)
         {
-            return PLC.WriteInt(RegisterName, Value);
+            return PLC.WriteInt(RegisterType, RegisterNumber, Value);
         }
-        public bool WriteDword(string RegisterName, Int32 Value)
+        public bool WriteDword(REGISTER_TYPE RegisterType, int RegisterNumber, Int32 Value)
         {
-            return PLC.WriteDint(RegisterName, Value);
-        }
-
-        public bool ForceMBit(string MBitName, bool Value)
-        {
-            return PLC.ForceMBit(MBitName, Value);
+            return PLC.WriteDint(RegisterType, RegisterNumber, Value);
         }
 
-        public void StartHeartBeat(string RegisterName, Int16 Value)
+        public bool ForceMBit(REGISTER_TYPE RegisterType, int RegisterNumber, bool Value)
         {
-            PLC.StartHeartBeat(RegisterName,Value);
+            return PLC.ForceMBit(RegisterType,RegisterNumber, Value);
         }
 
-        public Int16[] ReadBlockInt(string StartRegisterName, int Length,int TimeOut=3000)
+        public void StartHeartBeat(REGISTER_TYPE RegisterType, int RegisterNumber, Int16 Value)
         {
-            return PLC.ReadIntBlock(StartRegisterName, Length,TimeOut);
+            PLC.StartHeartBeat(RegisterType, RegisterNumber,Value);
         }
 
-        public bool WriteMbit(string MName,bool Value)
+        public Int16[] ReadBlockInt(REGISTER_TYPE RegisterType, int RegisterNumber, int Length,int TimeOut=3000)
         {
-            return PLC.ForceMBit(MName, Value);
+            return PLC.ReadIntBlock(RegisterType, RegisterNumber, Length,TimeOut);
+        }
+
+        public bool WriteMbit(REGISTER_TYPE RegisterType, int RegisterNumber, bool Value)
+        {
+            return PLC.ForceMBit(RegisterType, RegisterNumber, Value);
         }
     }
 }

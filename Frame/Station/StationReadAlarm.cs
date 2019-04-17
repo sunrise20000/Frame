@@ -72,7 +72,7 @@ namespace Frame.Model
                     switch (nStep)
                     {
                         case STEP2.INIT:
-                            GetAlarm(PLC.ReadDword("D400"));
+                            GetAlarm(PLC.ReadDword(FXPLCCommunicationLib.REGISTER_TYPE.D,400));
 
                             break;
                         default:

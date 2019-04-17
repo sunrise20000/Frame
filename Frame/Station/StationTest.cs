@@ -155,18 +155,18 @@ namespace Frame.Model
                                     UpdateType = EnumUpdateType.Socket
                                 });
 
-                                PLC.WriteWord("D98", 1000);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,98,1000);
                                 ClearAllStep();
                                 PushStep(STEP1.WaitInitOk);
                                 break;
                             case STEP1.WaitInitOk:
                                 ShowInfo("WaitInitOk");
-                                if (PLC.ReadWord("D98") == 0)
+                                if (PLC.ReadWord(FXPLCCommunicationLib.REGISTER_TYPE.D,98) == 0)
                                 {
                                     ShowInfo("InitOk");
                                     InitFlag = true;
                                     ClearAllStep();
-                                    PLC.WriteWord("D300", 1000);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,300, 1000);
                                 }
 
                                 Thread.Sleep(1000);
@@ -207,7 +207,7 @@ namespace Frame.Model
                                     {
                                         ShowInfo("未能抓取到产品1");
                                         PopStep();
-                                        PLC.WriteDword("D101", 2001);
+                                        PLC.WriteDword(FXPLCCommunicationLib.REGISTER_TYPE.D,101,2001);
                                         break;
                                     }
 
@@ -261,7 +261,7 @@ namespace Frame.Model
 
                                         Thread.Sleep(500);
                                         Robot.MoveAbs(DesX, DesY, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 10000);
-                                        PLC.WriteDword("D100", 1001);
+                                        PLC.WriteDword(FXPLCCommunicationLib.REGISTER_TYPE.D,100, 1001);
                                         ClearAllStep();
                                         PushStep(STEP1.SocketTest);
                                     }
@@ -269,14 +269,14 @@ namespace Frame.Model
                                     {
                                         ShowInfo("未能抓取到产品2");
                                         PopStep();
-                                        PLC.WriteWord("D100", 2001);
+                                        PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,100, 2001);
                                         break;
                                     }
 
                                 }
                                 else
                                 {
-                                    PLC.WriteWord("D100", 3000);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,100, 3000);
                                     PopStep();
                                 }
 
@@ -288,7 +288,7 @@ namespace Frame.Model
                                 socketTestResult = random.Next(1, 2);//1表示ok，2表示ng
                                 if (socketTestResult == 2)
                                 {
-                                    PLC.WriteWord("D101", 2001);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,101, 2001);
                                     PopStep();
                                     SendMessage(new MsgUpdateTestState()
                                     {
@@ -304,7 +304,7 @@ namespace Frame.Model
                                     UpdateType = EnumUpdateType.Socket
                                 });
 
-                                PLC.WriteWord("D101", 1001);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,101, 1001);
                                 PopStep();
                                 break;
 
@@ -330,7 +330,7 @@ namespace Frame.Model
                                 if (socketTestResult == 2)
                                 {
                                     PopAndPushStep(STEP1.PlayToNgPoint);
-                                    PLC.WriteWord("D102", 1002);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,102, 1002);
                                     break;
                                 }
 
@@ -341,7 +341,7 @@ namespace Frame.Model
                                 Robot.SetDoutBit(0, false);
                                 Thread.Sleep(500);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
-                                PLC.WriteWord("D102", 1001);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,102, 1001);
                                 PopStep();
                                 break;
                             case STEP1.FaceTest:
@@ -351,7 +351,7 @@ namespace Frame.Model
                                // faceTestResult = 2;
                                 if (faceTestResult == 2)
                                 {
-                                    PLC.WriteWord("D103", 2001);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,103, 2001);
                                     PopStep();
                                     SendMessage(new MsgUpdateTestState()
                                     {
@@ -366,7 +366,7 @@ namespace Frame.Model
                                     State = EnumTestState.OK,
                                     UpdateType = EnumUpdateType.FaceTest
                                 });
-                                PLC.WriteWord("D103", 1001);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,103, 1001);
                                 PopStep();
                                 break;
                             case STEP1.GetDustPlug:
@@ -390,7 +390,7 @@ namespace Frame.Model
                                 Thread.Sleep(500);
                                 Robot.MoveAbs(x, y, z, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
                                 Robot.MoveAbs(x, y, m_commonZ, CommonSpeed, EnumRobotTool.Tool1, EnumMoveType.MoveL, 20000);
-                                PLC.WriteWord("D104", 1001);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,104, 1001);
                                 PopStep();
                                 break;
                             case STEP1.UnloadFromEndFaceTest:
@@ -418,7 +418,7 @@ namespace Frame.Model
                                     ClearAllStep();
                                     PushStep(STEP1.PlayToOkPoint);
                                 }
-                                PLC.WriteWord("D105", 1001);
+                                PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,105, 1001);
                                 break;
                             case STEP1.PlayToNgPoint:
                                 {
@@ -433,7 +433,7 @@ namespace Frame.Model
                                     NgProductCount++;
                                     if (NgProductCount == 6)
                                     {
-                                        //PLC.WriteWord("D105", 3000);
+                                        //PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,105, 3000);
                                         NgProductCount = 0;
                                         SendMessage(new MsgOutput() { msg = new MessageModel() { MsgType = EnumMsgType.Warning, MsgContent = "NG料盘已满,请清理料盘" } });
                                     }
@@ -448,12 +448,12 @@ namespace Frame.Model
                                 Thread.Sleep(500);
                                 Robot.MoveToPointReplaceXYZ(EnumProductType.OK,OkPoints[OkProductCount, 0], OkPoints[OkProductCount, 1], m_commonZ, CommonSpeed, EnumRobotTool.Tool1, 30000);
                                 Robot.MoveToPoint((int)MachinePoint.InitPoint, CommonSpeed, 30000);
-                                //PLC.WriteWord("D105", 1001);
+                                //PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,105, 1001);
                                 OkProductCount++;
                                 if (OkProductCount == 10)
                                 {
                                     OkProductCount = 0;
-                                    PLC.WriteWord("D107", 3000);
+                                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,107, 3000);
                                     SendMessage(new MsgOutput() { msg = new MessageModel() { MsgType = EnumMsgType.Warning, MsgContent = "OK料盘已满,请清理料盘" } });
                                 }                     
                                 PopStep();
@@ -555,7 +555,7 @@ namespace Frame.Model
 
         private void Dispatcher()
         {
-            var IntList = PLC.ReadBlockInt("D100", 10);
+            var IntList = PLC.ReadBlockInt(FXPLCCommunicationLib.REGISTER_TYPE.D,100, 10);
             string val = string.Empty;
             for (int k = 0; k < MappingDic.Count; k++)
             {
@@ -570,7 +570,7 @@ namespace Frame.Model
                 if (IntList[i] == 1&& !nStepQueue.Contains((int)MappingDic[i]))
                 {
                     PushStep(MappingDic[i]);
-                    PLC.WriteWord($"D{100 + i}", 0);
+                    PLC.WriteWord(FXPLCCommunicationLib.REGISTER_TYPE.D,100 + i, 0);
                     ShowInfo($"当前压入步骤{MappingDic[i].ToString()}");
                     break;
                 }
